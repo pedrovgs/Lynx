@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Pedro Vicente Gomez Sanchez.
+ * Copyright (C) 2015 Pedro Vicente Gomez Sanchez.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.github.pedrovgs.sample;
 
 import android.os.Bundle;
