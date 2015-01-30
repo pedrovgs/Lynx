@@ -16,10 +16,13 @@
 
 package com.github.pedrovgs.sample;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
+import com.github.pedrovgs.lynx.LynxActivity;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -32,7 +35,9 @@ public class MainActivity extends ActionBarActivity {
     bt_show_logcat_view = (Button) findViewById(R.id.bt_show_lynx_view);
     bt_show_logcat_view.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-
+        Context context = MainActivity.this;
+        Intent intent = new Intent(context, LynxActivity.class);
+        startActivity(intent);
       }
     });
   }
