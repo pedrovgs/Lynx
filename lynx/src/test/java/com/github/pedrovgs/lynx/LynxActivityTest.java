@@ -17,6 +17,7 @@
 package com.github.pedrovgs.lynx;
 
 import android.view.View;
+import android.view.ViewGroup;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,10 +39,25 @@ import static org.junit.Assert.assertEquals;
   }
 
   @Test public void shouldShowLynxViewAsVisible() {
-    LynxView lynxView = (LynxView) lynxActivity.findViewById(R.id.lynx_view);
+    LynxView lynxView = getLynxView();
 
     int lynxViewVisibility = lynxView.getVisibility();
-    
+
     assertEquals(View.VISIBLE, lynxViewVisibility);
+  }
+
+  @Test public void shouldShowLynxViewUsingMatchParentAsConfiguration() {
+    LynxView lynxView = getLynxView();
+
+    ViewGroup.LayoutParams layoutParams = lynxView.getLayoutParams();
+    int lynxViewHeight = layoutParams.height;
+    int lynxViewWidth = layoutParams.width;
+
+    assertEquals(ViewGroup.LayoutParams.MATCH_PARENT, lynxViewHeight);
+    assertEquals(ViewGroup.LayoutParams.MATCH_PARENT, lynxViewWidth);
+  }
+
+  private LynxView getLynxView() {
+    return (LynxView) lynxActivity.findViewById(R.id.lynx_view);
   }
 }
