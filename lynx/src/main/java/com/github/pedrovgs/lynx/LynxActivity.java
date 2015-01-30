@@ -26,9 +26,10 @@ import android.os.Bundle;
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-public class LynxActivity extends Activity{
+public class LynxActivity extends Activity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setContentView(R.layout.lynx_activity);
   }
 }
