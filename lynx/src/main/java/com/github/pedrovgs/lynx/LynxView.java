@@ -24,7 +24,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 /**
- * Main library view. This ViewGroup extension shows all the information
+ * Main library view. This RelativeLayout extension shows all the information printed in your
+ * device log. Add this view to your layouts if you want to show your Logcat traces and configure
+ * it using styleable attributes.
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
