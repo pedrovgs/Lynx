@@ -3,7 +3,7 @@
     package="com.github.pedrovgs.lynx">
 
   <application>
-
+    <activity android:name=".LynxActivity"/>
   </application>
 
 </manifest>
