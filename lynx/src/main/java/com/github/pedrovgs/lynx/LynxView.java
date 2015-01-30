@@ -35,21 +35,15 @@ public class LynxView extends RelativeLayout {
   private ListView lv_traces;
 
   public LynxView(Context context) {
-    super(context);
-    initializeLynxView(null);
+    this(context, null);
   }
 
   public LynxView(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    initializeLynxView(attrs);
+    this(context, attrs, 0);
   }
 
   public LynxView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    initializeLynxView(attrs);
-  }
-
-  private void initializeLynxView(AttributeSet attrs) {
     if (attrs == null) {
       initializeConfiguration(attrs);
     }
@@ -57,7 +51,7 @@ public class LynxView extends RelativeLayout {
   }
 
   private void initializeConfiguration(AttributeSet attrs) {
-    //Obtain configuration
+    //Obtain Lynx configuration
   }
 
   private void inflateView() {
