@@ -17,8 +17,8 @@
 <resources>
 
   <string name="app_name">Lynx</string>
-  <string name="show_lynx_view">Show Lynx view</string>
-  <string name="shake_to_show_lynx_view">Press the button to show Lynx view or shake your phone.
+  <string name="show_lynx_view">Show Lynx Activity</string>
+  <string name="shake_to_show_lynx_view">Press the button to show Lynx Activity or shake your phone.
   </string>
 
 </resources>
