@@ -2,7 +2,7 @@
 <resources>
 
   <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-
+    <item name="android:windowBackground">@color/application_background</item>
   </style>
 
 </resources>
