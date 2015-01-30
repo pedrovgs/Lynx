@@ -18,11 +18,22 @@ package com.github.pedrovgs.sample;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends ActionBarActivity {
+
+  private Button bt_show_logcat_view;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    bt_show_logcat_view = (Button) findViewById(R.id.bt_show_lynx_view);
+    bt_show_logcat_view.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+
+      }
+    });
   }
 }
