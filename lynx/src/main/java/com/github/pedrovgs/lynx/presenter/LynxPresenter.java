@@ -16,6 +16,7 @@
 
 package com.github.pedrovgs.lynx.presenter;
 
+import com.github.pedrovgs.lynx.model.Lynx;
 import com.github.pedrovgs.lynx.model.Trace;
 import java.util.List;
 
@@ -26,20 +27,29 @@ import java.util.List;
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-public class LynxPresenter {
+public class LynxPresenter implements Lynx.LynxListener {
 
+  private final Lynx lynx;
   private final View view;
+  private final TraceBuffer traceBuffer;
 
-  public LynxPresenter(View view) {
+  public LynxPresenter(Lynx lynx, View view) {
+    this.lynx = lynx;
     this.view = view;
+    this.traceBuffer = new TraceBuffer();
   }
 
   public void resume() {
-
+    lynx.registerListener(this);
+    lynx.startReading();
   }
 
   public void pause() {
+    lynx.unregisterListener(this);
+    lynx.stopReading();
+  }
 
+  @Override public void onNewTraces(List<Trace> traces) {
   }
 
   public interface View {
