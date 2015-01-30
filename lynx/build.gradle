@@ -40,6 +40,7 @@ dependencies {
   compile 'com.android.support:appcompat-v7:21.0.3'
   testCompile 'org.robolectric:robolectric:2.3'
   testCompile 'junit:junit:4.10'
+  testCompile 'org.mockito:mockito-all:1.9.5'
 }
 
 task checkstyle(type: Checkstyle) {
