@@ -52,4 +52,18 @@ public class LynxPresenterTest {
 
     verify(lynx).unregisterListener(presenter);
   }
+
+  @Test public void shouldStartLynxOnResume() {
+    presenter.resume();
+
+    verify(lynx).startReading();
+  }
+
+  @Test public void shouldStopLynxOnPause() {
+    presenter.resume();
+
+    presenter.pause();
+
+    verify(lynx).stopReading();
+  }
 }
