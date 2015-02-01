@@ -33,6 +33,7 @@ import android.widget.RelativeLayout;
 public class LynxView extends RelativeLayout {
 
   private ListView lv_traces;
+  private LynxConfig lynxConfig;
 
   public LynxView(Context context) {
     this(context, null);
@@ -48,6 +49,14 @@ public class LynxView extends RelativeLayout {
       initializeConfiguration(attrs);
     }
     inflateView();
+  }
+
+  public void setLynxConfig(LynxConfig lynxConfig) {
+    this.lynxConfig = lynxConfig;
+  }
+
+  public LynxConfig getLynxConfig(){
+    return lynxConfig;
   }
 
   private void initializeConfiguration(AttributeSet attrs) {

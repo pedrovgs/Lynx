@@ -17,6 +17,8 @@
 package com.github.pedrovgs.lynx;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 /**
@@ -28,8 +30,32 @@ import android.os.Bundle;
  */
 public class LynxActivity extends Activity {
 
+  private static final String LYNX_CONFIG_EXTRA = "extra_lynx_config";
+
+  public static Intent getIntent(Context context, LynxConfig lynxConfig) {
+    Intent intent = new Intent(context, LynxActivity.class);
+    intent.putExtra(LYNX_CONFIG_EXTRA, lynxConfig);
+    return intent;
+  }
+
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.lynx_activity);
+    LynxConfig lynxConfig = getLynxConfig();
+    configureLynxView(lynxConfig);
+  }
+
+  private LynxConfig getLynxConfig() {
+    Bundle extras = getIntent().getExtras();
+    LynxConfig lynxConfig = new LynxConfig();
+    if (extras != null) {
+      lynxConfig = (LynxConfig) extras.getSerializable(LYNX_CONFIG_EXTRA);
+    }
+    return lynxConfig;
+  }
+
+  private void configureLynxView(LynxConfig lynxConfig) {
+    LynxView lynxView = (LynxView) findViewById(R.id.lynx_view);
+    lynxView.setLynxConfig(lynxConfig);
   }
 }
