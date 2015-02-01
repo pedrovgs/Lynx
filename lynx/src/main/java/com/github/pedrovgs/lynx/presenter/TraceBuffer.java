@@ -17,6 +17,7 @@
 package com.github.pedrovgs.lynx.presenter;
 
 import com.github.pedrovgs.lynx.model.Trace;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -25,11 +26,39 @@ import java.util.List;
  * @author Pedro Vicente Gómez Sánchez.
  */
 class TraceBuffer {
-  public void add(List<Trace> traces) {
 
+  private final int bufferSize;
+  private final List<Trace> traces;
+
+  TraceBuffer(int bufferSize) {
+    this.bufferSize = bufferSize;
+    traces = new LinkedList<Trace>();
+  }
+
+  /**
+   * Add a list of traces to the buffer, if the buffer is full your new traces will be added and
+   * the previous one will be removed.
+   */
+  public void add(List<Trace> traces) {
+    this.traces.addAll(traces);
+    int tracesToDiscard = getNumberOfTracesToDiscard();
+    if (tracesToDiscard > 0) {
+      discardTraces(tracesToDiscard);
+    }
   }
 
   public List<Trace> getTraces() {
-    return null;
+    return traces;
+  }
+
+  private int getNumberOfTracesToDiscard() {
+    int currentTracesSize = this.traces.size();
+    return currentTracesSize - bufferSize;
+  }
+
+  private void discardTraces(int tracesToDiscard) {
+    for (int i = 0; i < tracesToDiscard; i++) {
+      traces.remove(0);
+    }
   }
 }
