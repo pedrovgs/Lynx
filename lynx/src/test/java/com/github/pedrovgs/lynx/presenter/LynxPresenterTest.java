@@ -34,6 +34,8 @@ import static org.mockito.Mockito.verify;
  */
 public class LynxPresenterTest {
 
+  private static final int MAX_NUMBER_OF_TRACES = 10;
+
   @Mock private Lynx lynx;
   @Mock private LynxPresenter.View view;
 
@@ -41,7 +43,7 @@ public class LynxPresenterTest {
 
   @Before public void setUp() {
     MockitoAnnotations.initMocks(this);
-    presenter = new LynxPresenter(lynx, view);
+    presenter = new LynxPresenter(lynx, view, MAX_NUMBER_OF_TRACES);
   }
 
   @Test public void shouldRegisterItselfAsLynxListenerOnResume() {
@@ -72,10 +74,10 @@ public class LynxPresenterTest {
     verify(lynx).stopReading();
   }
 
-  @Test public void shouldShowFirstOneHoundredTraces() {
-    List<Trace> traces = generateTraces(100);
+  @Test public void shouldShowTracesNotifiedFromLynx() {
+    List<Trace> traces = generateTraces(MAX_NUMBER_OF_TRACES);
 
-    presenter = new LynxPresenter(lynx, view);
+    presenter = new LynxPresenter(lynx, view, MAX_NUMBER_OF_TRACES);
     presenter.resume();
     presenter.onNewTraces(traces);
 

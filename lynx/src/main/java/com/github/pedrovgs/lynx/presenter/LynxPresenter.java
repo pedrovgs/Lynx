@@ -29,16 +29,15 @@ import java.util.List;
  */
 public class LynxPresenter implements Lynx.LynxListener {
 
-  private static final int BUFFER_SIZE = 1000;
-  
   private final Lynx lynx;
   private final View view;
   private final TraceBuffer traceBuffer;
 
-  public LynxPresenter(Lynx lynx, View view) {
+  public LynxPresenter(Lynx lynx, View view, int maxNumberOfTracesToShow) {
+    validateNumberOfTracesConfiguration(maxNumberOfTracesToShow);
     this.lynx = lynx;
     this.view = view;
-    this.traceBuffer = new TraceBuffer(BUFFER_SIZE);
+    this.traceBuffer = new TraceBuffer(maxNumberOfTracesToShow);
   }
 
   public void resume() {
@@ -63,6 +62,13 @@ public class LynxPresenter implements Lynx.LynxListener {
 
   private List<Trace> getCurrentTraces() {
     return traceBuffer.getTraces();
+  }
+
+  private void validateNumberOfTracesConfiguration(long maxNumberOfTracesToShow) {
+    if (maxNumberOfTracesToShow <= 0) {
+      throw new IllegalArgumentException(
+          "You can't pass a zero or negative number of traces to show.");
+    }
   }
 
   public interface View {
