@@ -33,7 +33,7 @@ import java.util.List;
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-class TraceRendererBuilder extends RendererBuilder<Trace> {
+public class TraceRendererBuilder extends RendererBuilder<Trace> {
 
   public TraceRendererBuilder() {
     List<Renderer<Trace>> prototypes = new LinkedList<Renderer<Trace>>();
