@@ -17,11 +17,16 @@
 package com.github.pedrovgs.lynx.presenter;
 
 import com.github.pedrovgs.lynx.model.Lynx;
+import com.github.pedrovgs.lynx.model.Trace;
+import com.github.pedrovgs.lynx.model.TraceLevel;
+import java.util.LinkedList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -65,5 +70,24 @@ public class LynxPresenterTest {
     presenter.pause();
 
     verify(lynx).stopReading();
+  }
+
+  @Test public void shouldShowFirstOneHoundredTraces() {
+    List<Trace> traces = generateTraces(100);
+
+    presenter = new LynxPresenter(lynx, view);
+    presenter.resume();
+    presenter.onNewTraces(traces);
+
+    verify(view).showTraces(eq(traces));
+  }
+
+  private List<Trace> generateTraces(int numberOfTraces) {
+    List<Trace> traces = new LinkedList<Trace>();
+    for (int i = 0; i < numberOfTraces; i++) {
+      Trace dummyTrace = new Trace(TraceLevel.VERBOSE, String.valueOf(i));
+      traces.add(dummyTrace);
+    }
+    return traces;
   }
 }
