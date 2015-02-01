@@ -29,6 +29,8 @@ import java.util.List;
  */
 public class LynxPresenter implements Lynx.LynxListener {
 
+  private static final int BUFFER_SIZE = 1000;
+  
   private final Lynx lynx;
   private final View view;
   private final TraceBuffer traceBuffer;
@@ -36,7 +38,7 @@ public class LynxPresenter implements Lynx.LynxListener {
   public LynxPresenter(Lynx lynx, View view) {
     this.lynx = lynx;
     this.view = view;
-    this.traceBuffer = new TraceBuffer();
+    this.traceBuffer = new TraceBuffer(BUFFER_SIZE);
   }
 
   public void resume() {
@@ -50,6 +52,17 @@ public class LynxPresenter implements Lynx.LynxListener {
   }
 
   @Override public void onNewTraces(List<Trace> traces) {
+    updateTraceBuffer(traces);
+    List<Trace> tracesToNotify = getCurrentTraces();
+    view.showTraces(tracesToNotify);
+  }
+
+  private void updateTraceBuffer(List<Trace> traces) {
+    traceBuffer.add(traces);
+  }
+
+  private List<Trace> getCurrentTraces() {
+    return traceBuffer.getTraces();
   }
 
   public interface View {
