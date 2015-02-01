@@ -23,21 +23,25 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import com.github.pedrovgs.lynx.LynxActivity;
+import com.github.pedrovgs.lynx.LynxConfig;
 
 public class MainActivity extends ActionBarActivity {
 
-  private Button bt_show_logcat_view;
+  private static final int MAX_TRACES_TO_SHOW = 200;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    bt_show_logcat_view = (Button) findViewById(R.id.bt_show_lynx_view);
+    Button bt_show_logcat_view = (Button) findViewById(R.id.bt_show_lynx_view);
     bt_show_logcat_view.setOnClickListener(new View.OnClickListener() {
+
       @Override public void onClick(View v) {
         Context context = MainActivity.this;
-        Intent intent = new Intent(context, LynxActivity.class);
-        startActivity(intent);
+        LynxConfig lynxConfig = new LynxConfig();
+        lynxConfig.withMaxNumberOfTracesToShow(MAX_TRACES_TO_SHOW);
+        Intent lynxActivityIntent = LynxActivity.getIntent(context, lynxConfig);
+        startActivity(lynxActivityIntent);
       }
     });
   }

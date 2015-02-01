@@ -17,8 +17,10 @@
 package com.github.pedrovgs.lynx.renderer;
 
 /**
+ * TraceRenderer implementation used to render Trace objects with TraceLevel.ASSERT trace level.
+ *
  * @author Pedro Vicente Gómez Sánchez.
  */
-class AssertTraceRenderer extends TraceRenderer{
+class AssertTraceRenderer extends TraceRenderer {
 
 }

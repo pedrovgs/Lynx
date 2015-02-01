@@ -17,7 +17,9 @@
 package com.github.pedrovgs.lynx.renderer;
 
 /**
+ * TraceRenderer implementation used to render Trace objects with TraceLevel.INFO trace level.
+ *
  * @author Pedro Vicente Gómez Sánchez.
  */
-class InfoTraceRenderer extends TraceRenderer{
+class InfoTraceRenderer extends TraceRenderer {
 }

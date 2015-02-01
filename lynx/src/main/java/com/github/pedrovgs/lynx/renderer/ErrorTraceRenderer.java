@@ -17,6 +17,8 @@
 package com.github.pedrovgs.lynx.renderer;
 
 /**
+ * TraceRenderer implementation used to render Trace objects with TraceLevel.ERROR trace level.
+ *
  * @author Pedro Vicente Gómez Sánchez.
  */
 class ErrorTraceRenderer extends TraceRenderer{

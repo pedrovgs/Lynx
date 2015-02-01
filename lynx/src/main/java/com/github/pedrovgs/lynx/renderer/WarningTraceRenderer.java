@@ -17,7 +17,9 @@
 package com.github.pedrovgs.lynx.renderer;
 
 /**
+ * TraceRenderer implementation used to render Trace objects with TraceLevel.WARNING trace level.
+ *
  * @author Pedro Vicente Gómez Sánchez.
  */
-class WarningTraceRenderer extends TraceRenderer{
+class WarningTraceRenderer extends TraceRenderer {
 }
