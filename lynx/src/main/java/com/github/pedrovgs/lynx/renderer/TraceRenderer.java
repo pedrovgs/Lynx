@@ -19,6 +19,8 @@ package com.github.pedrovgs.lynx.renderer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import com.github.pedrovgs.lynx.R;
 import com.github.pedrovgs.lynx.model.Trace;
 import com.pedrogomez.renderers.Renderer;
 
@@ -34,12 +36,14 @@ import com.pedrogomez.renderers.Renderer;
  */
 class TraceRenderer extends Renderer<Trace> {
 
+  private TextView tv_trace;
+
   @Override protected View inflate(LayoutInflater inflater, ViewGroup parent) {
-    return null;
+    return inflater.inflate(R.layout.trace_row, parent, true);
   }
 
   @Override protected void setUpView(View rootView) {
-
+    tv_trace = (TextView) rootView.findViewById(R.id.tv_trace);
   }
 
   @Override protected void hookListeners(View rootView) {
@@ -47,6 +51,7 @@ class TraceRenderer extends Renderer<Trace> {
   }
 
   @Override public void render() {
-
+    Trace trace = getContent();
+    tv_trace.setText(trace.getMessage());
   }
 }
