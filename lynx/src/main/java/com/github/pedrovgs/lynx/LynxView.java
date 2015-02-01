@@ -22,11 +22,14 @@ import android.view.LayoutInflater;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import com.github.pedrovgs.lynx.model.Lynx;
 import com.github.pedrovgs.lynx.model.Trace;
+import com.github.pedrovgs.lynx.presenter.LynxPresenter;
 import com.github.pedrovgs.lynx.renderer.TraceRendererBuilder;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 import com.pedrogomez.renderers.RendererAdapter;
 import com.pedrogomez.renderers.RendererBuilder;
+import java.util.List;
 
 /**
  * Main library view. This RelativeLayout extension shows all the information printed in your
@@ -35,8 +38,9 @@ import com.pedrogomez.renderers.RendererBuilder;
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-public class LynxView extends RelativeLayout {
+public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
+  private LynxPresenter presenter;
   private LynxConfig lynxConfig;
 
   private ListView lv_traces;
@@ -52,10 +56,22 @@ public class LynxView extends RelativeLayout {
 
   public LynxView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    if (attrs == null) {
+    if (attrs != null) {
       initializeConfiguration(attrs);
     }
+    lynxConfig = new LynxConfig();
     inflateView();
+    initializePresenter();
+  }
+
+  @Override protected void onAttachedToWindow() {
+    super.onAttachedToWindow();
+    presenter.resume();
+  }
+
+  @Override protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    presenter.pause();
   }
 
   public void setLynxConfig(LynxConfig lynxConfig) {
@@ -66,8 +82,15 @@ public class LynxView extends RelativeLayout {
     return lynxConfig;
   }
 
+  @Override public void showTraces(List<Trace> traces) {
+    adapter.clear();
+    adapter.addAll(traces);
+    adapter.notifyDataSetChanged();
+  }
+
   private void initializeConfiguration(AttributeSet attrs) {
-    //Obtain Lynx configuration
+    //Obtain Lynx configuration from attrs
+    lynxConfig = new LynxConfig();
   }
 
   private void inflateView() {
@@ -79,18 +102,17 @@ public class LynxView extends RelativeLayout {
     initializeRenderers();
   }
 
+  private void mapGui() {
+    lv_traces = (ListView) findViewById(R.id.lv_traces);
+  }
+
   private void initializeRenderers() {
     RendererBuilder<Trace> tracesRendererBuilder = new TraceRendererBuilder();
     Context context = getContext();
     LayoutInflater layoutInflater = LayoutInflater.from(context);
-    RendererAdapter<Trace> adapter =
-        new RendererAdapter<Trace>(layoutInflater, tracesRendererBuilder,
-            new ListAdapteeCollection<Trace>());
+    adapter = new RendererAdapter<Trace>(layoutInflater, tracesRendererBuilder,
+        new ListAdapteeCollection<Trace>());
     lv_traces.setAdapter(adapter);
-  }
-
-  private void mapGui() {
-    lv_traces = (ListView) findViewById(R.id.lv_traces);
   }
 
   private void hookListeners() {
@@ -104,5 +126,10 @@ public class LynxView extends RelativeLayout {
 
       }
     });
+  }
+
+  private void initializePresenter() {
+    Lynx lynx = new Lynx();
+    presenter = new LynxPresenter(lynx, this, lynxConfig.getMaxNumberOfTracesToShow());
   }
 }

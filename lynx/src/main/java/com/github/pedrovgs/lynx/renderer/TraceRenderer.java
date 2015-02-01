@@ -39,7 +39,7 @@ class TraceRenderer extends Renderer<Trace> {
   private TextView tv_trace;
 
   @Override protected View inflate(LayoutInflater inflater, ViewGroup parent) {
-    return inflater.inflate(R.layout.trace_row, parent, true);
+    return inflater.inflate(R.layout.trace_row, parent, false);
   }
 
   @Override protected void setUpView(View rootView) {

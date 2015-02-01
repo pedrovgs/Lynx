@@ -23,6 +23,8 @@
       android:id="@+id/lv_traces"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:dividerHeight="0dp"/>
+      android:dividerHeight="0dp"
+      android:divider="#00000000"
+      android:stackFromBottom="true"/>
 
 </merge>

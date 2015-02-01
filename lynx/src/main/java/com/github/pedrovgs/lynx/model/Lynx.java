@@ -53,11 +53,11 @@ public class Lynx {
   }
 
   public void registerListener(Listener lynxPresenter) {
-
+    listeners.add(lynxPresenter);
   }
 
   public void unregisterListener(Listener lynxPresenter) {
-
+    listeners.remove(lynxPresenter);
   }
 
   private void notifyListeners(List<Trace> fakeTraces) {
