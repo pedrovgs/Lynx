@@ -16,6 +16,7 @@
 
 package com.github.pedrovgs.lynx;
 
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import org.junit.Before;
@@ -31,6 +32,9 @@ import static org.junit.Assert.assertEquals;
  * @author Pedro Vicente Gómez Sánchez.
  */
 @Config(emulateSdk = 18) @RunWith(RobolectricTestRunner.class) public class LynxActivityTest {
+
+  private static final int ANY_MAX_NUMBER_OF_TRACES = 1000;
+  private static final String EXTRA_LYNX_CONFIG = "extra_lynx_config";
 
   private LynxActivity lynxActivity;
 
@@ -55,6 +59,18 @@ import static org.junit.Assert.assertEquals;
 
     assertEquals(ViewGroup.LayoutParams.MATCH_PARENT, lynxViewHeight);
     assertEquals(ViewGroup.LayoutParams.MATCH_PARENT, lynxViewWidth);
+  }
+
+  @Test public void shouldPassLynxConfigurationToLynxView() {
+    LynxConfig lynxConfig = new LynxConfig().withMaxNumberOfTracesToShow(ANY_MAX_NUMBER_OF_TRACES);
+    Bundle bundle = new Bundle();
+    bundle.putSerializable(EXTRA_LYNX_CONFIG, lynxConfig);
+
+    LynxActivity lynxActivity =
+        Robolectric.buildActivity(LynxActivity.class).create(bundle).resume().get();
+
+    LynxView lynxView = (LynxView) lynxActivity.findViewById(R.id.lynx_view);
+    assertEquals(lynxConfig, lynxView.getLynxConfig());
   }
 
   private LynxView getLynxView() {
