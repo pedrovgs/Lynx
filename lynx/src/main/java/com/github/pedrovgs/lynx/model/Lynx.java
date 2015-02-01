@@ -16,8 +16,8 @@
 
 package com.github.pedrovgs.lynx.model;
 
-import com.github.pedrovgs.lynx.presenter.LynxPresenter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -29,29 +29,44 @@ import java.util.List;
  */
 public class Lynx {
 
-  private final List<LynxListener> listeners;
+  private final List<Listener> listeners;
 
   public Lynx() {
-    listeners = new ArrayList<LynxListener>();
+    listeners = new ArrayList<Listener>();
   }
 
   public void startReading() {
+    List<Trace> fakeTraces = generateFakeTraces(2000);
+    notifyListeners(fakeTraces);
+  }
 
+  private List<Trace> generateFakeTraces(int numberOfTraces) {
+    List<Trace> traces = new LinkedList<Trace>();
+    for (int i = 0; i < numberOfTraces; i++) {
+      traces.add(new Trace(TraceLevel.VERBOSE, "Pedro Vicente es el puto amo " + i));
+    }
+    return traces;
   }
 
   public void stopReading() {
 
   }
 
-  public void registerListener(LynxPresenter lynxPresenter) {
+  public void registerListener(Listener lynxPresenter) {
 
   }
 
-  public void unregisterListener(LynxPresenter lynxPresenter) {
+  public void unregisterListener(Listener lynxPresenter) {
 
   }
 
-  public interface LynxListener {
+  private void notifyListeners(List<Trace> fakeTraces) {
+    for (Listener listener : listeners) {
+      listener.onNewTraces(fakeTraces);
+    }
+  }
+
+  public interface Listener {
 
     void onNewTraces(List<Trace> traces);
   }

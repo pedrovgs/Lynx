@@ -27,7 +27,7 @@ import java.util.List;
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-public class LynxPresenter implements Lynx.LynxListener {
+public class LynxPresenter implements Lynx.Listener {
 
   private final Lynx lynx;
   private final View view;
