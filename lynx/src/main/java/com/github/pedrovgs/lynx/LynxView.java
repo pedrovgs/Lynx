@@ -22,6 +22,11 @@ import android.view.LayoutInflater;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import com.github.pedrovgs.lynx.model.Trace;
+import com.github.pedrovgs.lynx.renderer.TraceRendererBuilder;
+import com.pedrogomez.renderers.ListAdapteeCollection;
+import com.pedrogomez.renderers.RendererAdapter;
+import com.pedrogomez.renderers.RendererBuilder;
 
 /**
  * Main library view. This RelativeLayout extension shows all the information printed in your
@@ -32,8 +37,10 @@ import android.widget.RelativeLayout;
  */
 public class LynxView extends RelativeLayout {
 
-  private ListView lv_traces;
   private LynxConfig lynxConfig;
+
+  private ListView lv_traces;
+  private RendererAdapter<Trace> adapter;
 
   public LynxView(Context context) {
     this(context, null);
@@ -55,7 +62,7 @@ public class LynxView extends RelativeLayout {
     this.lynxConfig = lynxConfig;
   }
 
-  public LynxConfig getLynxConfig(){
+  public LynxConfig getLynxConfig() {
     return lynxConfig;
   }
 
@@ -69,6 +76,17 @@ public class LynxView extends RelativeLayout {
     layoutInflater.inflate(R.layout.lynx_view, this);
     mapGui();
     hookListeners();
+    initializeRenderers();
+  }
+
+  private void initializeRenderers() {
+    RendererBuilder<Trace> tracesRendererBuilder = new TraceRendererBuilder();
+    Context context = getContext();
+    LayoutInflater layoutInflater = LayoutInflater.from(context);
+    RendererAdapter<Trace> adapter =
+        new RendererAdapter<Trace>(layoutInflater, tracesRendererBuilder,
+            new ListAdapteeCollection<Trace>());
+    lv_traces.setAdapter(adapter);
   }
 
   private void mapGui() {
