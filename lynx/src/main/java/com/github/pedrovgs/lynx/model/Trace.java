@@ -38,4 +38,29 @@ public class Trace {
   public String getMessage() {
     return message;
   }
+
+  @Override public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Trace)) {
+      return false;
+    }
+
+    Trace trace = (Trace) o;
+    return level == trace.level && message.equals(trace.message);
+  }
+
+  @Override public int hashCode() {
+    int result = level.hashCode();
+    result = 31 * result + message.hashCode();
+    return result;
+  }
+
+  @Override public String toString() {
+    return "Trace{" +
+        "level=" + level +
+        ", message='" + message + '\'' +
+        '}';
+  }
 }
