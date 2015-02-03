@@ -34,6 +34,11 @@ public class LynxConfig implements Serializable {
   }
 
   public LynxConfig withMaxNumberOfTracesToShow(int maxNumberOfTracesToShow) {
+    if (maxNumberOfTracesToShow <= 0) {
+      throw new IllegalArgumentException(
+          "You can't use a max number of traces equals or lower than zero.");
+    }
+
     this.maxNumberOfTracesToShow = maxNumberOfTracesToShow;
     return this;
   }
