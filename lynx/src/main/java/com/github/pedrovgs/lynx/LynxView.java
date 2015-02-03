@@ -56,10 +56,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   public LynxView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    if (attrs != null) {
-      initializeConfiguration(attrs);
-    }
-    lynxConfig = new LynxConfig();
+    initializeConfiguration(attrs);
     inflateView();
     initializePresenter();
   }
@@ -75,7 +72,16 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   }
 
   public void setLynxConfig(LynxConfig lynxConfig) {
+    validateLynxConfig(lynxConfig);
     this.lynxConfig = lynxConfig;
+    presenter.setLynxConfig(lynxConfig);
+  }
+
+  private void validateLynxConfig(LynxConfig lynxConfig) {
+    if (lynxConfig == null) {
+      throw new IllegalArgumentException(
+          "You can't configure Lynx with a null LynxConfig instance.");
+    }
   }
 
   public LynxConfig getLynxConfig() {
@@ -89,8 +95,10 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   }
 
   private void initializeConfiguration(AttributeSet attrs) {
-    //Obtain Lynx configuration from attrs
     lynxConfig = new LynxConfig();
+    if (attrs != null) {
+      //Initialize lynx config here
+    }
   }
 
   private void inflateView() {
