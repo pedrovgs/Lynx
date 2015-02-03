@@ -16,6 +16,7 @@
 
 package com.github.pedrovgs.lynx.presenter;
 
+import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.model.Lynx;
 import com.github.pedrovgs.lynx.model.Trace;
 import java.util.List;
@@ -40,6 +41,11 @@ public class LynxPresenter implements Lynx.Listener {
     this.traceBuffer = new TraceBuffer(maxNumberOfTracesToShow);
   }
 
+  public void setLynxConfig(LynxConfig lynxConfig) {
+    traceBuffer.setBufferSize(lynxConfig.getMaxNumberOfTracesToShow());
+    refreshTraces();
+  }
+
   public void resume() {
     lynx.registerListener(this);
     lynx.startReading();
@@ -54,6 +60,10 @@ public class LynxPresenter implements Lynx.Listener {
     updateTraceBuffer(traces);
     List<Trace> tracesToNotify = getCurrentTraces();
     view.showTraces(tracesToNotify);
+  }
+
+  private void refreshTraces() {
+    onNewTraces(traceBuffer.getTraces());
   }
 
   private void updateTraceBuffer(List<Trace> traces) {
