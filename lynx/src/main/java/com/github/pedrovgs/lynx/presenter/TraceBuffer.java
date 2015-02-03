@@ -27,7 +27,7 @@ import java.util.List;
  */
 class TraceBuffer {
 
-  private final int bufferSize;
+  private int bufferSize;
   private final List<Trace> traces;
 
   TraceBuffer(int bufferSize) {
@@ -36,19 +36,31 @@ class TraceBuffer {
   }
 
   /**
+   * Configure the max number of traces to keep inside the buffer
+   */
+  void setBufferSize(int bufferSize) {
+    this.bufferSize = bufferSize;
+    removeExceededTracesIfNeeded();
+  }
+
+  /**
    * Add a list of traces to the buffer, if the buffer is full your new traces will be added and
    * the previous one will be removed.
    */
-  public void add(List<Trace> traces) {
+  void add(List<Trace> traces) {
     this.traces.addAll(traces);
+    removeExceededTracesIfNeeded();
+  }
+
+  List<Trace> getTraces() {
+    return traces;
+  }
+
+  private void removeExceededTracesIfNeeded() {
     int tracesToDiscard = getNumberOfTracesToDiscard();
     if (tracesToDiscard > 0) {
       discardTraces(tracesToDiscard);
     }
-  }
-
-  public List<Trace> getTraces() {
-    return traces;
   }
 
   private int getNumberOfTracesToDiscard() {
