@@ -61,6 +61,16 @@ import static org.junit.Assert.assertEquals;
     assertEquals(ViewGroup.LayoutParams.MATCH_PARENT, lynxViewWidth);
   }
 
+  @Test
+  public void shouldConfigureLynxViewWithTheDefaultLynxConfigObjectIfThereIsNoOtherConfiguration() {
+    LynxView lynxView = getLynxView();
+
+    LynxConfig lynxConfig = lynxView.getLynxConfig();
+
+    LynxConfig defaultLynxConfig = new LynxConfig();
+    assertEquals(defaultLynxConfig, lynxConfig);
+  }
+
   @Test public void shouldPassLynxConfigurationToLynxView() {
     LynxConfig lynxConfig = new LynxConfig().withMaxNumberOfTracesToShow(ANY_MAX_NUMBER_OF_TRACES);
     Bundle bundle = new Bundle();
