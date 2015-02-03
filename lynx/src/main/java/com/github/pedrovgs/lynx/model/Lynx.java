@@ -16,6 +16,7 @@
 
 package com.github.pedrovgs.lynx.model;
 
+import com.github.pedrovgs.lynx.LynxConfig;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,9 +31,18 @@ import java.util.List;
 public class Lynx {
 
   private final List<Listener> listeners;
+  private LynxConfig lynxConfig = new LynxConfig();
 
   public Lynx() {
     listeners = new ArrayList<Listener>();
+  }
+
+  public void setConfig(LynxConfig lynxConfig) {
+    this.lynxConfig = new LynxConfig();
+  }
+
+  public LynxConfig getLynxConfig() {
+    return lynxConfig;
   }
 
   public void startReading() {

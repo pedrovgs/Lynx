@@ -36,14 +36,17 @@ public class LynxPresenter implements Lynx.Listener {
 
   public LynxPresenter(Lynx lynx, View view, int maxNumberOfTracesToShow) {
     validateNumberOfTracesConfiguration(maxNumberOfTracesToShow);
+
     this.lynx = lynx;
     this.view = view;
     this.traceBuffer = new TraceBuffer(maxNumberOfTracesToShow);
   }
 
   public void setLynxConfig(LynxConfig lynxConfig) {
-    traceBuffer.setBufferSize(lynxConfig.getMaxNumberOfTracesToShow());
-    refreshTraces();
+    validateLynxConfig(lynxConfig);
+
+    updateBufferConfig(lynxConfig);
+    updateLynxConfig(lynxConfig);
   }
 
   public void resume() {
@@ -62,8 +65,17 @@ public class LynxPresenter implements Lynx.Listener {
     view.showTraces(tracesToNotify);
   }
 
+  private void updateBufferConfig(LynxConfig lynxConfig) {
+    traceBuffer.setBufferSize(lynxConfig.getMaxNumberOfTracesToShow());
+    refreshTraces();
+  }
+
   private void refreshTraces() {
     onNewTraces(traceBuffer.getTraces());
+  }
+
+  private void updateLynxConfig(LynxConfig lynxConfig) {
+    lynx.setConfig(lynxConfig);
   }
 
   private void updateTraceBuffer(List<Trace> traces) {
@@ -78,6 +90,13 @@ public class LynxPresenter implements Lynx.Listener {
     if (maxNumberOfTracesToShow <= 0) {
       throw new IllegalArgumentException(
           "You can't pass a zero or negative number of traces to show.");
+    }
+  }
+
+  private void validateLynxConfig(LynxConfig lynxConfig) {
+    if (lynxConfig == null) {
+      throw new IllegalArgumentException(
+          "You can't use a null instance of LynxConfig as configuration.");
     }
   }
 

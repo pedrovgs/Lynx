@@ -16,6 +16,7 @@
 
 package com.github.pedrovgs.lynx.presenter;
 
+import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.model.Lynx;
 import com.github.pedrovgs.lynx.model.Trace;
 import com.github.pedrovgs.lynx.model.TraceLevel;
@@ -82,6 +83,18 @@ public class LynxPresenterTest {
     presenter.onNewTraces(traces);
 
     verify(view).showTraces(eq(traces));
+  }
+
+  @Test(expected = IllegalArgumentException.class) public void shouldNotAcceptNullLynxConfigs() {
+    presenter.setLynxConfig(null);
+  }
+
+  @Test public void shouldUpdateLynxConfigOnSetLynxConfig() {
+    LynxConfig lynxConfig = new LynxConfig();
+
+    presenter.setLynxConfig(lynxConfig);
+
+    verify(lynx).setConfig(lynxConfig);
   }
 
   private List<Trace> generateTraces(int numberOfTraces) {
