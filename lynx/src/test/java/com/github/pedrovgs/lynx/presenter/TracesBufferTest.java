@@ -84,12 +84,33 @@ public class TracesBufferTest {
     assertEquals(expectedTraces, traceBuffer.getTraces());
   }
 
+  @Test public void shouldKeepTracesIfNewBufferSizeIsBiggerThanThePreviousOne() {
+    List<Trace> traces = generateTraces(20);
+
+    traceBuffer.add(traces);
+    int newBufferSize = ANY_BUFFER_SIZE * 2;
+    traceBuffer.setBufferSize(newBufferSize);
+
+    assertEquals(traces, traceBuffer.getTraces());
+  }
+
+  @Test public void shouldDiscardExceededTracesOnBufferSizedChangedToAMinValue() {
+    List<Trace> traces = generateTraces(20);
+
+    traceBuffer.add(traces);
+    int newBufferSize = ANY_BUFFER_SIZE / 2;
+    traceBuffer.setBufferSize(newBufferSize);
+
+    List<Trace> expectedTraces = generateTraces(10, 20);
+    assertEquals(newBufferSize, traceBuffer.getTraces().size());
+    assertEquals(expectedTraces, traceBuffer.getTraces());
+  }
+
   private List<Trace> generateTraces(int numberOfTraces) {
     return generateTraces(0, numberOfTraces);
   }
 
   private List<Trace> generateTraces(int initialValue, int finalValue) {
-    int size = finalValue - initialValue;
     List<Trace> traces = new LinkedList<Trace>();
     for (int i = initialValue; i < finalValue; i++) {
       Trace generatedTrace = new Trace(TraceLevel.DEBUG, String.valueOf(i));
