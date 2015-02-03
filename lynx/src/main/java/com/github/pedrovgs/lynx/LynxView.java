@@ -57,7 +57,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   public LynxView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
     initializeConfiguration(attrs);
-    inflateView();
+    initializeView();
     initializePresenter();
   }
 
@@ -77,13 +77,6 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     presenter.setLynxConfig(lynxConfig);
   }
 
-  private void validateLynxConfig(LynxConfig lynxConfig) {
-    if (lynxConfig == null) {
-      throw new IllegalArgumentException(
-          "You can't configure Lynx with a null LynxConfig instance.");
-    }
-  }
-
   public LynxConfig getLynxConfig() {
     return lynxConfig;
   }
@@ -101,7 +94,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     }
   }
 
-  private void inflateView() {
+  private void initializeView() {
     Context context = getContext();
     LayoutInflater layoutInflater = LayoutInflater.from(context);
     layoutInflater.inflate(R.layout.lynx_view, this);
@@ -139,5 +132,12 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   private void initializePresenter() {
     Lynx lynx = new Lynx();
     presenter = new LynxPresenter(lynx, this, lynxConfig.getMaxNumberOfTracesToShow());
+  }
+
+  private void validateLynxConfig(LynxConfig lynxConfig) {
+    if (lynxConfig == null) {
+      throw new IllegalArgumentException(
+          "You can't configure Lynx with a null LynxConfig instance.");
+    }
   }
 }
