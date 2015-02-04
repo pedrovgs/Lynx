@@ -30,6 +30,8 @@ import java.util.List;
  */
 public class LynxPresenter implements Lynx.Listener {
 
+  private static final int MIN_VISIBLE_POSITION_TO_ENABLE_AUTO_SCROLL = 3;
+
   private final Lynx lynx;
   private final View view;
   private final TraceBuffer traceBuffer;
@@ -60,9 +62,17 @@ public class LynxPresenter implements Lynx.Listener {
   }
 
   @Override public void onNewTraces(List<Trace> traces) {
-    updateTraceBuffer(traces);
+    int tracesRemoved = updateTraceBuffer(traces);
     List<Trace> tracesToNotify = getCurrentTraces();
-    view.showTraces(tracesToNotify);
+    view.showTraces(tracesToNotify, tracesRemoved);
+  }
+
+  public void onScrollToPosition(int lastVisiblePosition) {
+    if (shouldDisableAutoScroll(lastVisiblePosition)) {
+      view.disableAutoScroll();
+    } else {
+      view.enableAutoScroll();
+    }
   }
 
   private void updateBufferConfig(LynxConfig lynxConfig) {
@@ -78,8 +88,8 @@ public class LynxPresenter implements Lynx.Listener {
     lynx.setConfig(lynxConfig);
   }
 
-  private void updateTraceBuffer(List<Trace> traces) {
-    traceBuffer.add(traces);
+  private int updateTraceBuffer(List<Trace> traces) {
+    return traceBuffer.add(traces);
   }
 
   private List<Trace> getCurrentTraces() {
@@ -100,8 +110,17 @@ public class LynxPresenter implements Lynx.Listener {
     }
   }
 
+  private boolean shouldDisableAutoScroll(int lastVisiblePosition) {
+    int positionOffset = traceBuffer.getCurrentNumberOfTraces() - lastVisiblePosition;
+    return positionOffset >= MIN_VISIBLE_POSITION_TO_ENABLE_AUTO_SCROLL;
+  }
+
   public interface View {
 
-    void showTraces(List<Trace> traces);
+    void showTraces(List<Trace> traces, int removedTraces);
+
+    void disableAutoScroll();
+
+    void enableAutoScroll();
   }
 }
