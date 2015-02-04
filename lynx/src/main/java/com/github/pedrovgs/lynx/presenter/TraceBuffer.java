@@ -47,30 +47,37 @@ class TraceBuffer {
    * Add a list of traces to the buffer, if the buffer is full your new traces will be added and
    * the previous one will be removed.
    */
-  void add(List<Trace> traces) {
+  int add(List<Trace> traces) {
     this.traces.addAll(traces);
-    removeExceededTracesIfNeeded();
+    return removeExceededTracesIfNeeded();
   }
 
   List<Trace> getTraces() {
     return traces;
   }
 
-  private void removeExceededTracesIfNeeded() {
+  private int removeExceededTracesIfNeeded() {
     int tracesToDiscard = getNumberOfTracesToDiscard();
     if (tracesToDiscard > 0) {
       discardTraces(tracesToDiscard);
     }
+    return tracesToDiscard;
   }
 
   private int getNumberOfTracesToDiscard() {
     int currentTracesSize = this.traces.size();
-    return currentTracesSize - bufferSize;
+    int tracesToDiscard = currentTracesSize - bufferSize;
+    tracesToDiscard = tracesToDiscard < 0 ? 0 : tracesToDiscard;
+    return tracesToDiscard;
   }
 
   private void discardTraces(int tracesToDiscard) {
     for (int i = 0; i < tracesToDiscard; i++) {
       traces.remove(0);
     }
+  }
+
+  public int getCurrentNumberOfTraces() {
+    return traces.size();
   }
 }
