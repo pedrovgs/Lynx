@@ -82,7 +82,7 @@ public class LynxPresenterTest {
     presenter.resume();
     presenter.onNewTraces(traces);
 
-    verify(view).showTraces(eq(traces));
+    verify(view).showTraces(eq(traces), eq(0));
   }
 
   @Test(expected = IllegalArgumentException.class) public void shouldNotAcceptNullLynxConfigs() {
@@ -95,6 +95,27 @@ public class LynxPresenterTest {
     presenter.setLynxConfig(lynxConfig);
 
     verify(lynx).setConfig(lynxConfig);
+  }
+
+  @Test
+  public void shouldDisableAutoScrollOnScrollCalledWithLastVisiblePositionDifferentFromThreeLastPositions() {
+    List<Trace> traces = generateTraces(10);
+
+    presenter.resume();
+    presenter.onNewTraces(traces);
+    presenter.onScrollToPosition(5);
+
+    verify(view).disableAutoScroll();
+  }
+
+  @Test public void shouldEnableAutoScrollOnScrollCalledWithOneOfTheLastThreePositions() {
+    List<Trace> traces = generateTraces(10);
+
+    presenter.resume();
+    presenter.onNewTraces(traces);
+    presenter.onScrollToPosition(9);
+
+    verify(view).enableAutoScroll();
   }
 
   private List<Trace> generateTraces(int numberOfTraces) {
