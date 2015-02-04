@@ -106,6 +106,25 @@ public class TracesBufferTest {
     assertEquals(expectedTraces, traceBuffer.getTraces());
   }
 
+  @Test public void shouldReturnZeroIfThereAreNoRemovedTracesOnAdd() {
+    List<Trace> traces = generateTraces(5);
+
+    int removedTraces = traceBuffer.add(traces);
+
+    assertEquals(0, removedTraces);
+  }
+
+  @Test public void shouldReturnNumberOfTracesRemovedOnAdd() {
+    TraceBuffer traceBuffer = new TraceBuffer(20);
+    List<Trace> traces = generateTraces(20);
+
+    traceBuffer.add(traces);
+    traces = generateTraces(20);
+    int removedTraces = traceBuffer.add(traces);
+
+    assertEquals(20, removedTraces);
+  }
+
   private List<Trace> generateTraces(int numberOfTraces) {
     return generateTraces(0, numberOfTraces);
   }
