@@ -45,6 +45,8 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   private ListView lv_traces;
   private RendererAdapter<Trace> adapter;
+  private int transcriptMode;
+  private int lastFirstVisibleItem = -1;
 
   public LynxView(Context context) {
     this(context, null);
@@ -57,8 +59,8 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   public LynxView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
     initializeConfiguration(attrs);
-    initializeView();
     initializePresenter();
+    initializeView();
   }
 
   @Override protected void onAttachedToWindow() {
@@ -81,10 +83,21 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     return lynxConfig;
   }
 
-  @Override public void showTraces(List<Trace> traces) {
+  @Override public void showTraces(List<Trace> traces, int removedTraces) {
     adapter.clear();
     adapter.addAll(traces);
+    disableTranscriptMode();
     adapter.notifyDataSetChanged();
+    recoverTranscriptMode();
+    updateScrollPosition(removedTraces);
+  }
+
+  @Override public void disableAutoScroll() {
+    transcriptMode = ListView.TRANSCRIPT_MODE_DISABLED;
+  }
+
+  @Override public void enableAutoScroll() {
+    transcriptMode = ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL;
   }
 
   private void initializeConfiguration(AttributeSet attrs) {
@@ -99,8 +112,8 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     LayoutInflater layoutInflater = LayoutInflater.from(context);
     layoutInflater.inflate(R.layout.lynx_view, this);
     mapGui();
-    hookListeners();
     initializeRenderers();
+    hookListeners();
   }
 
   private void mapGui() {
@@ -124,7 +137,9 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
       @Override public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
           int totalItemCount) {
-
+        lastFirstVisibleItem = firstVisibleItem;
+        int lastVisiblePosition = firstVisibleItem + visibleItemCount;
+        presenter.onScrollToPosition(lastVisiblePosition);
       }
     });
   }
@@ -139,5 +154,28 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
       throw new IllegalArgumentException(
           "You can't configure Lynx with a null LynxConfig instance.");
     }
+  }
+
+  private void disableTranscriptMode() {
+    lv_traces.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_DISABLED);
+  }
+
+  private void recoverTranscriptMode() {
+    lv_traces.setTranscriptMode(transcriptMode);
+  }
+
+  private void updateScrollPosition(int removedTraces) {
+    if (shouldUpdateScrollPosition()) {
+      int scrollPosition = lastFirstVisibleItem - removedTraces;
+      if (scrollPosition >= 0 && lv_traces.getTranscriptMode() == ListView.TRANSCRIPT_MODE_NORMAL) {
+        lv_traces.setSelection(scrollPosition);
+      }
+    } else {
+      lv_traces.setSelection(0);
+    }
+  }
+
+  private boolean shouldUpdateScrollPosition() {
+    return lastFirstVisibleItem >= 0;
   }
 }

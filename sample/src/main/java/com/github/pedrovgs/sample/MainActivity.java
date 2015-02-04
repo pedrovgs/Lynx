@@ -27,7 +27,7 @@ import com.github.pedrovgs.lynx.LynxConfig;
 
 public class MainActivity extends ActionBarActivity {
 
-  private static final int MAX_TRACES_TO_SHOW = 200;
+  private static final int MAX_TRACES_TO_SHOW = 3000;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
