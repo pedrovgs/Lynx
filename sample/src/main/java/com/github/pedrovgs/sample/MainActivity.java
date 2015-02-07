@@ -20,14 +20,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.github.pedrovgs.lynx.LynxActivity;
 import com.github.pedrovgs.lynx.LynxConfig;
+import java.util.Random;
 
 public class MainActivity extends ActionBarActivity {
 
   private static final int MAX_TRACES_TO_SHOW = 3000;
+  private Thread logGeneratorThread;
+  private boolean continueReading = true;
+  private int traceCounter = 0;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -44,5 +49,47 @@ public class MainActivity extends ActionBarActivity {
         startActivity(lynxActivityIntent);
       }
     });
+
+    generateFiveRandomTracesPerSecond();
+  }
+
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    continueReading = false;
+  }
+
+  private void generateFiveRandomTracesPerSecond() {
+    final Random random = new Random();
+    logGeneratorThread = new Thread(new Runnable() {
+      @Override public void run() {
+        while (continueReading) {
+          int traceLevel = random.nextInt(6);
+          switch (traceLevel) {
+            case 0:
+              Log.v("Lynx", traceCounter + " - Verbose trace generated automatically");
+              break;
+            case 2:
+              Log.d("Lynx", traceCounter + " - Debug trace generated automatically");
+              break;
+            case 3:
+              Log.w("Lynx", traceCounter + " - Warning trace generated automatically");
+              break;
+            case 4:
+              Log.e("Lynx", traceCounter + " - Error trace generated automatically");
+              break;
+            case 5:
+              Log.wtf("Lynx", traceCounter + " - WTF trace generated automatically");
+              break;
+          }
+          traceCounter++;
+          try {
+            Thread.sleep(200);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    });
+    logGeneratorThread.start();
   }
 }
