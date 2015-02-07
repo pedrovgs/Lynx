@@ -17,7 +17,8 @@
 package com.github.pedrovgs.lynx.model;
 
 import com.github.pedrovgs.lynx.LynxConfig;
-import java.util.ArrayList;
+import com.github.pedrovgs.lynx.exception.IllegalTraceException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -29,27 +30,45 @@ import java.util.List;
  */
 public class Lynx {
 
+  private static final int MIN_NOTIFICATION_TIME_FREQUENCY = 10;
+
+  private final Logcat logcat;
+  private final MainThread mainThread;
+  private final TimeProvider timeProvider;
+
   private final List<Listener> listeners;
+  private final List<Trace> tracesToNotify;
+  private long lastNotificationTime;
   private LynxConfig lynxConfig = new LynxConfig();
 
-  public Lynx() {
-    listeners = new ArrayList<Listener>();
+  public Lynx(Logcat logcat, MainThread mainThread, TimeProvider timeProvider) {
+    this.listeners = new LinkedList<Listener>();
+    this.tracesToNotify = new LinkedList<Trace>();
+    this.logcat = logcat;
+    this.mainThread = mainThread;
+    this.timeProvider = timeProvider;
   }
 
   public void setConfig(LynxConfig lynxConfig) {
     this.lynxConfig = new LynxConfig();
   }
 
-  public LynxConfig getLynxConfig() {
-    return lynxConfig;
-  }
-
   public void startReading() {
-
+    logcat.setListener(new Logcat.Listener() {
+      @Override public void onTraceRead(String logcatTrace) {
+        try {
+          addTraceToTheBuffer(logcatTrace);
+        } catch (IllegalTraceException e) {
+          return;
+        }
+        notifyNewTraces();
+      }
+    });
+    logcat.start();
   }
 
   public void stopReading() {
-
+    logcat.stopReading();
   }
 
   public void registerListener(Listener lynxPresenter) {
@@ -60,10 +79,34 @@ public class Lynx {
     listeners.remove(lynxPresenter);
   }
 
-  private void notifyListeners(List<Trace> fakeTraces) {
-    for (Listener listener : listeners) {
-      listener.onNewTraces(fakeTraces);
+  private void addTraceToTheBuffer(String logcatTrace) throws IllegalTraceException {
+    Trace trace = Trace.fromString(logcatTrace);
+    tracesToNotify.add(trace);
+  }
+
+  private void notifyNewTraces() {
+    if (shouldNotifyListeners()) {
+      final List<Trace> traces = new LinkedList<Trace>(tracesToNotify);
+      tracesToNotify.clear();
+      notifyListeners(traces);
     }
+  }
+
+  private boolean shouldNotifyListeners() {
+    long now = timeProvider.getCurrentTimeMillis();
+    long timeFromLastNotification = now - lastNotificationTime;
+    return timeFromLastNotification > MIN_NOTIFICATION_TIME_FREQUENCY;
+  }
+
+  private void notifyListeners(final List<Trace> traces) {
+    mainThread.post(new Runnable() {
+      @Override public void run() {
+        for (Listener listener : listeners) {
+          listener.onNewTraces(traces);
+        }
+      }
+    });
+    lastNotificationTime = timeProvider.getCurrentTimeMillis();
   }
 
   public interface Listener {
