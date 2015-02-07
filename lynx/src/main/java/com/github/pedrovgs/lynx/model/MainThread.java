@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.pedrovgs.lynx;
+package com.github.pedrovgs.lynx.model;
 
 import android.os.Handler;
 import android.os.Looper;
