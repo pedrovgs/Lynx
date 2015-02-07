@@ -22,7 +22,10 @@ import android.view.LayoutInflater;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import com.github.pedrovgs.lynx.model.Logcat;
 import com.github.pedrovgs.lynx.model.Lynx;
+import com.github.pedrovgs.lynx.model.AndroidMainThread;
+import com.github.pedrovgs.lynx.model.TimeProvider;
 import com.github.pedrovgs.lynx.model.Trace;
 import com.github.pedrovgs.lynx.presenter.LynxPresenter;
 import com.github.pedrovgs.lynx.renderer.TraceRendererBuilder;
@@ -145,7 +148,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   }
 
   private void initializePresenter() {
-    Lynx lynx = new Lynx();
+    Lynx lynx = new Lynx(new Logcat(), new AndroidMainThread(), new TimeProvider());
     presenter = new LynxPresenter(lynx, this, lynxConfig.getMaxNumberOfTracesToShow());
   }
 

@@ -17,12 +17,15 @@
 package com.github.pedrovgs.lynx.model;
 
 /**
- * Abstraction created to represent the application main thread. This class is used to send
- * messages from a background thread to the UI thread.
+ * MainThread extension created for testing purposes. This implementation is going to execute the
+ * Runnable passed as argument directly instead of post the Runnable directly to the main Looper as
+ * the original implementation does.
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-public interface MainThread {
+public class FakeMainThread implements MainThread {
 
-  public void post(Runnable runnable);
+  @Override public void post(Runnable runnable) {
+    runnable.run();
+  }
 }

@@ -16,13 +16,23 @@
 
 package com.github.pedrovgs.lynx.model;
 
+import android.os.Handler;
+import android.os.Looper;
+
 /**
- * Abstraction created to represent the application main thread. This class is used to send
- * messages from a background thread to the UI thread.
+ * MainThread implementation based on Android Handler class.
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-public interface MainThread {
+public class AndroidMainThread implements MainThread {
 
-  public void post(Runnable runnable);
+  private final Handler handler;
+
+  public AndroidMainThread() {
+    handler = new Handler(Looper.getMainLooper());
+  }
+
+  public void post(Runnable runnable) {
+    handler.post(runnable);
+  }
 }
