@@ -35,9 +35,9 @@ import static org.mockito.Mockito.when;
 public class LynxTest {
 
   private static final long NOW = 100;
-  private static final String ANY_DEBUG_TRACE = "D/Any debug trace";
-  private static final String ANY_ERROR_TRACE = "E/Any error trace";
-  private static final String ANY_WTF_TRACE = "F/Any WTF trace";
+  private static final String ANY_DEBUG_TRACE = "02-07 17:45:33.014 D/Any debug trace";
+  private static final String ANY_ERROR_TRACE = "02-07 17:45:33.014 E/Any error trace";
+  private static final String ANY_WTF_TRACE = "02-07 17:45:33.014 F/Any WTF trace";
 
   private Lynx lynx;
 
