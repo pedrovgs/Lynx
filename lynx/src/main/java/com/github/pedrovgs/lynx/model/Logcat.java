@@ -41,7 +41,7 @@ public class Logcat extends Thread {
   @Override public void run() {
     super.run();
     try {
-      process = Runtime.getRuntime().exec("logcat");
+      process = Runtime.getRuntime().exec("logcat -v time");
     } catch (IOException e) {
       Log.e(LOGTAG, "IOException executing logcat command.", e);
     }
