@@ -22,5 +22,5 @@ package com.github.pedrovgs.lynx.model;
  * @author Pedro Vicente Gómez Sánchez.
  */
 public enum TraceLevel {
-  VERBOSE, DEBUG, INFO, WARNING, ERROR, ASSERT
+  VERBOSE, DEBUG, INFO, WARNING, ERROR, ASSERT, WTF
 }
