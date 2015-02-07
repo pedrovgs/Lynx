@@ -16,6 +16,8 @@
 
 package com.github.pedrovgs.lynx.model;
 
+import com.github.pedrovgs.lynx.exception.IllegalTraceException;
+
 /**
  * Logcat trace representation. All traces contains a message and a TraceLevel assigned.
  *
@@ -23,7 +25,25 @@ package com.github.pedrovgs.lynx.model;
  */
 public class Trace {
 
+  private static final char TRACE_LEVEL_SEPARATOR = '/';
+
+  /**
+   * Factory method used to create a Trace instance from a String. The format of the input string
+   * should be something like: "D/LogMessage"
+   */
+  public static Trace fromString(String logcatTrace) throws IllegalTraceException {
+    if (logcatTrace == null
+        || logcatTrace.length() < 2
+        || logcatTrace.charAt(1) != TRACE_LEVEL_SEPARATOR) {
+      throw new IllegalTraceException(
+          "You are trying to create a Trace object from a invalid String. Your trace should be something like: 'D/TraceMessage'.");
+    }
+    TraceLevel level = getTraceLevel(logcatTrace.charAt(0));
+    return new Trace(level, logcatTrace.substring(2));
+  }
+
   private final TraceLevel level;
+
   private final String message;
 
   public Trace(TraceLevel level, String message) {
@@ -37,6 +57,33 @@ public class Trace {
 
   public String getMessage() {
     return message;
+  }
+
+  private static TraceLevel getTraceLevel(char traceString) {
+    TraceLevel traceLevel;
+    switch (traceString) {
+      case 'V':
+        traceLevel = TraceLevel.VERBOSE;
+        break;
+      case 'A':
+        traceLevel = TraceLevel.ASSERT;
+        break;
+      case 'I':
+        traceLevel = TraceLevel.INFO;
+        break;
+      case 'W':
+        traceLevel = TraceLevel.WARNING;
+        break;
+      case 'E':
+        traceLevel = TraceLevel.ERROR;
+        break;
+      case 'F':
+        traceLevel = TraceLevel.WTF;
+        break;
+      default:
+        traceLevel = TraceLevel.DEBUG;
+    }
+    return traceLevel;
   }
 
   @Override public boolean equals(Object o) {
