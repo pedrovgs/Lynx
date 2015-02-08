@@ -23,8 +23,11 @@
       android:id="@+id/lv_traces"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:dividerHeight="0dp"
-      android:divider="#00000000"
+      android:dividerHeight="@dimen/divider_height"
+      android:paddingLeft="@dimen/trace_padding"
+      android:paddingRight="@dimen/trace_padding"
+      android:divider="@color/white"
+      android:background="@color/black"
       android:stackFromBottom="true"/>
 
 </merge>
