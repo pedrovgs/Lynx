@@ -27,7 +27,8 @@ import java.io.Serializable;
 public class LynxConfig implements Serializable {
   private static final long serialVersionUID = 293939299388293L;
 
-  private int maxNumberOfTracesToShow = 1000;
+  private int maxNumberOfTracesToShow = 2500;
+  private String filter;
 
   public LynxConfig() {
 
@@ -43,8 +44,25 @@ public class LynxConfig implements Serializable {
     return this;
   }
 
+  public LynxConfig withFilter(String filter) {
+    if (filter == null) {
+      throw new IllegalArgumentException("You can't use a null instance as filter.");
+    }
+
+    this.filter = filter;
+    return this;
+  }
+
   public int getMaxNumberOfTracesToShow() {
     return maxNumberOfTracesToShow;
+  }
+
+  public String getFilter() {
+    return filter;
+  }
+
+  public boolean hasFilter() {
+    return filter != null;
   }
 
   @Override public boolean equals(Object o) {
@@ -54,17 +72,21 @@ public class LynxConfig implements Serializable {
     LynxConfig that = (LynxConfig) o;
 
     if (maxNumberOfTracesToShow != that.maxNumberOfTracesToShow) return false;
+    if (filter != null ? !filter.equals(that.filter) : that.filter != null) return false;
 
     return true;
   }
 
   @Override public int hashCode() {
-    return maxNumberOfTracesToShow;
+    int result = maxNumberOfTracesToShow;
+    result = 31 * result + (filter != null ? filter.hashCode() : 0);
+    return result;
   }
 
   @Override public String toString() {
     return "LynxConfig{" +
         "maxNumberOfTracesToShow=" + maxNumberOfTracesToShow +
+        ", filter='" + filter + '\'' +
         '}';
   }
 }
