@@ -43,6 +43,7 @@ public class TraceRendererBuilder extends RendererBuilder<Trace> {
     prototypes.add(new InfoTraceRenderer());
     prototypes.add(new WarningTraceRenderer());
     prototypes.add(new ErrorTraceRenderer());
+    prototypes.add(new WtfTraceRenderer());
     setPrototypes(prototypes);
   }
 
@@ -64,6 +65,9 @@ public class TraceRendererBuilder extends RendererBuilder<Trace> {
         break;
       case ERROR:
         rendererClass = ErrorTraceRenderer.class;
+        break;
+      case WTF:
+        rendererClass = WtfTraceRenderer.class;
         break;
       default:
         rendererClass = TraceRenderer.class;
