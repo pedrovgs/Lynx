@@ -30,6 +30,8 @@ import java.util.Random;
 public class MainActivity extends ActionBarActivity {
 
   private static final int MAX_TRACES_TO_SHOW = 3000;
+  private static final String LYNX_FILTER = "Lynx";
+
   private Thread logGeneratorThread;
   private boolean continueReading = true;
   private int traceCounter = 0;
@@ -42,9 +44,10 @@ public class MainActivity extends ActionBarActivity {
     bt_show_logcat_view.setOnClickListener(new View.OnClickListener() {
 
       @Override public void onClick(View v) {
+        LynxConfig lynxConfig = new LynxConfig().withMaxNumberOfTracesToShow(MAX_TRACES_TO_SHOW)
+            .withFilter(LYNX_FILTER);
+
         Context context = MainActivity.this;
-        LynxConfig lynxConfig = new LynxConfig();
-        lynxConfig.withMaxNumberOfTracesToShow(MAX_TRACES_TO_SHOW);
         Intent lynxActivityIntent = LynxActivity.getIntent(context, lynxConfig);
         startActivity(lynxActivityIntent);
       }
@@ -66,22 +69,22 @@ public class MainActivity extends ActionBarActivity {
           int traceLevel = random.nextInt(7);
           switch (traceLevel) {
             case 0:
-              Log.v("Lynx", traceCounter + " - Verbose trace generated automatically");
+              Log.v("LynxVerbose", traceCounter + " - Verbose trace generated automatically");
               break;
             case 2:
-              Log.d("Lynx", traceCounter + " - Debug trace generated automatically");
+              Log.d("LynxDebug", traceCounter + " - Debug trace generated automatically");
               break;
             case 3:
-              Log.w("Lynx", traceCounter + " - Warning trace generated automatically");
+              Log.w("LynxWarning", traceCounter + " - Warning trace generated automatically");
               break;
             case 4:
-              Log.e("Lynx", traceCounter + " - Error trace generated automatically");
+              Log.e("LynxError", traceCounter + " - Error trace generated automatically");
               break;
             case 5:
-              Log.wtf("Lynx", traceCounter + " - WTF trace generated automatically");
+              Log.wtf("LynxWtf", traceCounter + " - WTF trace generated automatically");
               break;
             case 6:
-              Log.i("Lynx", traceCounter + " - Info trace generated automatically");
+              Log.i("LynxInfo", traceCounter + " - Info trace generated automatically");
               break;
           }
           traceCounter++;
