@@ -22,9 +22,9 @@ import android.view.LayoutInflater;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import com.github.pedrovgs.lynx.model.AndroidMainThread;
 import com.github.pedrovgs.lynx.model.Logcat;
 import com.github.pedrovgs.lynx.model.Lynx;
-import com.github.pedrovgs.lynx.model.AndroidMainThread;
 import com.github.pedrovgs.lynx.model.TimeProvider;
 import com.github.pedrovgs.lynx.model.Trace;
 import com.github.pedrovgs.lynx.presenter.LynxPresenter;
@@ -91,8 +91,8 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     adapter.addAll(traces);
     disableTranscriptMode();
     adapter.notifyDataSetChanged();
-    recoverTranscriptMode();
     updateScrollPosition(removedTraces);
+    recoverTranscriptMode();
   }
 
   @Override public void disableAutoScroll() {
@@ -168,17 +168,18 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   }
 
   private void updateScrollPosition(int removedTraces) {
-    if (shouldUpdateScrollPosition()) {
-      int scrollPosition = lastFirstVisibleItem - removedTraces;
-      if (scrollPosition >= 0 && lv_traces.getTranscriptMode() == ListView.TRANSCRIPT_MODE_NORMAL) {
+    if (shouldUpdateScrollPosition(removedTraces)) {
+      int scrollPosition = lastFirstVisibleItem + removedTraces - 1;
+      boolean isTranscriptModeDisabled =
+          lv_traces.getTranscriptMode() == ListView.TRANSCRIPT_MODE_DISABLED;
+      if (isTranscriptModeDisabled) {
         lv_traces.setSelection(scrollPosition);
+        lastFirstVisibleItem = scrollPosition;
       }
-    } else {
-      lv_traces.setSelection(0);
     }
   }
 
-  private boolean shouldUpdateScrollPosition() {
-    return lastFirstVisibleItem >= 0;
+  private boolean shouldUpdateScrollPosition(int removedTraces) {
+    return removedTraces > 0 && lastFirstVisibleItem >= 0;
   }
 }
