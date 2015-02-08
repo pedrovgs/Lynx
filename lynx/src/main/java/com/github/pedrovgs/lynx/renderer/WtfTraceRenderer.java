@@ -21,6 +21,6 @@ package com.github.pedrovgs.lynx.renderer;
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-class WtfTraceRenderer extends TraceRenderer {
+class WtfTraceRenderer extends ErrorTraceRenderer {
 
 }

@@ -16,12 +16,17 @@
 
 package com.github.pedrovgs.lynx.renderer;
 
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.github.pedrovgs.lynx.R;
 import com.github.pedrovgs.lynx.model.Trace;
+import com.github.pedrovgs.lynx.model.TraceLevel;
 import com.pedrogomez.renderers.Renderer;
 
 /**
@@ -47,11 +52,26 @@ class TraceRenderer extends Renderer<Trace> {
   }
 
   @Override protected void hookListeners(View rootView) {
-
+    //Empty
   }
 
   @Override public void render() {
     Trace trace = getContent();
-    tv_trace.setText(trace.getMessage());
+    String traceMessage = trace.getMessage();
+    Spannable traceRepresentation = getTraceVisualRepresentation(trace.getLevel(), traceMessage);
+    tv_trace.setText(traceRepresentation);
+  }
+
+  private Spannable getTraceVisualRepresentation(TraceLevel level, String traceMessage) {
+    traceMessage = " " + level.getValue() + "  " + traceMessage;
+    Spannable traceRepresentation = new SpannableString(traceMessage);
+    int traceColor = getTraceColor();
+    traceRepresentation.setSpan(new BackgroundColorSpan(traceColor), 0, 3,
+        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    return traceRepresentation;
+  }
+
+  protected int getTraceColor() {
+    return Color.GRAY;
   }
 }

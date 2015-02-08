@@ -16,10 +16,16 @@
 
 package com.github.pedrovgs.lynx.renderer;
 
+import android.graphics.Color;
+
 /**
  * TraceRenderer implementation used to render Trace objects with TraceLevel.INFO trace level.
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
 class InfoTraceRenderer extends TraceRenderer {
+
+  @Override protected int getTraceColor() {
+    return Color.YELLOW;
+  }
 }

@@ -16,10 +16,17 @@
 
 package com.github.pedrovgs.lynx.renderer;
 
+import android.graphics.Color;
+
 /**
  * TraceRenderer implementation used to render Trace objects with TraceLevel.WARNING trace level.
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
 class WarningTraceRenderer extends TraceRenderer {
+
+  @Override protected int getTraceColor() {
+    return Color.MAGENTA;
+  }
+
 }

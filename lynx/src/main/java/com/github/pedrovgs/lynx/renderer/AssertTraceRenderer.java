@@ -21,6 +21,6 @@ package com.github.pedrovgs.lynx.renderer;
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-class AssertTraceRenderer extends TraceRenderer {
+class AssertTraceRenderer extends DebugTraceRenderer {
 
 }
