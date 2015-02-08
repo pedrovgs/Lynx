@@ -16,6 +16,7 @@
 
 package com.github.pedrovgs.lynx.model;
 
+import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.exception.IllegalTraceException;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,6 +27,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -38,6 +41,10 @@ public class LynxTest {
   private static final String ANY_DEBUG_TRACE = "02-07 17:45:33.014 D/Any debug trace";
   private static final String ANY_ERROR_TRACE = "02-07 17:45:33.014 E/Any error trace";
   private static final String ANY_WTF_TRACE = "02-07 17:45:33.014 F/Any WTF trace";
+  private static final String ANY_FILTER = "FiLteR";
+  private static final String ANY_TRACE_MATCHING_FILTER = "02-07 17:45:33.014 D/any fIltEr trace";
+  private static final String ANY_TRACE_NON_MATCHING_FILTER =
+      "02-07 17:45:33.014 D/Any error trace";
 
   private Lynx lynx;
 
@@ -107,6 +114,46 @@ public class LynxTest {
     verify(listener).onNewTraces(expectedTraces);
     expectedTraces = generateTraces(ANY_ERROR_TRACE, ANY_WTF_TRACE);
     verify(listener).onNewTraces(expectedTraces);
+  }
+
+  @Test public void shouldNotifyAboutTracesJustIfTraceMatchesWithLynxConfigFilter()
+      throws IllegalTraceException {
+    givenCurrentTime();
+    givenLynxWithFilter(ANY_FILTER);
+
+    Logcat.Listener logcatListener = startLogcat();
+    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER);
+
+    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER);
+    verify(listener).onNewTraces(expectedTraces);
+  }
+
+  @Test public void shouldNotNotifyAboutTracesJustIfTraceMatchesWithLynxConfigFilter()
+      throws IllegalTraceException {
+    givenCurrentTime();
+    givenLynxWithFilter(ANY_FILTER);
+
+    Logcat.Listener logcatListener = startLogcat();
+    logcatListener.onTraceRead(ANY_TRACE_NON_MATCHING_FILTER);
+
+    verify(listener, never()).onNewTraces(anyList());
+  }
+
+  @Test public void shouldNotifyJustTracesMatchingFilter() throws IllegalTraceException {
+    givenCurrentTimes(NOW, NOW + 5, NOW + 15, NOW + 20);
+    givenLynxWithFilter(ANY_FILTER);
+
+    Logcat.Listener logcatListener = startLogcat();
+    logcatListener.onTraceRead(ANY_TRACE_NON_MATCHING_FILTER);
+    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER);
+
+    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER);
+    verify(listener).onNewTraces(expectedTraces);
+  }
+
+  private void givenLynxWithFilter(String filter) {
+    LynxConfig lynxConfigWithFilter = new LynxConfig().withFilter(filter);
+    lynx.setConfig(lynxConfigWithFilter);
   }
 
   private void givenCurrentTimes(long t1, long t2, long t3, long t4) {
