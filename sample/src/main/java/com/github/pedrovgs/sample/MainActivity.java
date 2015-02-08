@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
     logGeneratorThread = new Thread(new Runnable() {
       @Override public void run() {
         while (continueReading) {
-          int traceLevel = random.nextInt(6);
+          int traceLevel = random.nextInt(7);
           switch (traceLevel) {
             case 0:
               Log.v("Lynx", traceCounter + " - Verbose trace generated automatically");
@@ -79,6 +79,9 @@ public class MainActivity extends ActionBarActivity {
               break;
             case 5:
               Log.wtf("Lynx", traceCounter + " - WTF trace generated automatically");
+              break;
+            case 6:
+              Log.i("Lynx", traceCounter + " - Info trace generated automatically");
               break;
           }
           traceCounter++;
