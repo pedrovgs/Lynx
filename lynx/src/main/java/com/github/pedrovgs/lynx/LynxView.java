@@ -78,6 +78,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   public void setLynxConfig(LynxConfig lynxConfig) {
     validateLynxConfig(lynxConfig);
+
     this.lynxConfig = lynxConfig;
     presenter.setLynxConfig(lynxConfig);
   }

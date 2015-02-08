@@ -49,8 +49,8 @@ public class Lynx {
     this.timeProvider = timeProvider;
   }
 
-  public void setConfig(LynxConfig lynxConfig) {
-    this.lynxConfig = new LynxConfig();
+  public synchronized void setConfig(LynxConfig lynxConfig) {
+    this.lynxConfig = lynxConfig;
   }
 
   public void startReading() {
@@ -79,9 +79,22 @@ public class Lynx {
     listeners.remove(lynxPresenter);
   }
 
-  private void addTraceToTheBuffer(String logcatTrace) throws IllegalTraceException {
-    Trace trace = Trace.fromString(logcatTrace);
-    tracesToNotify.add(trace);
+  private synchronized void addTraceToTheBuffer(String logcatTrace) throws IllegalTraceException {
+    if (shouldAddTrace(logcatTrace)) {
+      Trace trace = Trace.fromString(logcatTrace);
+      tracesToNotify.add(trace);
+    }
+  }
+
+  private boolean shouldAddTrace(String logcatTrace) {
+    boolean hasFilterConfigured = lynxConfig.hasFilter();
+    return !hasFilterConfigured || traceMatchesFilter(logcatTrace);
+  }
+
+  private boolean traceMatchesFilter(String logcatTrace) {
+    String filter = lynxConfig.getFilter().toLowerCase();
+    String logcatTraceLowercase = logcatTrace.toLowerCase();
+    return logcatTraceLowercase.contains(filter);
   }
 
   private void notifyNewTraces() {
@@ -95,7 +108,8 @@ public class Lynx {
   private boolean shouldNotifyListeners() {
     long now = timeProvider.getCurrentTimeMillis();
     long timeFromLastNotification = now - lastNotificationTime;
-    return timeFromLastNotification > MIN_NOTIFICATION_TIME_FREQUENCY;
+    boolean hasTracesToNotify = tracesToNotify.size() > 0;
+    return timeFromLastNotification > MIN_NOTIFICATION_TIME_FREQUENCY && hasTracesToNotify;
   }
 
   private void notifyListeners(final List<Trace> traces) {
