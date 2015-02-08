@@ -24,7 +24,7 @@ import java.io.Serializable;
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-public class LynxConfig implements Serializable {
+public class LynxConfig implements Serializable, Cloneable {
   private static final long serialVersionUID = 293939299388293L;
 
   private int maxNumberOfTracesToShow = 2500;
@@ -45,10 +45,6 @@ public class LynxConfig implements Serializable {
   }
 
   public LynxConfig withFilter(String filter) {
-    if (filter == null) {
-      throw new IllegalArgumentException("You can't use a null instance as filter.");
-    }
-
     this.filter = filter;
     return this;
   }
@@ -81,6 +77,11 @@ public class LynxConfig implements Serializable {
     int result = maxNumberOfTracesToShow;
     result = 31 * result + (filter != null ? filter.hashCode() : 0);
     return result;
+  }
+
+  @Override protected Object clone() {
+    return new LynxConfig().withMaxNumberOfTracesToShow(getMaxNumberOfTracesToShow())
+        .withFilter(getFilter());
   }
 
   @Override public String toString() {
