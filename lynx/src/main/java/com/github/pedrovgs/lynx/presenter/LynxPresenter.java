@@ -38,7 +38,6 @@ public class LynxPresenter implements Lynx.Listener {
 
   public LynxPresenter(Lynx lynx, View view, int maxNumberOfTracesToShow) {
     validateNumberOfTracesConfiguration(maxNumberOfTracesToShow);
-
     this.lynx = lynx;
     this.view = view;
     this.traceBuffer = new TraceBuffer(maxNumberOfTracesToShow);
@@ -46,7 +45,6 @@ public class LynxPresenter implements Lynx.Listener {
 
   public void setLynxConfig(LynxConfig lynxConfig) {
     validateLynxConfig(lynxConfig);
-
     updateBufferConfig(lynxConfig);
     updateLynxConfig(lynxConfig);
   }
@@ -57,8 +55,8 @@ public class LynxPresenter implements Lynx.Listener {
   }
 
   public void pause() {
-    lynx.unregisterListener(this);
     lynx.stopReading();
+    lynx.unregisterListener(this);
   }
 
   @Override public void onNewTraces(List<Trace> traces) {
@@ -73,6 +71,23 @@ public class LynxPresenter implements Lynx.Listener {
     } else {
       view.enableAutoScroll();
     }
+  }
+
+  public void onFilterUpdated(String filter) {
+    LynxConfig lynxConfig = lynx.getConfig();
+    lynxConfig.withFilter(filter);
+    lynx.setConfig(lynxConfig);
+    clearView();
+    restartLynx();
+  }
+
+  private void clearView() {
+    traceBuffer.clear();
+    view.clear();
+  }
+
+  private void restartLynx() {
+    lynx.restart();
   }
 
   private void updateBufferConfig(LynxConfig lynxConfig) {
@@ -122,5 +137,7 @@ public class LynxPresenter implements Lynx.Listener {
     void disableAutoScroll();
 
     void enableAutoScroll();
+
+    void clear();
   }
 }
