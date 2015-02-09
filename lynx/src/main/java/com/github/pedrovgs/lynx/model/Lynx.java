@@ -32,14 +32,14 @@ public class Lynx {
 
   private static final int MIN_NOTIFICATION_TIME_FREQUENCY = 10;
 
-  private final Logcat logcat;
+  private Logcat logcat;
   private final MainThread mainThread;
   private final TimeProvider timeProvider;
-
-  private final List<Listener> listeners;
   private final List<Trace> tracesToNotify;
-  private long lastNotificationTime;
+  private final List<Listener> listeners;
+
   private LynxConfig lynxConfig = new LynxConfig();
+  private long lastNotificationTime;
 
   public Lynx(Logcat logcat, MainThread mainThread, TimeProvider timeProvider) {
     this.listeners = new LinkedList<Listener>();
@@ -69,6 +69,16 @@ public class Lynx {
 
   public void stopReading() {
     logcat.stopReading();
+    logcat.interrupt();
+  }
+
+  public void restart() {
+    Logcat.Listener previousListener = logcat.getListener();
+    logcat.stopReading();
+    logcat.interrupt();
+    logcat = (Logcat) logcat.clone();
+    logcat.setListener(previousListener);
+    logcat.start();
   }
 
   public void registerListener(Listener lynxPresenter) {
@@ -121,6 +131,10 @@ public class Lynx {
       }
     });
     lastNotificationTime = timeProvider.getCurrentTimeMillis();
+  }
+
+  public LynxConfig getConfig() {
+    return (LynxConfig) lynxConfig.clone();
   }
 
   public interface Listener {
