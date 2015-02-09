@@ -1,9 +1,9 @@
 buildscript {
   repositories {
-    jcenter()
+    mavenCentral()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:0.14.2'
+    classpath 'com.android.tools.build:gradle:1.0.0'
     classpath 'com.github.jcandksolutions.gradle:android-unit-test:2.1.1'
   }
 }
@@ -19,7 +19,6 @@ android {
   buildToolsVersion "21.1.2"
 
   defaultConfig {
-    applicationId "com.github.pedrovgs.lynx"
     minSdkVersion 8
     targetSdkVersion 21
     versionCode 1
