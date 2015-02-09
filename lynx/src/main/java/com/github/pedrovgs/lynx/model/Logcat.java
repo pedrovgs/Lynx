@@ -26,7 +26,7 @@ import java.io.InputStreamReader;
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-public class Logcat extends Thread {
+public class Logcat extends Thread implements Cloneable{
   private static final String LOGTAG = "Logcat";
 
   private Process process;
@@ -81,6 +81,11 @@ public class Logcat extends Thread {
     }
     return bufferReader;
   }
+
+  @Override public Object clone() {
+    return new Logcat();
+  }
+
 
   interface Listener {
 
