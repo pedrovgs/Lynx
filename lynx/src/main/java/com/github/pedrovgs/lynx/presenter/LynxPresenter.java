@@ -19,6 +19,7 @@ package com.github.pedrovgs.lynx.presenter;
 import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.model.Lynx;
 import com.github.pedrovgs.lynx.model.Trace;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -81,6 +82,12 @@ public class LynxPresenter implements Lynx.Listener {
     restartLynx();
   }
 
+  public void onShareButtonClicked() {
+    List<Trace> tracesToShare = new LinkedList<Trace>(traceBuffer.getTraces());
+    String plainTraces = generatePlainTracesToShare(tracesToShare);
+    view.shareTraces(plainTraces);
+  }
+
   private void clearView() {
     traceBuffer.clear();
     view.clear();
@@ -130,6 +137,19 @@ public class LynxPresenter implements Lynx.Listener {
     return positionOffset >= MIN_VISIBLE_POSITION_TO_ENABLE_AUTO_SCROLL;
   }
 
+  private String generatePlainTracesToShare(List<Trace> tracesToShare) {
+    StringBuilder sb = new StringBuilder();
+    for (Trace trace : tracesToShare) {
+      String traceLevel = trace.getLevel().getValue();
+      String traceMessage = trace.getMessage();
+      sb.append(traceLevel);
+      sb.append("/ ");
+      sb.append(traceMessage);
+      sb.append("\n");
+    }
+    return sb.toString();
+  }
+
   public interface View {
 
     void showTraces(List<Trace> traces, int removedTraces);
@@ -139,5 +159,7 @@ public class LynxPresenter implements Lynx.Listener {
     void enableAutoScroll();
 
     void clear();
+
+    void shareTraces(String plainTraces);
   }
 }

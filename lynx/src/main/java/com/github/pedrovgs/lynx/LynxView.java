@@ -17,13 +17,17 @@
 package com.github.pedrovgs.lynx;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,12 +54,15 @@ import java.util.List;
 public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   private static final String LOGTAG = "LynxView";
+  private static final String SHARE_INTENT_TYPE = "text/plain";
+  private static final CharSequence SHARE_INTENT_TITLE = "Application Logcat";
 
   private LynxPresenter presenter;
   private LynxConfig lynxConfig;
 
   private ListView lv_traces;
   private EditText et_filter;
+  private ImageButton ib_share;
 
   private RendererAdapter<Trace> adapter;
   private int transcriptMode;
@@ -120,6 +127,13 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     adapter.notifyDataSetChanged();
   }
 
+  @Override public void shareTraces(String plainTraces) {
+    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+    sharingIntent.setType(SHARE_INTENT_TYPE);
+    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, plainTraces);
+    getContext().startActivity(Intent.createChooser(sharingIntent, SHARE_INTENT_TITLE));
+  }
+
   private void initializeConfiguration(AttributeSet attrs) {
     lynxConfig = new LynxConfig();
     if (attrs != null) {
@@ -140,6 +154,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     lv_traces = (ListView) findViewById(R.id.lv_traces);
     et_filter = (EditText) findViewById(R.id.et_filter);
     configureCursorColor();
+    ib_share = (ImageButton) findViewById(R.id.ib_share);
   }
 
   /**
@@ -190,6 +205,12 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
       @Override public void afterTextChanged(Editable s) {
         //Empty
+      }
+    });
+
+    ib_share.setOnClickListener(new OnClickListener() {
+      @Override public void onClick(View v) {
+        presenter.onShareButtonClicked();
       }
     });
   }
