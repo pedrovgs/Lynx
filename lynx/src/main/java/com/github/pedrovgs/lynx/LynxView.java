@@ -17,9 +17,12 @@
 package com.github.pedrovgs.lynx;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.AbsListView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import com.github.pedrovgs.lynx.model.AndroidMainThread;
@@ -47,6 +50,8 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   private LynxConfig lynxConfig;
 
   private ListView lv_traces;
+  private EditText et_filter;
+
   private RendererAdapter<Trace> adapter;
   private int transcriptMode;
   private int lastFirstVisibleItem = -1;
@@ -104,10 +109,16 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     transcriptMode = ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL;
   }
 
+  @Override public void clear() {
+    transcriptMode = ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL;
+    adapter.clear();
+    adapter.notifyDataSetChanged();
+  }
+
   private void initializeConfiguration(AttributeSet attrs) {
     lynxConfig = new LynxConfig();
     if (attrs != null) {
-      //Initialize lynx config here
+      //TODO: Initialize lynx config here
     }
   }
 
@@ -122,6 +133,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   private void mapGui() {
     lv_traces = (ListView) findViewById(R.id.lv_traces);
+    et_filter = (EditText) findViewById(R.id.et_filter);
   }
 
   private void initializeRenderers() {
@@ -144,6 +156,20 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
         lastFirstVisibleItem = firstVisibleItem;
         int lastVisiblePosition = firstVisibleItem + visibleItemCount;
         presenter.onScrollToPosition(lastVisiblePosition);
+      }
+    });
+
+    et_filter.addTextChangedListener(new TextWatcher() {
+      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        //Empty
+      }
+
+      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+        presenter.onFilterUpdated(s.toString());
+      }
+
+      @Override public void afterTextChanged(Editable s) {
+        //Empty
       }
     });
   }

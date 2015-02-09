@@ -78,6 +78,7 @@ public class Lynx {
     logcat.interrupt();
     logcat = (Logcat) logcat.clone();
     logcat.setListener(previousListener);
+    lastNotificationTime = 0;
     logcat.start();
   }
 
