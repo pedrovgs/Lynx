@@ -21,5 +21,6 @@
   <dimen name="trace_padding">4dp</dimen>
   <dimen name="filter_layout_height">40dp</dimen>
   <dimen name="filter_edit_text_padding">4dp</dimen>
+  <dimen name="scrollbar_width">3dp</dimen>
 
 </resources>

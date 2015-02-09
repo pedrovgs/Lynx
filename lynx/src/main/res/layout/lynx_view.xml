@@ -69,6 +69,8 @@
       android:dividerHeight="@dimen/divider_height"
       android:divider="@color/white"
       android:background="@color/black"
+      android:scrollbarSize="@dimen/scrollbar_width"
+      android:scrollbarThumbVertical="@color/white"
       android:stackFromBottom="true"
       android:layout_above="@id/filter"/>
 
