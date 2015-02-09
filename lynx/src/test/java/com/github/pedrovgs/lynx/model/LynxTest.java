@@ -57,6 +57,7 @@ public class LynxTest {
     MainThread mainThread = new FakeMainThread();
     lynx = new Lynx(logcat, mainThread, timeProvider);
     lynx.registerListener(listener);
+    when(logcat.clone()).thenReturn(logcat);
   }
 
   @Test public void shouldRegisterListenerOnStart() {
@@ -149,6 +150,27 @@ public class LynxTest {
 
     List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER);
     verify(listener).onNewTraces(expectedTraces);
+  }
+
+  @Test public void shouldStopAndInterruptLogcatOnRestart() {
+    lynx.restart();
+
+    verify(logcat).stopReading();
+    verify(logcat).interrupt();
+  }
+
+  @Test public void shouldKeepLogcatListenerOnRestart() {
+    Logcat.Listener logcatListener = startLogcat();
+
+    lynx.restart();
+
+    verify(logcat).setListener(logcatListener);
+  }
+
+  @Test public void shouldStartClonedLogcatOnRestart() {
+    lynx.restart();
+
+    verify(logcat).start();
   }
 
   private void givenLynxWithFilter(String filter) {
