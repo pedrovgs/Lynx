@@ -38,6 +38,10 @@ public class Logcat extends Thread {
     this.listener = listener;
   }
 
+  public Listener getListener() {
+    return listener;
+  }
+
   @Override public void run() {
     super.run();
     try {
