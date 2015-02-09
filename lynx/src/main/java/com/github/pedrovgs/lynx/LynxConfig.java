@@ -79,7 +79,7 @@ public class LynxConfig implements Serializable, Cloneable {
     return result;
   }
 
-  @Override protected Object clone() {
+  @Override public Object clone() {
     return new LynxConfig().withMaxNumberOfTracesToShow(getMaxNumberOfTracesToShow())
         .withFilter(getFilter());
   }
