@@ -157,6 +157,38 @@ public class LynxPresenterTest {
     verify(view, times(2)).showTraces(newTraces, 0);
   }
 
+  @Test public void shouldShareAPlainRepresentationOfTheCurrentBufferTraces() {
+    List<Trace> traces = generateTraces(30);
+
+    presenter.resume();
+    presenter.onNewTraces(traces);
+    presenter.onShareButtonClicked();
+
+    traces = removeFirstTraces(20, traces);
+    String expectedTraces = generatePlainTracesToShare(traces);
+    verify(view).shareTraces(expectedTraces);
+  }
+
+  private List<Trace> removeFirstTraces(int tracesToRemove, List<Trace> traces) {
+    for (int i = 0; i < tracesToRemove; i++) {
+      traces.remove(0);
+    }
+    return traces;
+  }
+
+  private String generatePlainTracesToShare(List<Trace> traces) {
+    StringBuilder sb = new StringBuilder();
+    for (Trace trace : traces) {
+      String traceLevel = trace.getLevel().getValue();
+      String traceMessage = trace.getMessage();
+      sb.append(traceLevel);
+      sb.append("/ ");
+      sb.append(traceMessage);
+      sb.append("\n");
+    }
+    return sb.toString();
+  }
+
   private void givenAPreviusLynxConfig() {
     when(lynx.getConfig()).thenReturn(new LynxConfig());
   }
