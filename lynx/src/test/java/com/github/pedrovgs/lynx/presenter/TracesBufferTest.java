@@ -125,6 +125,15 @@ public class TracesBufferTest {
     assertEquals(20, removedTraces);
   }
 
+  @Test public void shouldRemoveAllTracesOnClear() {
+    List<Trace> traces = generateTraces(20);
+
+    traceBuffer.add(traces);
+    traceBuffer.clear();
+
+    assertEquals(0, traceBuffer.getCurrentNumberOfTraces());
+  }
+
   private List<Trace> generateTraces(int numberOfTraces) {
     return generateTraces(0, numberOfTraces);
   }

@@ -80,4 +80,8 @@ class TraceBuffer {
   public int getCurrentNumberOfTraces() {
     return traces.size();
   }
+
+  public void clear() {
+    traces.clear();
+  }
 }
