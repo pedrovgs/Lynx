@@ -22,6 +22,7 @@
     android:layout_height="match_parent">
 
   <!-- Filter Layout -->
+
   <RelativeLayout
       android:id="@+id/filter"
       android:layout_height="@dimen/filter_layout_height"
@@ -50,13 +51,14 @@
         tools:text="Filter"
         android:background="@color/black"
         android:textColor="@color/white"
+        android:textColorHint="@color/gray"
+        android:hint="@string/et_filter_hint_text"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@id/ib_share"
         android:layout_centerVertical="true"/>
 
 
   </RelativeLayout>
-
 
   <!-- ListView full of traces -->
 
@@ -69,6 +71,5 @@
       android:background="@color/black"
       android:stackFromBottom="true"
       android:layout_above="@id/filter"/>
-
 
 </merge>

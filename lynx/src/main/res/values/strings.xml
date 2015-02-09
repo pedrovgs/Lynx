@@ -15,13 +15,6 @@
   ~ limitations under the License.
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.pedrovgs.lynx">
-
-  <application>
-    <activity
-        android:name=".LynxActivity"
-        android:windowSoftInputMode="stateHidden"/>
-  </application>
-
-</manifest>
+<resources>
+  <string name="et_filter_hint_text">Add your logcat filter here</string>
+</resources>
