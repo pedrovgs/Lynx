@@ -24,11 +24,15 @@ import java.util.LinkedList;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Pedro Vicente Gómez Sánchez.
@@ -36,6 +40,7 @@ import static org.mockito.Mockito.verify;
 public class LynxPresenterTest {
 
   private static final int MAX_NUMBER_OF_TRACES = 10;
+  private static final String ANY_FILTER = "filter";
 
   @Mock private Lynx lynx;
   @Mock private LynxPresenter.View view;
@@ -116,6 +121,44 @@ public class LynxPresenterTest {
     presenter.onScrollToPosition(9);
 
     verify(view).enableAutoScroll();
+  }
+
+  @Test public void shouldApplyNewConfigToLynxOnFilterUpdated() {
+    givenAPreviusLynxConfig();
+    ArgumentCaptor<LynxConfig> lynxConfigArgumentCaptor = ArgumentCaptor.forClass(LynxConfig.class);
+
+    presenter.resume();
+    presenter.onFilterUpdated(ANY_FILTER);
+
+    verify(lynx).setConfig(lynxConfigArgumentCaptor.capture());
+    LynxConfig lynxConfig = lynxConfigArgumentCaptor.getValue();
+    assertEquals(ANY_FILTER, lynxConfig.getFilter());
+  }
+
+  @Test public void shouldClearViewOnFilterUpdated() {
+    givenAPreviusLynxConfig();
+
+    presenter.resume();
+    presenter.onFilterUpdated(ANY_FILTER);
+
+    verify(view).clear();
+  }
+
+  @Test public void shouldShowNewTracesAfterOnFilterUpdated() {
+    givenAPreviusLynxConfig();
+    List<Trace> traces = generateTraces(3);
+
+    presenter.resume();
+    presenter.onNewTraces(traces);
+    presenter.onFilterUpdated(ANY_FILTER);
+    List<Trace> newTraces = generateTraces(5);
+    presenter.onNewTraces(newTraces);
+
+    verify(view, times(2)).showTraces(newTraces, 0);
+  }
+
+  private void givenAPreviusLynxConfig() {
+    when(lynx.getConfig()).thenReturn(new LynxConfig());
   }
 
   private List<Trace> generateTraces(int numberOfTraces) {
