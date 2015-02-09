@@ -64,7 +64,9 @@ public class Lynx {
         notifyNewTraces();
       }
     });
-    logcat.start();
+    if(!logcat.isAlive()) {
+      logcat.start();
+    }
   }
 
   public void stopReading() {

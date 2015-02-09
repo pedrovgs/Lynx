@@ -18,13 +18,13 @@ package com.github.pedrovgs.lynx;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -95,8 +95,8 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   public void setLynxConfig(LynxConfig lynxConfig) {
     validateLynxConfig(lynxConfig);
-
     this.lynxConfig = (LynxConfig) lynxConfig.clone();
+    updateFilterText();
     presenter.setLynxConfig(lynxConfig);
   }
 
@@ -137,7 +137,12 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   private void initializeConfiguration(AttributeSet attrs) {
     lynxConfig = new LynxConfig();
     if (attrs != null) {
-      //TODO: Initialize lynx config here
+      TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.lynx);
+      int maxTracesToShow = attributes.getInteger(R.styleable.lynx_max_traces_to_show,
+          lynxConfig.getMaxNumberOfTracesToShow());
+      String filter = attributes.getString(R.styleable.lynx_filter);
+      lynxConfig.withMaxNumberOfTracesToShow(maxTracesToShow).withFilter(filter);
+      attributes.recycle();
     }
   }
 
@@ -153,8 +158,9 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   private void mapGui() {
     lv_traces = (ListView) findViewById(R.id.lv_traces);
     et_filter = (EditText) findViewById(R.id.et_filter);
-    configureCursorColor();
     ib_share = (ImageButton) findViewById(R.id.ib_share);
+    configureCursorColor();
+    updateFilterText();
   }
 
   /**
@@ -249,5 +255,11 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   private boolean shouldUpdateScrollPosition(int removedTraces) {
     return removedTraces > 0 && lastFirstVisibleItem >= 0;
+  }
+
+  private void updateFilterText() {
+    if (lynxConfig.hasFilter()) {
+      et_filter.append(lynxConfig.getFilter());
+    }
   }
 }
