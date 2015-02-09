@@ -19,6 +19,7 @@
 
   <dimen name="divider_height">0dp</dimen>
   <dimen name="trace_padding">4dp</dimen>
-  <dimen name="filter_text_view_height">40dp</dimen>
+  <dimen name="filter_edit_text_height">40dp</dimen>
+  <dimen name="filter_edit_text_padding">4dp</dimen>
 
 </resources>

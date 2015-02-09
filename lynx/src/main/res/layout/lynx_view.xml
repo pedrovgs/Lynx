@@ -26,8 +26,13 @@
   <EditText
       android:id="@+id/et_filter"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/filter_text_view_height"
-      android:layout_alignParentBottom="true"/>
+      android:layout_height="@dimen/filter_edit_text_height"
+      android:layout_alignParentBottom="true"
+      android:padding="@dimen/filter_edit_text_padding"
+      tools:text="Filter"
+      android:background="@color/black"
+      android:textColor="@color/white"
+      android:drawableRight="@android:drawable/ic_menu_share"/>
 
   <!-- ListView full of traces -->
 
