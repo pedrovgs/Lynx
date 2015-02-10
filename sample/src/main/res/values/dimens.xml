@@ -18,5 +18,6 @@
 
   <dimen name="button_margin">10dp</dimen>
   <dimen name="text_view_margin">10dp</dimen>
+  <dimen name="lynx_view_height">320dp</dimen>
 
 </resources>

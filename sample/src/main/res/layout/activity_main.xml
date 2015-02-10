@@ -58,7 +58,7 @@
       xmlns:lynx="http://schemas.android.com/apk/res-auto"
       android:id="@+id/lynx_view"
       android:layout_width="match_parent"
-      android:layout_height="320dip"
+      android:layout_height="@dimen/lynx_view_height"
       lynx:filter="Lynx"
       lynx:max_traces_to_show="1500"
       android:visibility="gone"/>
