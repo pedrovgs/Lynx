@@ -43,6 +43,12 @@ public class LynxActivity extends Activity {
     setContentView(R.layout.lynx_activity);
     LynxConfig lynxConfig = getLynxConfig();
     configureLynxView(lynxConfig);
+    disableLynxShakeDetector();
+  }
+
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    enableLynxShakeDetector();
   }
 
   private LynxConfig getLynxConfig() {
@@ -57,5 +63,13 @@ public class LynxActivity extends Activity {
   private void configureLynxView(LynxConfig lynxConfig) {
     LynxView lynxView = (LynxView) findViewById(R.id.lynx_view);
     lynxView.setLynxConfig(lynxConfig);
+  }
+
+  private void enableLynxShakeDetector() {
+    LynxShakeDetector.enable();
+  }
+
+  private void disableLynxShakeDetector() {
+    LynxShakeDetector.disable();
   }
 }
