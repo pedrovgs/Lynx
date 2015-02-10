@@ -93,6 +93,14 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     presenter.pause();
   }
 
+  @Override protected void onVisibilityChanged(View changedView, int visibility) {
+    super.onVisibilityChanged(changedView, visibility);
+    if (visibility == View.VISIBLE) {
+      int lastPosition = adapter.getCount() - 1;
+      lv_traces.setSelection(lastPosition);
+    }
+  }
+
   public void setLynxConfig(LynxConfig lynxConfig) {
     validateLynxConfig(lynxConfig);
     this.lynxConfig = (LynxConfig) lynxConfig.clone();
