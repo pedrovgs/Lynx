@@ -38,6 +38,7 @@ dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   compile 'com.android.support:appcompat-v7:21.0.3'
   compile 'com.github.pedrovgs:renderers:1.4'
+  compile 'com.squareup:seismic:1.0.1'
   testCompile 'org.robolectric:robolectric:2.3'
   testCompile 'junit:junit:4.10'
   testCompile 'org.mockito:mockito-all:1.9.5'
