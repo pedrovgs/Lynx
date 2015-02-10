@@ -74,26 +74,24 @@ public class MainActivity extends ActionBarActivity {
     logGeneratorThread = new Thread(new Runnable() {
       @Override public void run() {
         while (continueReading) {
-          int traceLevel = random.nextInt(7);
+          int traceLevel = random.nextInt(6);
           switch (traceLevel) {
             case 0:
-              Log.v("LynxVerbose", traceCounter + " - Verbose trace generated automatically");
-              break;
-            case 2:
               Log.d("LynxDebug", traceCounter + " - Debug trace generated automatically");
               break;
-            case 3:
+            case 1:
               Log.w("LynxWarning", traceCounter + " - Warning trace generated automatically");
               break;
-            case 4:
+            case 2:
               Log.e("LynxError", traceCounter + " - Error trace generated automatically");
               break;
-            case 5:
+            case 3:
               Log.wtf("LynxWtf", traceCounter + " - WTF trace generated automatically");
               break;
-            case 6:
+            case 4:
               Log.i("LynxInfo", traceCounter + " - Info trace generated automatically");
-              break;
+            default:
+              Log.v("LynxVerbose", traceCounter + " - Verbose trace generated automatically");
           }
           traceCounter++;
           try {
