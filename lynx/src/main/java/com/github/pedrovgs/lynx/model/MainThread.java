@@ -24,5 +24,5 @@ package com.github.pedrovgs.lynx.model;
  */
 public interface MainThread {
 
-  public void post(Runnable runnable);
+  void post(Runnable runnable);
 }

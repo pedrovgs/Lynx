@@ -23,7 +23,7 @@ import android.graphics.Color;
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-class DebugTraceRenderer extends TraceRenderer{
+class DebugTraceRenderer extends TraceRenderer {
 
   @Override protected int getTraceColor() {
     return Color.BLUE;

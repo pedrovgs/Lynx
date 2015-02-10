@@ -23,7 +23,7 @@ import android.graphics.Color;
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-class ErrorTraceRenderer extends TraceRenderer{
+class ErrorTraceRenderer extends TraceRenderer {
 
   @Override protected int getTraceColor() {
     return Color.RED;

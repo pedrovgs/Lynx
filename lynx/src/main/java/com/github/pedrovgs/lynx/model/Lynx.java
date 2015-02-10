@@ -64,7 +64,7 @@ public class Lynx {
         notifyNewTraces();
       }
     });
-    if(!logcat.isAlive()) {
+    if (!logcat.isAlive()) {
       logcat.start();
     }
   }

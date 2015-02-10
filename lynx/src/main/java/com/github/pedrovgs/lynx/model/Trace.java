@@ -40,7 +40,8 @@ public class Trace {
         || logcatTrace.length() < MIN_TRACE_SIZE
         || logcatTrace.charAt(20) != TRACE_LEVEL_SEPARATOR) {
       throw new IllegalTraceException(
-          "You are trying to create a Trace object from a invalid String. Your trace should be something like: 'D/TraceMessage'.");
+          "You are trying to create a Trace object from a invalid String. Your trace should be "
+              + "something like: 'D/TraceMessage'.");
     }
     TraceLevel level = getTraceLevel(logcatTrace.charAt(TRACE_LEVEL_INDEX));
     String date = logcatTrace.substring(0, END_OF_DATE_INDEX);
@@ -111,9 +112,6 @@ public class Trace {
   }
 
   @Override public String toString() {
-    return "Trace{" +
-        "level=" + level +
-        ", message='" + message + '\'' +
-        '}';
+    return "Trace{" + "level=" + level + ", message='" + message + '\'' + '}';
   }
 }
