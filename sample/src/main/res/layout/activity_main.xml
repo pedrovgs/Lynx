@@ -16,7 +16,6 @@
   -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:lynx="http://github.com/pedrovgs/Lynx"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -56,11 +55,12 @@
       android:gravity="center"/>
 
   <com.github.pedrovgs.lynx.LynxView
+      xmlns:lynx="http://schemas.android.com/apk/res-auto"
       android:id="@+id/lynx_view"
       android:layout_width="match_parent"
       android:layout_height="320dip"
       lynx:filter="Lynx"
       lynx:max_traces_to_show="1500"
       android:visibility="gone"/>
-  
+
 </RelativeLayout>
