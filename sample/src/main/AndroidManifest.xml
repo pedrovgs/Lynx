@@ -17,6 +17,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.github.pedrovgs.sample">
 
+  <!-- This permission is needed to be able to execute 'logcat' command on Android 2.X devices -->
+  <uses-permission android:name="android.permission.READ_LOGS"/>
+
   <application
       android:name=".LynxApplication"
       android:icon="@drawable/ic_launcher"
