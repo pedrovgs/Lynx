@@ -18,6 +18,7 @@
     package="com.github.pedrovgs.sample">
 
   <application
+      android:name=".LynxApplication"
       android:icon="@drawable/ic_launcher"
       android:label="@string/app_name"
       android:theme="@style/AppTheme">
