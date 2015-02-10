@@ -16,6 +16,7 @@
   -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:lynx="http://github.com/pedrovgs/Lynx"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -28,10 +29,19 @@
       android:src="@drawable/ic_lynx"/>
 
   <Button
-      android:id="@+id/bt_show_lynx_view"
+      android:id="@+id/bt_show_lynx_activity"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_below="@id/iv_lynx_icon"
+      android:layout_centerHorizontal="true"
+      android:layout_margin="@dimen/button_margin"
+      android:text="@string/show_lynx_activity"/>
+
+  <Button
+      android:id="@+id/bt_show_lynx_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/bt_show_lynx_activity"
       android:layout_centerHorizontal="true"
       android:layout_margin="@dimen/button_margin"
       android:text="@string/show_lynx_view"/>
@@ -45,4 +55,12 @@
       android:text="@string/shake_to_show_lynx_view"
       android:gravity="center"/>
 
+  <com.github.pedrovgs.lynx.LynxView
+      android:id="@+id/lynx_view"
+      android:layout_width="match_parent"
+      android:layout_height="320dip"
+      lynx:filter="Lynx"
+      lynx:max_traces_to_show="1500"
+      android:visibility="gone"/>
+  
 </RelativeLayout>

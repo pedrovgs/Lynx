@@ -40,8 +40,8 @@ public class MainActivity extends ActionBarActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    Button bt_show_logcat_view = (Button) findViewById(R.id.bt_show_lynx_view);
-    bt_show_logcat_view.setOnClickListener(new View.OnClickListener() {
+    Button bt_show_lynx_activity = (Button) findViewById(R.id.bt_show_lynx_activity);
+    bt_show_lynx_activity.setOnClickListener(new View.OnClickListener() {
 
       @Override public void onClick(View v) {
         LynxConfig lynxConfig = new LynxConfig().withMaxNumberOfTracesToShow(MAX_TRACES_TO_SHOW)
@@ -50,6 +50,14 @@ public class MainActivity extends ActionBarActivity {
         Context context = MainActivity.this;
         Intent lynxActivityIntent = LynxActivity.getIntent(context, lynxConfig);
         startActivity(lynxActivityIntent);
+      }
+    });
+
+    final Button bt_show_lynx_view = (Button) findViewById(R.id.bt_show_lynx_view);
+    bt_show_lynx_view.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        View lynxView = findViewById(R.id.lynx_view);
+        lynxView.setVisibility(View.VISIBLE);
       }
     });
 
