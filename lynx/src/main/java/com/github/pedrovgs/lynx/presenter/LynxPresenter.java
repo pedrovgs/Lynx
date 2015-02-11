@@ -36,6 +36,7 @@ public class LynxPresenter implements Lynx.Listener {
   private final Lynx lynx;
   private final View view;
   private final TraceBuffer traceBuffer;
+  private boolean isInitialized;
 
   public LynxPresenter(Lynx lynx, View view, int maxNumberOfTracesToShow) {
     validateNumberOfTracesConfiguration(maxNumberOfTracesToShow);
@@ -51,13 +52,19 @@ public class LynxPresenter implements Lynx.Listener {
   }
 
   public void resume() {
-    lynx.registerListener(this);
-    lynx.startReading();
+    if (!isInitialized) {
+      isInitialized = true;
+      lynx.registerListener(this);
+      lynx.startReading();
+    }
   }
 
   public void pause() {
-    lynx.stopReading();
-    lynx.unregisterListener(this);
+    if (isInitialized) {
+      isInitialized = false;
+      lynx.stopReading();
+      lynx.unregisterListener(this);
+    }
   }
 
   @Override public void onNewTraces(List<Trace> traces) {
@@ -75,11 +82,13 @@ public class LynxPresenter implements Lynx.Listener {
   }
 
   public void onFilterUpdated(String filter) {
-    LynxConfig lynxConfig = lynx.getConfig();
-    lynxConfig.withFilter(filter);
-    lynx.setConfig(lynxConfig);
-    clearView();
-    restartLynx();
+    if (isInitialized) {
+      LynxConfig lynxConfig = lynx.getConfig();
+      lynxConfig.withFilter(filter);
+      lynx.setConfig(lynxConfig);
+      clearView();
+      restartLynx();
+    }
   }
 
   public void onShareButtonClicked() {

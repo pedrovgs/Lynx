@@ -29,7 +29,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -167,6 +169,29 @@ public class LynxPresenterTest {
     traces = removeFirstTraces(20, traces);
     String expectedTraces = generatePlainTracesToShare(traces);
     verify(view).shareTraces(expectedTraces);
+  }
+
+  @Test public void shouldNotStartReadingFromLynxIfPresenterIsAlreadyInitialized() {
+    presenter.resume();
+
+    presenter.resume();
+
+    verify(lynx).startReading();
+    verify(lynx).registerListener(presenter);
+  }
+
+  @Test public void shouldStopLynxJustItWasInitializedBefore() {
+    presenter.pause();
+
+    verify(lynx, never()).stopReading();
+    verify(lynx, never()).unregisterListener(presenter);
+  }
+
+  @Test public void shouldNotUpdateFilterIfPresenterIsNotInitialized() {
+    presenter.onFilterUpdated(ANY_FILTER);
+
+    verify(lynx, never()).setConfig(any(LynxConfig.class));
+    verify(lynx, never()).restart();
   }
 
   private List<Trace> removeFirstTraces(int tracesToRemove, List<Trace> traces) {
