@@ -17,6 +17,7 @@
 package com.github.pedrovgs.lynx.renderer;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
@@ -49,6 +50,7 @@ class TraceRenderer extends Renderer<Trace> {
 
   @Override protected void setUpView(View rootView) {
     tv_trace = (TextView) rootView.findViewById(R.id.tv_trace);
+    tv_trace.setTypeface(Typeface.MONOSPACE);
   }
 
   @Override protected void hookListeners(View rootView) {
