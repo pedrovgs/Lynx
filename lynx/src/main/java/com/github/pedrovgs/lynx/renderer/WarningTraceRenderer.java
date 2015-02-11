@@ -26,7 +26,8 @@ import android.graphics.Color;
 class WarningTraceRenderer extends TraceRenderer {
 
   @Override protected int getTraceColor() {
-    return Color.MAGENTA;
+    return Color.rgb(255,165,0);
+
   }
 
 }
