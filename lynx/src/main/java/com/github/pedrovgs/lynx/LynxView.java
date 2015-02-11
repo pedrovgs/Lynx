@@ -85,19 +85,26 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   @Override protected void onAttachedToWindow() {
     super.onAttachedToWindow();
-    presenter.resume();
+    if (isVisible()) {
+      resumePresenter();
+    }
   }
 
   @Override protected void onDetachedFromWindow() {
     super.onDetachedFromWindow();
-    presenter.pause();
+    pausePresenter();
   }
 
   @Override protected void onVisibilityChanged(View changedView, int visibility) {
     super.onVisibilityChanged(changedView, visibility);
+    if (changedView != this) {
+      return;
+    }
+
     if (visibility == View.VISIBLE) {
-      int lastPosition = adapter.getCount() - 1;
-      lv_traces.setSelection(lastPosition);
+      resumePresenter();
+    } else {
+      pausePresenter();
     }
   }
 
@@ -140,6 +147,28 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     sharingIntent.setType(SHARE_INTENT_TYPE);
     sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, plainTraces);
     getContext().startActivity(Intent.createChooser(sharingIntent, SHARE_INTENT_TITLE));
+  }
+
+  private boolean isPresenterReady() {
+    return presenter != null;
+  }
+  
+  private void resumePresenter() {
+    if (isPresenterReady()) {
+      presenter.resume();
+      int lastPosition = adapter.getCount() - 1;
+      lv_traces.setSelection(lastPosition);
+    }
+  }
+
+  private void pausePresenter() {
+    if (isPresenterReady()) {
+      presenter.pause();
+    }
+  }
+
+  private boolean isVisible() {
+    return getVisibility() == View.VISIBLE;
   }
 
   private void initializeConfiguration(AttributeSet attrs) {
