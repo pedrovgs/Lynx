@@ -26,6 +26,6 @@ import android.graphics.Color;
 class InfoTraceRenderer extends TraceRenderer {
 
   @Override protected int getTraceColor() {
-    return Color.YELLOW;
+    return Color.rgb(255, 215, 0);
   }
 }
