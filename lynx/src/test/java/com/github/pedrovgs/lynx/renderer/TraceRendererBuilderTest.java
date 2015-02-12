@@ -16,6 +16,7 @@
 
 package com.github.pedrovgs.lynx.renderer;
 
+import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.model.Trace;
 import com.github.pedrovgs.lynx.model.TraceLevel;
 import org.junit.Before;
@@ -29,11 +30,12 @@ import static org.junit.Assert.assertEquals;
 public class TraceRendererBuilderTest {
 
   private static final String ANY_TRACE_MESSAGE = "Any log trace";
+  private static final LynxConfig ANY_LYNX_CONFIG = new LynxConfig();
 
   private TraceRendererBuilder traceRendererBuilder;
 
   @Before public void setUp() {
-    traceRendererBuilder = new TraceRendererBuilder();
+    traceRendererBuilder = new TraceRendererBuilder(ANY_LYNX_CONFIG);
   }
 
   @Test public void shouldReturnAssertTraceRendererAsPrototypeIfTraceLevelEqualsToVerbose() {

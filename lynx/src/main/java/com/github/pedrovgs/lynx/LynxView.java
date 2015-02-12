@@ -179,6 +179,11 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
           lynxConfig.getMaxNumberOfTracesToShow());
       String filter = attributes.getString(R.styleable.lynx_filter);
       lynxConfig.withMaxNumberOfTracesToShow(maxTracesToShow).withFilter(filter);
+      float fontSizeInPx = attributes.getDimension(R.styleable.lynx_text_size, -1);
+      if (fontSizeInPx != -1) {
+        fontSizeInPx = pixelsToSp(fontSizeInPx);
+        lynxConfig.withTextSizeInPx(fontSizeInPx);
+      }
       attributes.recycle();
     }
   }
@@ -215,7 +220,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   }
 
   private void initializeRenderers() {
-    RendererBuilder<Trace> tracesRendererBuilder = new TraceRendererBuilder();
+    RendererBuilder<Trace> tracesRendererBuilder = new TraceRendererBuilder(lynxConfig);
     Context context = getContext();
     LayoutInflater layoutInflater = LayoutInflater.from(context);
     adapter = new RendererAdapter<Trace>(layoutInflater, tracesRendererBuilder,
@@ -298,6 +303,11 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     if (lynxConfig.hasFilter()) {
       et_filter.append(lynxConfig.getFilter());
     }
+  }
+
+  private float pixelsToSp(float px) {
+    float scaledDensity = getContext().getResources().getDisplayMetrics().scaledDensity;
+    return px / scaledDensity;
   }
 
   /**

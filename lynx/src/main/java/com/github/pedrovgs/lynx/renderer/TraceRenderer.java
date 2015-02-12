@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.R;
 import com.github.pedrovgs.lynx.model.Trace;
 import com.github.pedrovgs.lynx.model.TraceLevel;
@@ -42,7 +43,13 @@ import com.pedrogomez.renderers.Renderer;
  */
 class TraceRenderer extends Renderer<Trace> {
 
+  private final LynxConfig lynxConfig;
+
   private TextView tv_trace;
+
+  TraceRenderer(LynxConfig lynxConfig) {
+    this.lynxConfig = lynxConfig;
+  }
 
   @Override protected View inflate(LayoutInflater inflater, ViewGroup parent) {
     return inflater.inflate(R.layout.trace_row, parent, false);
@@ -51,6 +58,10 @@ class TraceRenderer extends Renderer<Trace> {
   @Override protected void setUpView(View rootView) {
     tv_trace = (TextView) rootView.findViewById(R.id.tv_trace);
     tv_trace.setTypeface(Typeface.MONOSPACE);
+    if (lynxConfig.hasTextSizeInPx()) {
+      float textSize = lynxConfig.getTextSizeInPx();
+      tv_trace.setTextSize(textSize);
+    }
   }
 
   @Override protected void hookListeners(View rootView) {

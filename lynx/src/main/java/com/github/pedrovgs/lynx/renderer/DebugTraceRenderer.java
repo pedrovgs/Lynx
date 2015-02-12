@@ -17,6 +17,7 @@
 package com.github.pedrovgs.lynx.renderer;
 
 import android.graphics.Color;
+import com.github.pedrovgs.lynx.LynxConfig;
 
 /**
  * TraceRenderer implementation used to render Trace objects with TraceLevel.DEBUG trace level.
@@ -24,6 +25,10 @@ import android.graphics.Color;
  * @author Pedro Vicente Gómez Sánchez.
  */
 class DebugTraceRenderer extends TraceRenderer {
+
+  DebugTraceRenderer(LynxConfig lynxConfig) {
+    super(lynxConfig);
+  }
 
   @Override protected int getTraceColor() {
     return Color.BLUE;

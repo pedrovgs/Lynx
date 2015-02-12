@@ -17,6 +17,7 @@
 package com.github.pedrovgs.lynx.renderer;
 
 import android.graphics.Color;
+import com.github.pedrovgs.lynx.LynxConfig;
 
 /**
  * TraceRenderer implementation used to render Trace objects with TraceLevel.WARNING trace level.
@@ -25,9 +26,11 @@ import android.graphics.Color;
  */
 class WarningTraceRenderer extends TraceRenderer {
 
-  @Override protected int getTraceColor() {
-    return Color.rgb(255,165,0);
-
+  WarningTraceRenderer(LynxConfig lynxConfig) {
+    super(lynxConfig);
   }
 
+  @Override protected int getTraceColor() {
+    return Color.rgb(255, 165, 0);
+  }
 }

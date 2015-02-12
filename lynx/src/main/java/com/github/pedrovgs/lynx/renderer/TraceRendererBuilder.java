@@ -16,6 +16,7 @@
 
 package com.github.pedrovgs.lynx.renderer;
 
+import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.model.Trace;
 import com.github.pedrovgs.lynx.model.TraceLevel;
 import com.pedrogomez.renderers.Renderer;
@@ -35,15 +36,15 @@ import java.util.List;
  */
 public class TraceRendererBuilder extends RendererBuilder<Trace> {
 
-  public TraceRendererBuilder() {
+  public TraceRendererBuilder(LynxConfig lynxConfig) {
     List<Renderer<Trace>> prototypes = new LinkedList<Renderer<Trace>>();
-    prototypes.add(new TraceRenderer());
-    prototypes.add(new AssertTraceRenderer());
-    prototypes.add(new DebugTraceRenderer());
-    prototypes.add(new InfoTraceRenderer());
-    prototypes.add(new WarningTraceRenderer());
-    prototypes.add(new ErrorTraceRenderer());
-    prototypes.add(new WtfTraceRenderer());
+    prototypes.add(new TraceRenderer(lynxConfig));
+    prototypes.add(new AssertTraceRenderer(lynxConfig));
+    prototypes.add(new DebugTraceRenderer(lynxConfig));
+    prototypes.add(new InfoTraceRenderer(lynxConfig));
+    prototypes.add(new WarningTraceRenderer(lynxConfig));
+    prototypes.add(new ErrorTraceRenderer(lynxConfig));
+    prototypes.add(new WtfTraceRenderer(lynxConfig));
     setPrototypes(prototypes);
   }
 

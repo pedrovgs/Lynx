@@ -19,6 +19,7 @@ package com.github.pedrovgs.lynx.renderer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.R;
 import com.github.pedrovgs.lynx.model.Trace;
 import com.github.pedrovgs.lynx.model.TraceLevel;
@@ -39,11 +40,12 @@ import static org.junit.Assert.assertEquals;
   private static final TraceLevel ANY_TRACE_LEVEL = TraceLevel.WTF;
   private static final String ANY_TRACE_MESSAGE =
       "02-08 19:54:30.145 Lynx﹕ WTF!!! My app is not working!!";
+  private static final LynxConfig ANY_LYNX_CONFIG = new LynxConfig();
 
   private TraceRenderer traceRenderer;
 
   @Before public void setUp() {
-    traceRenderer = new TraceRenderer();
+    traceRenderer = new TraceRenderer(ANY_LYNX_CONFIG);
   }
 
   @Test public void shouldRenderFullTracePlusTraceLevelInformation() {

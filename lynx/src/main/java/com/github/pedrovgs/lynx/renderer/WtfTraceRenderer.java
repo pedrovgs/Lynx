@@ -16,6 +16,8 @@
 
 package com.github.pedrovgs.lynx.renderer;
 
+import com.github.pedrovgs.lynx.LynxConfig;
+
 /**
  * TraceRenderer implementation used to render Trace objects with TraceLevel.WTF trace level.
  *
@@ -23,4 +25,7 @@ package com.github.pedrovgs.lynx.renderer;
  */
 class WtfTraceRenderer extends ErrorTraceRenderer {
 
+  WtfTraceRenderer(LynxConfig lynxConfig) {
+    super(lynxConfig);
+  }
 }
