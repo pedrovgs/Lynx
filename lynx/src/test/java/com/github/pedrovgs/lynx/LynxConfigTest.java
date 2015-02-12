@@ -53,4 +53,22 @@ public class LynxConfigTest {
 
     assertTrue(lynxConfig.hasFilter());
   }
+
+  @Test public void shouldUse36pxAsTextSizeByDefault() {
+    LynxConfig lynxConfig = new LynxConfig();
+
+    assertEquals(36, lynxConfig.getTextSizeInPx(), 0.1f);
+  }
+
+  @Test public void shouldReturnFalseIfHasNoConfiguredTraceTextSize() {
+    LynxConfig lynxConfig = new LynxConfig();
+
+    assertFalse(lynxConfig.hasTextSizeInPx());
+  }
+
+  @Test public void shouldReturnTrueIfHasConfiguredTraceTextSize() {
+    LynxConfig lynxConfig = new LynxConfig().withTextSizeInPx(10);
+
+    assertTrue(lynxConfig.hasTextSizeInPx());
+  }
 }
