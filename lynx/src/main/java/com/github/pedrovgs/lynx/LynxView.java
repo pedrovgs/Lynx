@@ -152,7 +152,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   private boolean isPresenterReady() {
     return presenter != null;
   }
-  
+
   private void resumePresenter() {
     if (isPresenterReady()) {
       presenter.resume();
@@ -298,5 +298,13 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     if (lynxConfig.hasFilter()) {
       et_filter.append(lynxConfig.getFilter());
     }
+  }
+
+  /**
+   * Backdoor used to replace the presenter used in this view. This method should be used just for
+   * testing purposes.
+   */
+  void setPresenter(LynxPresenter presenter) {
+    this.presenter = presenter;
   }
 }
