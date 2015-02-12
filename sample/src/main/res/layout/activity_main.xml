@@ -61,6 +61,7 @@
       android:layout_height="@dimen/lynx_view_height"
       lynx:filter="Lynx"
       lynx:max_traces_to_show="1500"
+      lynx:text_size="12sp"
       android:visibility="gone"/>
 
 </RelativeLayout>
