@@ -19,6 +19,7 @@ package com.github.pedrovgs.lynx;
 import android.app.Activity;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.github.pedrovgs.lynx.model.Trace;
 import com.github.pedrovgs.lynx.model.TraceLevel;
 import com.github.pedrovgs.lynx.presenter.LynxPresenter;
@@ -44,6 +45,7 @@ import static org.mockito.Mockito.verify;
 
   private static final String ANY_TRACE_MESSAGE = "02-07 17:45:33.014 D/ Any trace message";
   private static final String SHARE_INTENT_TYPE = "text/plain";
+  public static final int ANY_TEXT_SIZE = 300;
 
   private LynxView lynxView;
   private Activity activity;
@@ -154,6 +156,23 @@ import static org.mockito.Mockito.verify;
     ListView lv_traces = getLvTraces();
     assertEquals(0, lv_traces.getAdapter().getCount());
   }
+
+  @Test public void shouldApplyNewConfigJustIfIsDifferentOfTheCurrentOne() {
+    LynxConfig newLynxConfig = new LynxConfig().withTextSizeInPx(ANY_TEXT_SIZE);
+
+    lynxView.setLynxConfig(newLynxConfig);
+
+    verify(presenter).setLynxConfig(newLynxConfig);
+  }
+
+  @Test public void shouldNotApplyNewConfigIfIsEqualsToThePreviousOne() {
+    LynxConfig defaultConfig = new LynxConfig();
+
+    lynxView.setLynxConfig(defaultConfig);
+
+    verify(presenter, never()).setLynxConfig(defaultConfig);
+  }
+
 
   private void assertTracesRendered(List<Trace> traces, ListView lv_traces) {
     for (int i = 0; i < traces.size(); i++) {

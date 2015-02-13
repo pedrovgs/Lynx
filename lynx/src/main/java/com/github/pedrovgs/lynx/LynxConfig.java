@@ -26,7 +26,7 @@ import java.io.Serializable;
  */
 public class LynxConfig implements Serializable, Cloneable {
   private static final long serialVersionUID = 293939299388293L;
-  
+
   private static final float DEFAULT_TEXT_SIZE_IN_PX = 36;
 
   private int maxNumberOfTracesToShow = 2500;
@@ -52,8 +52,8 @@ public class LynxConfig implements Serializable, Cloneable {
     return this;
   }
 
-  public LynxConfig withTextSizeInPx(float fontSizeInPx) {
-    this.textSizeInPx = fontSizeInPx;
+  public LynxConfig withTextSizeInPx(float textSizeInPx) {
+    this.textSizeInPx = textSizeInPx;
     return this;
   }
 
@@ -85,6 +85,10 @@ public class LynxConfig implements Serializable, Cloneable {
 
     if (maxNumberOfTracesToShow != that.maxNumberOfTracesToShow) return false;
     if (filter != null ? !filter.equals(that.filter) : that.filter != null) return false;
+    if (textSizeInPx != null ? !textSizeInPx.equals(that.textSizeInPx)
+        : that.textSizeInPx != null) {
+      return false;
+    }
 
     return true;
   }

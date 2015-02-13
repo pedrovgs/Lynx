@@ -123,7 +123,7 @@ public class LynxPresenter implements Lynx.Listener {
     return traceBuffer.add(traces);
   }
 
-  private List<Trace> getCurrentTraces() {
+  public List<Trace> getCurrentTraces() {
     return traceBuffer.getTraces();
   }
 

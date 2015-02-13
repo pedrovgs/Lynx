@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity {
     final Button bt_show_lynx_view = (Button) findViewById(R.id.bt_show_lynx_view);
     bt_show_lynx_view.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        View lynxView = findViewById(R.id.lynx_view);
+        final View lynxView = findViewById(R.id.lynx_view);
         lynxView.setVisibility(View.VISIBLE);
       }
     });

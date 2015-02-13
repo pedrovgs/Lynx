@@ -194,6 +194,15 @@ public class LynxPresenterTest {
     verify(lynx, never()).restart();
   }
 
+  @Test public void shouldReturnCurrentTraces() {
+    List<Trace> traces = generateTraces(5);
+
+    presenter.resume();
+    presenter.onNewTraces(traces);
+
+    assertEquals(traces, presenter.getCurrentTraces());
+  }
+
   private List<Trace> removeFirstTraces(int tracesToRemove, List<Trace> traces) {
     for (int i = 0; i < tracesToRemove; i++) {
       traces.remove(0);

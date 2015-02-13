@@ -110,9 +110,15 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   public void setLynxConfig(LynxConfig lynxConfig) {
     validateLynxConfig(lynxConfig);
-    this.lynxConfig = (LynxConfig) lynxConfig.clone();
-    updateFilterText();
-    presenter.setLynxConfig(lynxConfig);
+    if (!this.lynxConfig.equals(lynxConfig)) {
+      this.lynxConfig = (LynxConfig) lynxConfig.clone();
+      updateFilterText();
+      if (lynxConfig.hasTextSizeInPx()
+          && this.lynxConfig.getTextSizeInPx() != lynxConfig.getTextSizeInPx()) {
+        initializeRenderers();
+      }
+      presenter.setLynxConfig(lynxConfig);
+    }
   }
 
   public LynxConfig getLynxConfig() {
@@ -225,6 +231,10 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     LayoutInflater layoutInflater = LayoutInflater.from(context);
     adapter = new RendererAdapter<Trace>(layoutInflater, tracesRendererBuilder,
         new ListAdapteeCollection<Trace>());
+    adapter.addAll(presenter.getCurrentTraces());
+    if (adapter.getCount() > 0) {
+      adapter.notifyDataSetChanged();
+    }
     lv_traces.setAdapter(adapter);
   }
 
