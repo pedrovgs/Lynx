@@ -17,9 +17,9 @@
 package com.github.pedrovgs.lynx.model;
 
 /**
- * Class created to add testability in time usage terms. Using this wrapper of
+ * Class created to add testability in terms of time usage. Using this wrapper of
  * System.currentTimeMillis instead of use the System call directly we improve our code
- * testability.
+ * testability and provide mocked implementations of TimeProvider with pre-configured results.
  *
  * @author Pedro Vicente Gómez Sánchez.
  */

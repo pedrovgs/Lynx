@@ -45,9 +45,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 /**
- * Main library view. This RelativeLayout extension shows all the information printed in your
- * device log. Add this view to your layouts if you want to show your Logcat traces and configure
- * it using styleable attributes.
+ * Main library view. Custom view based on a RelativeLayout used to show all the information
+ * printed by the Android Logcat. Add this view to your layouts if you want to show your Logcat
+ * traces and configure it using styleable attributes.
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
@@ -82,6 +82,9 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     initializeView();
   }
 
+  /**
+   * Initializes LynxPresenter if LynxView is visible when is attached to the window.
+   */
   @Override protected void onAttachedToWindow() {
     super.onAttachedToWindow();
     if (isVisible()) {
@@ -89,11 +92,19 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     }
   }
 
+  /**
+   * Stops LynxPresenter when LynxView is detached from the window.
+   */
   @Override protected void onDetachedFromWindow() {
     super.onDetachedFromWindow();
     pausePresenter();
   }
 
+  /**
+   * Initializes or stops LynxPresenter based on visibility changes. Doing this Lynx is not going
+   * to
+   * read your application Logcat if LynxView is not visible or attached.
+   */
   @Override protected void onVisibilityChanged(View changedView, int visibility) {
     super.onVisibilityChanged(changedView, visibility);
     if (changedView != this) {
@@ -107,6 +118,9 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     }
   }
 
+  /**
+   * Given a valid LynxConfig object update all the dependencies to apply this new configuration.
+   */
   public void setLynxConfig(LynxConfig lynxConfig) {
     validateLynxConfig(lynxConfig);
     boolean hasChangedLynxConfig = !this.lynxConfig.equals(lynxConfig);
@@ -118,10 +132,17 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     }
   }
 
+  /**
+   * Returns the current LynxConfig object used.
+   */
   public LynxConfig getLynxConfig() {
     return lynxConfig;
   }
 
+  /**
+   * Given a List<Trace> updates the ListView adapter with this information and keeps the scroll
+   * position if needed.
+   */
   @Override public void showTraces(List<Trace> traces, int removedTraces) {
     if (lastScrollPosition == 0) {
       lastScrollPosition = lv_traces.getFirstVisiblePosition();
@@ -132,20 +153,18 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     updateScrollPosition(removedTraces);
   }
 
-  private void updateScrollPosition(int removedTraces) {
-    boolean shouldUpdateScrollPosition = removedTraces > 0;
-    if (shouldUpdateScrollPosition) {
-      int newScrollPosition = lastScrollPosition - removedTraces;
-      lastScrollPosition = newScrollPosition;
-      lv_traces.setSelectionFromTop(newScrollPosition, 0);
-    }
-  }
-
+  /**
+   * Removes all the traces rendered in the ListView.
+   */
   @Override public void clear() {
     adapter.clear();
     adapter.notifyDataSetChanged();
   }
 
+  /**
+   * Uses an intent to share content and given one String with all the information related to the
+   * List of traces shares this information with other applications.
+   */
   @Override public void shareTraces(String plainTraces) {
     Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
     sharingIntent.setType(SHARE_INTENT_TYPE);
@@ -260,6 +279,8 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
       @Override public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
           int totalItemCount) {
+        //Hack to avoid problems with the scroll position when auto scroll is disabled. This hack
+        // is needed because Android notify a firstVisibleItem one position before it should be.
         if (lastScrollPosition - firstVisibleItem != 1) {
           lastScrollPosition = firstVisibleItem;
         }
@@ -273,7 +294,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
       }
 
       @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-        presenter.onFilterUpdated(s.toString());
+        presenter.updateFilter(s.toString());
       }
 
       @Override public void afterTextChanged(Editable s) {
@@ -317,6 +338,15 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   private float pixelsToSp(float px) {
     float scaledDensity = getContext().getResources().getDisplayMetrics().scaledDensity;
     return px / scaledDensity;
+  }
+
+  private void updateScrollPosition(int removedTraces) {
+    boolean shouldUpdateScrollPosition = removedTraces > 0;
+    if (shouldUpdateScrollPosition) {
+      int newScrollPosition = lastScrollPosition - removedTraces;
+      lastScrollPosition = newScrollPosition;
+      lv_traces.setSelectionFromTop(newScrollPosition, 0);
+    }
   }
 
   /**

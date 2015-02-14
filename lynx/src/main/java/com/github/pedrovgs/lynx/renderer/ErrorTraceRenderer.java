@@ -22,6 +22,9 @@ import com.github.pedrovgs.lynx.LynxConfig;
 /**
  * TraceRenderer implementation used to render Trace objects with TraceLevel.ERROR trace level.
  *
+ * To learn more about Renderers library take a look to the repository:
+ * https://github.com/pedrovgs/Renderers
+ *
  * @author Pedro Vicente Gómez Sánchez.
  */
 class ErrorTraceRenderer extends TraceRenderer {

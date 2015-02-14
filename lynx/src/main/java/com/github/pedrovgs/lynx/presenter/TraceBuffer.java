@@ -36,7 +36,7 @@ class TraceBuffer {
   }
 
   /**
-   * Configure the max number of traces to keep inside the buffer
+   * Configures the max number of traces to keep inside the buffer
    */
   void setBufferSize(int bufferSize) {
     this.bufferSize = bufferSize;
@@ -44,7 +44,7 @@ class TraceBuffer {
   }
 
   /**
-   * Add a list of traces to the buffer, if the buffer is full your new traces will be added and
+   * Adds a list of traces to the buffer, if the buffer is full your new traces will be added and
    * the previous one will be removed.
    */
   int add(List<Trace> traces) {
@@ -52,8 +52,25 @@ class TraceBuffer {
     return removeExceededTracesIfNeeded();
   }
 
+  /**
+   * Returns the current list of traces stored in the buffer.
+   */
   List<Trace> getTraces() {
     return traces;
+  }
+
+  /**
+   * Returns the number of traes stored in the buffer.
+   */
+  public int getCurrentNumberOfTraces() {
+    return traces.size();
+  }
+
+  /**
+   * Removes traces stored in the buffer.
+   */
+  public void clear() {
+    traces.clear();
   }
 
   private int removeExceededTracesIfNeeded() {
@@ -75,13 +92,5 @@ class TraceBuffer {
     for (int i = 0; i < tracesToDiscard; i++) {
       traces.remove(0);
     }
-  }
-
-  public int getCurrentNumberOfTraces() {
-    return traces.size();
-  }
-
-  public void clear() {
-    traces.clear();
   }
 }

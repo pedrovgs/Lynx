@@ -26,6 +26,10 @@ import java.util.List;
  * events and notify it to the Lynx listeners transforming all the information from a plain String
  * to a Trace with all the information needed.
  *
+ * Given a LynxConfig object the sample rating used to notify Lynx clients about new traces can be
+ * modified on demand. LynxConfig object will be used to filter traces if any filter has been
+ * previously configured.
+ *
  * @author Pedro Vicente Gómez Sánchez.
  */
 public class Lynx {
@@ -47,10 +51,23 @@ public class Lynx {
     this.timeProvider = timeProvider;
   }
 
+  /**
+   * Indicates a custom LynxConfig object.
+   */
   public synchronized void setConfig(LynxConfig lynxConfig) {
     this.lynxConfig = lynxConfig;
   }
 
+  /**
+   * Returns a copy of the current LynxConfig object.
+   */
+  public LynxConfig getConfig() {
+    return (LynxConfig) lynxConfig.clone();
+  }
+
+  /**
+   * Configures a Logcat. Listeners and initialize Logcat dependency to read logcat traces.
+   */
   public void startReading() {
     logcat.setListener(new Logcat.Listener() {
       @Override public void onTraceRead(String logcatTrace) {
@@ -67,11 +84,18 @@ public class Lynx {
     }
   }
 
+  /**
+   * Stops Logcat dependency to stop receiving logcat traces.
+   */
   public void stopReading() {
     logcat.stopReading();
     logcat.interrupt();
   }
 
+  /**
+   * Stops the configured Logcat dependency and creates a clone to restart using Logcat and
+   * LogcatListener configured previously.
+   */
   public void restart() {
     Logcat.Listener previousListener = logcat.getListener();
     logcat.stopReading();
@@ -82,10 +106,16 @@ public class Lynx {
     logcat.start();
   }
 
+  /**
+   * Adds a Listener to the listeners collection to be notified with new Trace objects.
+   */
   public void registerListener(Listener lynxPresenter) {
     listeners.add(lynxPresenter);
   }
 
+  /**
+   * Removes a Listener to the listeners collection.
+   */
   public void unregisterListener(Listener lynxPresenter) {
     listeners.remove(lynxPresenter);
   }
@@ -132,10 +162,6 @@ public class Lynx {
       }
     });
     lastNotificationTime = timeProvider.getCurrentTimeMillis();
-  }
-
-  public LynxConfig getConfig() {
-    return (LynxConfig) lynxConfig.clone();
   }
 
   public interface Listener {

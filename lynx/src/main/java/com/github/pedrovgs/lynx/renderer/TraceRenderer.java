@@ -75,6 +75,10 @@ class TraceRenderer extends Renderer<Trace> {
     tv_trace.setText(traceRepresentation);
   }
 
+  protected int getTraceColor() {
+    return Color.GRAY;
+  }
+
   private Spannable getTraceVisualRepresentation(TraceLevel level, String traceMessage) {
     traceMessage = " " + level.getValue() + "  " + traceMessage;
     Spannable traceRepresentation = new SpannableString(traceMessage);
@@ -82,9 +86,5 @@ class TraceRenderer extends Renderer<Trace> {
     traceRepresentation.setSpan(new BackgroundColorSpan(traceColor), 0, 3,
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     return traceRepresentation;
-  }
-
-  protected int getTraceColor() {
-    return Color.GRAY;
   }
 }

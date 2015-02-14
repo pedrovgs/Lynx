@@ -23,8 +23,10 @@ import android.os.Bundle;
 
 /**
  * Activity created to show a LynxView with "match_parent" configuration for LynxView
- * "layout_height" and "layout_width". To configure LynxView and all the information to show use
- * Activity extras.
+ * "layout_height" and "layout_width" attributes. To configure LynxView and all the information to
+ * show use Activity extras and a LynxConfig object. Use getIntent() method to obtain a valid
+ * intent
+ * to start this Activity.
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
@@ -32,7 +34,13 @@ public class LynxActivity extends Activity {
 
   private static final String LYNX_CONFIG_EXTRA = "extra_lynx_config";
 
+  /**
+   * Generates an Intent to start LynxActivity with a LynxConfig configuration passed as parameter.
+   */
   public static Intent getIntent(Context context, LynxConfig lynxConfig) {
+    if (lynxConfig == null) {
+      lynxConfig = new LynxConfig();
+    }
     Intent intent = new Intent(context, LynxActivity.class);
     intent.putExtra(LYNX_CONFIG_EXTRA, lynxConfig);
     return intent;

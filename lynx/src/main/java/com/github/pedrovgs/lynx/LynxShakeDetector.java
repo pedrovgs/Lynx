@@ -22,7 +22,8 @@ import android.hardware.SensorManager;
 import com.squareup.seismic.ShakeDetector;
 
 /**
- * Shake detector wrapper based on Square Seismic library: https://github.com/square/seismic
+ * Identifies when the user has shaken the device to open LynxActivity. This sake detector is a
+ * wrapper of Square Seismic library: https://github.com/square/seismic
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
@@ -36,6 +37,10 @@ public class LynxShakeDetector {
     this.context = context;
   }
 
+  /**
+   * Starts listening shakes to open LynxActivity if a shake is detected if the ShakeDetector is
+   * enabled.
+   */
   public void init() {
     ShakeDetector shakeDetector = new ShakeDetector(new ShakeDetector.Listener() {
       @Override public void hearShake() {
@@ -48,17 +53,23 @@ public class LynxShakeDetector {
     shakeDetector.start(sensorManager);
   }
 
-  private void openLynxActivity() {
-    Intent lynxActivityIntent = new Intent(context, LynxActivity.class);
-    lynxActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    context.startActivity(lynxActivityIntent);
-  }
-
+  /**
+   * Enables shake detector to open LynxActivity on shake.
+   */
   static void enable() {
     isEnabled = true;
   }
 
+  /**
+   * Disables shake detector to open LynxActivity on shake.
+   */
   static void disable() {
     isEnabled = false;
+  }
+
+  private void openLynxActivity() {
+    Intent lynxActivityIntent = new Intent(context, LynxActivity.class);
+    lynxActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    context.startActivity(lynxActivityIntent);
   }
 }

@@ -22,7 +22,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Logcat abstraction created to be able to read from the device log output.
+ * Logcat abstraction created to be able to read from the device log output. This implementation is
+ * based on a BufferReader connected to the process InputStream you can obtain executing a command
+ * using Android Runtime object.
+ *
+ * This class will notify listeners configured previously about new traces sent to the device and
+ * will be reading and notifying traces until stopReading() method be invoked.
+ *
+ * To be able to read from a process InputStream without block the thread where we were, this class
+ * extends from Thread and all the code inside the run() method will be executed in a background
+ * thread.
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
@@ -34,14 +43,23 @@ public class Logcat extends Thread implements Cloneable {
   private Listener listener;
   private boolean continueReading = true;
 
+  /**
+   * Configures a listener to be notified with new traces read from the application logcat.
+   */
   public void setListener(Listener listener) {
     this.listener = listener;
   }
 
+  /**
+   * Obtains the current Logcat listener.
+   */
   public Listener getListener() {
     return listener;
   }
 
+  /**
+   * Starts reading traces from the application logcat and notifying listeners if needed.
+   */
   @Override public void run() {
     super.run();
     try {
@@ -52,6 +70,9 @@ public class Logcat extends Thread implements Cloneable {
     readLogcat();
   }
 
+  /**
+   * Stops reading from the application logcat and notifying listeners.
+   */
   public void stopReading() {
     continueReading = false;
   }

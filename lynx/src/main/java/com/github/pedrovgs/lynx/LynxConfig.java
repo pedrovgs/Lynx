@@ -20,7 +20,13 @@ import java.io.Serializable;
 
 /**
  * Lynx configuration parameters used to open main activity. All the configuration library is
- * provided by library clients using this class.
+ * provided by library clients using this class. With LynxConfig you can privde different values
+ * for:
+ *
+ * - Max number of traces to show in LynxView.
+ * - Filter used to get a list of traces to show.
+ * - Text size in DP used to render a trace.
+ * - Sampling rate used to read from the Logcat output.
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
@@ -114,14 +120,21 @@ public class LynxConfig implements Serializable, Cloneable {
 
   @Override public Object clone() {
     return new LynxConfig().setMaxNumberOfTracesToShow(getMaxNumberOfTracesToShow())
-        .setFilter(getFilter());
+        .setFilter(getFilter())
+        .setSamplingRate(getSamplingRate());
   }
 
   @Override public String toString() {
-    return "LynxConfig{" + "maxNumberOfTracesToShow=" + maxNumberOfTracesToShow
-        + ", filter='" + filter + '\''
-        + ", textSizeInPx=" + textSizeInPx
-        + ", samplingRate=" + samplingRate
+    return "LynxConfig{"
+        + "maxNumberOfTracesToShow="
+        + maxNumberOfTracesToShow
+        + ", filter='"
+        + filter
+        + '\''
+        + ", textSizeInPx="
+        + textSizeInPx
+        + ", samplingRate="
+        + samplingRate
         + '}';
   }
 }

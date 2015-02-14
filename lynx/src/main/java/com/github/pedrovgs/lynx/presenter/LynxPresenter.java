@@ -45,12 +45,19 @@ public class LynxPresenter implements Lynx.Listener {
     this.traceBuffer = new TraceBuffer(maxNumberOfTracesToShow);
   }
 
+  /**
+   * Updates and applies a new lynx configuration based on the LynxConfig object passed as
+   * parameter.
+   */
   public void setLynxConfig(LynxConfig lynxConfig) {
     validateLynxConfig(lynxConfig);
     updateBufferConfig(lynxConfig);
     updateLynxConfig(lynxConfig);
   }
 
+  /**
+   * Initializes presenter lifecycle if it wasn't initialized before.
+   */
   public void resume() {
     if (!isInitialized) {
       isInitialized = true;
@@ -59,6 +66,9 @@ public class LynxPresenter implements Lynx.Listener {
     }
   }
 
+  /**
+   * Stops presenter lifecycle if it was previously initialized.
+   */
   public void pause() {
     if (isInitialized) {
       isInitialized = false;
@@ -67,13 +77,19 @@ public class LynxPresenter implements Lynx.Listener {
     }
   }
 
+  /**
+   * Given a list of Trace objects to show, updates the buffer of traces and refresh the view.
+   */
   @Override public void onNewTraces(List<Trace> traces) {
     int tracesRemoved = updateTraceBuffer(traces);
     List<Trace> tracesToNotify = getCurrentTraces();
     view.showTraces(tracesToNotify, tracesRemoved);
   }
 
-  public void onFilterUpdated(String filter) {
+  /**
+   * Updates the filter used to know which Trace objects we have to show in the UI.
+   */
+  public void updateFilter(String filter) {
     if (isInitialized) {
       LynxConfig lynxConfig = lynx.getConfig();
       lynxConfig.setFilter(filter);
@@ -83,12 +99,21 @@ public class LynxPresenter implements Lynx.Listener {
     }
   }
 
+  /**
+   * Generates a plain representation of all the Trace objects this presenter has stored and share
+   * them to other applications.
+   */
   public void onShareButtonClicked() {
     List<Trace> tracesToShare = new LinkedList<Trace>(traceBuffer.getTraces());
     String plainTraces = generatePlainTracesToShare(tracesToShare);
     view.shareTraces(plainTraces);
   }
 
+  /**
+   * Based on the int passed as parameter changes auto scroll feature configuration to
+   * enable/disabled. If the last visible item of the list is in the last position of the list,
+   * enables auto scroll, if ont, disables auto scroll.
+   */
   public void onScrollToPosition(int lastVisiblePositionInTheList) {
     if (shouldDisableAutoScroll(lastVisiblePositionInTheList)) {
       view.disableAutoScroll();
@@ -97,6 +122,9 @@ public class LynxPresenter implements Lynx.Listener {
     }
   }
 
+  /**
+   * Returns a list of the current traces stored in this presenter.
+   */
   public List<Trace> getCurrentTraces() {
     return traceBuffer.getTraces();
   }

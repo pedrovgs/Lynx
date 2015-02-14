@@ -130,7 +130,7 @@ public class LynxPresenterTest {
     ArgumentCaptor<LynxConfig> lynxConfigArgumentCaptor = ArgumentCaptor.forClass(LynxConfig.class);
 
     presenter.resume();
-    presenter.onFilterUpdated(ANY_FILTER);
+    presenter.updateFilter(ANY_FILTER);
 
     verify(lynx).setConfig(lynxConfigArgumentCaptor.capture());
     LynxConfig lynxConfig = lynxConfigArgumentCaptor.getValue();
@@ -141,7 +141,7 @@ public class LynxPresenterTest {
     givenAPreviusLynxConfig();
 
     presenter.resume();
-    presenter.onFilterUpdated(ANY_FILTER);
+    presenter.updateFilter(ANY_FILTER);
 
     verify(view).clear();
   }
@@ -152,7 +152,7 @@ public class LynxPresenterTest {
 
     presenter.resume();
     presenter.onNewTraces(traces);
-    presenter.onFilterUpdated(ANY_FILTER);
+    presenter.updateFilter(ANY_FILTER);
     List<Trace> newTraces = generateTraces(5);
     presenter.onNewTraces(newTraces);
 
@@ -188,7 +188,7 @@ public class LynxPresenterTest {
   }
 
   @Test public void shouldNotUpdateFilterIfPresenterIsNotInitialized() {
-    presenter.onFilterUpdated(ANY_FILTER);
+    presenter.updateFilter(ANY_FILTER);
 
     verify(lynx, never()).setConfig(any(LynxConfig.class));
     verify(lynx, never()).restart();
