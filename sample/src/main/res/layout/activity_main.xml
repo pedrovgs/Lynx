@@ -59,9 +59,10 @@
       android:id="@+id/lynx_view"
       android:layout_width="match_parent"
       android:layout_height="@dimen/lynx_view_height"
+      android:visibility="gone"
       lynx:filter="Lynx"
       lynx:max_traces_to_show="1500"
       lynx:text_size="12sp"
-      android:visibility="gone"/>
+      lynx:sampling_rate="200"/>
 
 </RelativeLayout>

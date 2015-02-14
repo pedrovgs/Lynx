@@ -110,13 +110,11 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   public void setLynxConfig(LynxConfig lynxConfig) {
     validateLynxConfig(lynxConfig);
-    if (!this.lynxConfig.equals(lynxConfig)) {
+    boolean hasChangedLynxConfig = !this.lynxConfig.equals(lynxConfig);
+    if (hasChangedLynxConfig) {
       this.lynxConfig = (LynxConfig) lynxConfig.clone();
       updateFilterText();
-      if (lynxConfig.hasTextSizeInPx()
-          && this.lynxConfig.getTextSizeInPx() != lynxConfig.getTextSizeInPx()) {
-        initializeRenderers();
-      }
+      updateAdapter();
       presenter.setLynxConfig(lynxConfig);
     }
   }
@@ -181,15 +179,22 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     lynxConfig = new LynxConfig();
     if (attrs != null) {
       TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.lynx);
+
       int maxTracesToShow = attributes.getInteger(R.styleable.lynx_max_traces_to_show,
           lynxConfig.getMaxNumberOfTracesToShow());
       String filter = attributes.getString(R.styleable.lynx_filter);
-      lynxConfig.setMaxNumberOfTracesToShow(maxTracesToShow).setFilter(filter);
       float fontSizeInPx = attributes.getDimension(R.styleable.lynx_text_size, -1);
       if (fontSizeInPx != -1) {
         fontSizeInPx = pixelsToSp(fontSizeInPx);
         lynxConfig.setTextSizeInPx(fontSizeInPx);
       }
+      int samplingRate =
+          attributes.getInteger(R.styleable.lynx_sampling_rate, lynxConfig.getSamplingRate());
+
+      lynxConfig.setMaxNumberOfTracesToShow(maxTracesToShow)
+          .setFilter(filter)
+          .setSamplingRate(samplingRate);
+
       attributes.recycle();
     }
   }
@@ -275,6 +280,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   private void initializePresenter() {
     Lynx lynx = new Lynx(new Logcat(), new AndroidMainThread(), new TimeProvider());
+    lynx.setConfig(lynxConfig);
     presenter = new LynxPresenter(lynx, this, lynxConfig.getMaxNumberOfTracesToShow());
   }
 
@@ -312,6 +318,13 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   private void updateFilterText() {
     if (lynxConfig.hasFilter()) {
       et_filter.append(lynxConfig.getFilter());
+    }
+  }
+
+  private void updateAdapter() {
+    if (lynxConfig.hasTextSizeInPx()
+        && this.lynxConfig.getTextSizeInPx() != lynxConfig.getTextSizeInPx()) {
+      initializeRenderers();
     }
   }
 
