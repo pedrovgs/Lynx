@@ -17,7 +17,7 @@
 package com.github.pedrovgs.lynx.exception;
 
 /**
- * Custom exception created to notify when a Trace object is created with an ivalid source.
+ * Custom exception created to notify when a Trace object is created with an invalid source.
  *
  * @author Pedro Vicente Gómez Sánchez.
  */

@@ -118,11 +118,10 @@ public class LynxConfig implements Serializable, Cloneable {
   }
 
   @Override public String toString() {
-    return "LynxConfig{" +
-        "maxNumberOfTracesToShow=" + maxNumberOfTracesToShow +
-        ", filter='" + filter + '\'' +
-        ", textSizeInPx=" + textSizeInPx +
-        ", samplingRate=" + samplingRate +
-        '}';
+    return "LynxConfig{" + "maxNumberOfTracesToShow=" + maxNumberOfTracesToShow
+        + ", filter='" + filter + '\''
+        + ", textSizeInPx=" + textSizeInPx
+        + ", samplingRate=" + samplingRate
+        + '}';
   }
 }
