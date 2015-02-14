@@ -184,11 +184,11 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
       int maxTracesToShow = attributes.getInteger(R.styleable.lynx_max_traces_to_show,
           lynxConfig.getMaxNumberOfTracesToShow());
       String filter = attributes.getString(R.styleable.lynx_filter);
-      lynxConfig.withMaxNumberOfTracesToShow(maxTracesToShow).withFilter(filter);
+      lynxConfig.setMaxNumberOfTracesToShow(maxTracesToShow).setFilter(filter);
       float fontSizeInPx = attributes.getDimension(R.styleable.lynx_text_size, -1);
       if (fontSizeInPx != -1) {
         fontSizeInPx = pixelsToSp(fontSizeInPx);
-        lynxConfig.withTextSizeInPx(fontSizeInPx);
+        lynxConfig.setTextSizeInPx(fontSizeInPx);
       }
       attributes.recycle();
     }

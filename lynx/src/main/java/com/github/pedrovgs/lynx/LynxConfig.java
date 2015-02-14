@@ -32,12 +32,13 @@ public class LynxConfig implements Serializable, Cloneable {
   private int maxNumberOfTracesToShow = 2500;
   private String filter;
   private Float textSizeInPx;
+  private int samplingRate = 10;
 
   public LynxConfig() {
 
   }
 
-  public LynxConfig withMaxNumberOfTracesToShow(int maxNumberOfTracesToShow) {
+  public LynxConfig setMaxNumberOfTracesToShow(int maxNumberOfTracesToShow) {
     if (maxNumberOfTracesToShow <= 0) {
       throw new IllegalArgumentException(
           "You can't use a max number of traces equals or lower than zero.");
@@ -47,13 +48,18 @@ public class LynxConfig implements Serializable, Cloneable {
     return this;
   }
 
-  public LynxConfig withFilter(String filter) {
+  public LynxConfig setFilter(String filter) {
     this.filter = filter;
     return this;
   }
 
-  public LynxConfig withTextSizeInPx(float textSizeInPx) {
+  public LynxConfig setTextSizeInPx(float textSizeInPx) {
     this.textSizeInPx = textSizeInPx;
+    return this;
+  }
+
+  public LynxConfig withSamplingRate(int samplingRate) {
+    this.samplingRate = samplingRate;
     return this;
   }
 
@@ -77,6 +83,10 @@ public class LynxConfig implements Serializable, Cloneable {
     return textSizeInPx != null;
   }
 
+  public int getSamplingRate() {
+    return samplingRate;
+  }
+
   @Override public boolean equals(Object o) {
     if (this == o) return true;
     if (!(o instanceof LynxConfig)) return false;
@@ -84,6 +94,7 @@ public class LynxConfig implements Serializable, Cloneable {
     LynxConfig that = (LynxConfig) o;
 
     if (maxNumberOfTracesToShow != that.maxNumberOfTracesToShow) return false;
+    if (samplingRate != that.samplingRate) return false;
     if (filter != null ? !filter.equals(that.filter) : that.filter != null) return false;
     if (textSizeInPx != null ? !textSizeInPx.equals(that.textSizeInPx)
         : that.textSizeInPx != null) {
@@ -96,21 +107,22 @@ public class LynxConfig implements Serializable, Cloneable {
   @Override public int hashCode() {
     int result = maxNumberOfTracesToShow;
     result = 31 * result + (filter != null ? filter.hashCode() : 0);
+    result = 31 * result + (textSizeInPx != null ? textSizeInPx.hashCode() : 0);
+    result = 31 * result + samplingRate;
     return result;
   }
 
   @Override public Object clone() {
-    return new LynxConfig().withMaxNumberOfTracesToShow(getMaxNumberOfTracesToShow())
-        .withFilter(getFilter());
+    return new LynxConfig().setMaxNumberOfTracesToShow(getMaxNumberOfTracesToShow())
+        .setFilter(getFilter());
   }
 
   @Override public String toString() {
-    return "LynxConfig{"
-        + "maxNumberOfTracesToShow="
-        + maxNumberOfTracesToShow
-        + ", filter='"
-        + filter
-        + '\''
-        + '}';
+    return "LynxConfig{" +
+        "maxNumberOfTracesToShow=" + maxNumberOfTracesToShow +
+        ", filter='" + filter + '\'' +
+        ", textSizeInPx=" + textSizeInPx +
+        ", samplingRate=" + samplingRate +
+        '}';
   }
 }

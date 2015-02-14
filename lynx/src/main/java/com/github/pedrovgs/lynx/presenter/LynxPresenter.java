@@ -84,7 +84,7 @@ public class LynxPresenter implements Lynx.Listener {
   public void onFilterUpdated(String filter) {
     if (isInitialized) {
       LynxConfig lynxConfig = lynx.getConfig();
-      lynxConfig.withFilter(filter);
+      lynxConfig.setFilter(filter);
       lynx.setConfig(lynxConfig);
       clearView();
       restartLynx();

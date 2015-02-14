@@ -49,7 +49,7 @@ public class LynxConfigTest {
   }
 
   @Test public void shouldReturnTrueIfHasAnyFilterConfiguredDifferentOfNull() {
-    LynxConfig lynxConfig = new LynxConfig().withFilter(ANY_FILTER);
+    LynxConfig lynxConfig = new LynxConfig().setFilter(ANY_FILTER);
 
     assertTrue(lynxConfig.hasFilter());
   }
@@ -67,8 +67,15 @@ public class LynxConfigTest {
   }
 
   @Test public void shouldReturnTrueIfHasConfiguredTraceTextSize() {
-    LynxConfig lynxConfig = new LynxConfig().withTextSizeInPx(10);
+    LynxConfig lynxConfig = new LynxConfig().setTextSizeInPx(10);
 
     assertTrue(lynxConfig.hasTextSizeInPx());
+  }
+
+  @Test
+  public void shouldUse10AsDefaultSamplingRate(){
+    LynxConfig lynxConfig = new LynxConfig();
+
+    assertEquals(10,lynxConfig.getSamplingRate());
   }
 }

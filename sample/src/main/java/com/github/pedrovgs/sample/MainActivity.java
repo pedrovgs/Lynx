@@ -44,8 +44,8 @@ public class MainActivity extends ActionBarActivity {
     bt_show_lynx_activity.setOnClickListener(new View.OnClickListener() {
 
       @Override public void onClick(View v) {
-        LynxConfig lynxConfig = new LynxConfig().withMaxNumberOfTracesToShow(MAX_TRACES_TO_SHOW)
-            .withFilter(LYNX_FILTER);
+        LynxConfig lynxConfig = new LynxConfig().setMaxNumberOfTracesToShow(MAX_TRACES_TO_SHOW)
+            .setFilter(LYNX_FILTER);
 
         Context context = MainActivity.this;
         Intent lynxActivityIntent = LynxActivity.getIntent(context, lynxConfig);

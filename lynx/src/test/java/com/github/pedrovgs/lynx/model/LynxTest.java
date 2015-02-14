@@ -174,7 +174,7 @@ public class LynxTest {
   }
 
   private void givenLynxWithFilter(String filter) {
-    LynxConfig lynxConfigWithFilter = new LynxConfig().withFilter(filter);
+    LynxConfig lynxConfigWithFilter = new LynxConfig().setFilter(filter);
     lynx.setConfig(lynxConfigWithFilter);
   }
 

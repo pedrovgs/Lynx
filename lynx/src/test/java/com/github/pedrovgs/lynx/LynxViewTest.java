@@ -19,7 +19,6 @@ package com.github.pedrovgs.lynx;
 import android.app.Activity;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.github.pedrovgs.lynx.model.Trace;
 import com.github.pedrovgs.lynx.model.TraceLevel;
 import com.github.pedrovgs.lynx.presenter.LynxPresenter;
@@ -158,7 +157,7 @@ import static org.mockito.Mockito.verify;
   }
 
   @Test public void shouldApplyNewConfigJustIfIsDifferentOfTheCurrentOne() {
-    LynxConfig newLynxConfig = new LynxConfig().withTextSizeInPx(ANY_TEXT_SIZE);
+    LynxConfig newLynxConfig = new LynxConfig().setTextSizeInPx(ANY_TEXT_SIZE);
 
     lynxView.setLynxConfig(newLynxConfig);
 
