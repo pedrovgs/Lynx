@@ -16,7 +16,6 @@
 
 package com.github.pedrovgs.sample;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -45,14 +44,7 @@ public class MainActivity extends ActionBarActivity {
     bt_show_lynx_activity.setOnClickListener(new View.OnClickListener() {
 
       @Override public void onClick(View v) {
-        LynxConfig lynxConfig = new LynxConfig();
-        lynxConfig.setMaxNumberOfTracesToShow(MAX_TRACES_TO_SHOW)
-            .setFilter(LYNX_FILTER)
-            .setSamplingRate(SAMPLING_RATE);
-
-        Context context = MainActivity.this;
-        Intent lynxActivityIntent = LynxActivity.getIntent(context, lynxConfig);
-        startActivity(lynxActivityIntent);
+        openLynxActivity();
       }
     });
 
@@ -67,11 +59,24 @@ public class MainActivity extends ActionBarActivity {
     generateFiveRandomTracesPerSecond();
   }
 
+  private void openLynxActivity() {
+    LynxConfig lynxConfig = new LynxConfig();
+    lynxConfig.setMaxNumberOfTracesToShow(MAX_TRACES_TO_SHOW)
+        .setFilter(LYNX_FILTER)
+        .setSamplingRate(SAMPLING_RATE);
+
+    Intent lynxActivityIntent = LynxActivity.getIntent(this, lynxConfig);
+    startActivity(lynxActivityIntent);
+  }
+
   @Override protected void onDestroy() {
     super.onDestroy();
     continueReading = false;
   }
 
+  /**
+   * Random traces generator used just for this demo application.
+   */
   private void generateFiveRandomTracesPerSecond() {
     final Random random = new Random();
     logGeneratorThread = new Thread(new Runnable() {
