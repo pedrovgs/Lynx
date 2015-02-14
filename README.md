@@ -1,4 +1,4 @@
-Lynx
+Lynx [![Build Status](https://travis-ci.org/pedrovgs/Lynx.svg?branch=master)](https://travis-ci.org/pedrovgs/Lynx)
 ====
 
 

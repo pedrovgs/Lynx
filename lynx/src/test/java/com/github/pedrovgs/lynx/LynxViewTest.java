@@ -59,9 +59,9 @@ import static org.mockito.Mockito.verify;
   }
 
   @Test public void shouldShowListViewAsVisible() {
-    ListView tracesListView = getLvTraces();
+    ListView lv_traces = getLvTraces();
 
-    assertEquals(View.VISIBLE, tracesListView.getVisibility());
+    assertEquals(View.VISIBLE, lv_traces.getVisibility());
   }
 
   @Test public void shouldShowEditTextForInputFilterAsVisible() {
@@ -171,7 +171,6 @@ import static org.mockito.Mockito.verify;
 
     verify(presenter, never()).setLynxConfig(defaultConfig);
   }
-
 
   private void assertTracesRendered(List<Trace> traces, ListView tracesListView) {
     for (int i = 0; i < traces.size(); i++) {
