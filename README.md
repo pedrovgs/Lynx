@@ -31,7 +31,7 @@ private void openLynxActivity() {
 
 ```
 
-* 2. Configure ``LynxShakeDetector`` to start ``LynxActivity`` for you if you shake your phone.
+* 2. Configure ``LynxShakeDetector`` to start ``LynxActivity`` for you if you **shake your phone**.
 
 ```java
 
@@ -46,7 +46,7 @@ public class YourApplication extends Application {
 
 ```
 
-* 3. Add ``LynxView`` to your layouts and configure it as you wish.
+* 3. Add ``LynxView`` **to your layouts** and configure it as you wish.
 
 ```xml
 
@@ -67,7 +67,7 @@ You can **provide different configurations based on styleable attributes**:
 * Text size used to render traces inside LynxView: ``lynx:text_size="12sp``
 * Sampling rate used to read from the application log: ``lynx:sampling_rate=200``
 
-If you have to support applications based on Android 2.X you'll have to add ``READ_LOG`` permission to your application manifest. **This is not needed for other Android versions.**
+If you have to support applications based on Android 2.X you'll have to add ``READ_LOG`` permission to your application manifest. **This is not needed for newer Android versions.**
 
 ```xml
 
