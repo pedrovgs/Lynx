@@ -55,7 +55,9 @@ public class LynxTest {
   @Before public void setUp() {
     MockitoAnnotations.initMocks(this);
     MainThread mainThread = new FakeMainThread();
+    LynxConfig lynxConfig = new LynxConfig().setSamplingRate(10);
     lynx = new Lynx(logcat, mainThread, timeProvider);
+    lynx.setConfig(lynxConfig);
     lynx.registerListener(listener);
     when(logcat.clone()).thenReturn(logcat);
   }
@@ -175,6 +177,7 @@ public class LynxTest {
 
   private void givenLynxWithFilter(String filter) {
     LynxConfig lynxConfigWithFilter = new LynxConfig().setFilter(filter);
+    lynxConfigWithFilter.setSamplingRate(10);
     lynx.setConfig(lynxConfigWithFilter);
   }
 
