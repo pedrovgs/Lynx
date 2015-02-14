@@ -16,10 +16,12 @@
   -->
 
 <resources>
+
   <declare-styleable name="lynx">
     <attr name="max_traces_to_show" format="integer"/>
     <attr name="filter" format="string"/>
     <attr name="text_size" format="dimension"/>
     <attr name="sampling_rate" format="integer"/>
   </declare-styleable>
+
 </resources>

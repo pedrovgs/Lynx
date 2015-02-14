@@ -20,8 +20,6 @@
   <solid android:color="@color/white"/>
   <corners android:radius="8dp"/>
   <size android:width="4dp"/>
-  <padding
-      android:left="1dp"
-      android:right="1dp"/>
+  <padding android:left="1dp" android:right="1dp"/>
 
 </shape>
