@@ -96,17 +96,21 @@ Or add Lynx as a new dependency inside your pom.xml
 ```xml
 
 <dependency>
-  <groupId>com.squareup</groupId>
-  <artifactId>seismic</artifactId>
-  <version>1.0.1</version>
-</dependency>
-<dependency>
     <groupId>com.github.pedrovgs</groupId>
     <artifactId>lynx</artifactId>
     <version>1.0</version>
     <type>aar</type>
 </dependency>
-
+<dependency>
+  <groupId>com.squareup</groupId>
+  <artifactId>seismic</artifactId>
+  <version>1.0.1</version>
+</dependency>
+<dependency>
+  <groupId>com.github.pedrovgs</groupId>
+  <artifactId>renderers</artifactId>
+  <version>1.4</version>
+</dependency>
 ```
 
 

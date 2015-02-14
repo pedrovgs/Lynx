@@ -26,6 +26,11 @@ import com.github.pedrovgs.lynx.LynxActivity;
 import com.github.pedrovgs.lynx.LynxConfig;
 import java.util.Random;
 
+/**
+ * Activity created to show how to use Lynx.
+ *
+ * @author Pedro Vicente Gómez Sánchez.
+ */
 public class MainActivity extends ActionBarActivity {
 
   private static final int MAX_TRACES_TO_SHOW = 3000;
