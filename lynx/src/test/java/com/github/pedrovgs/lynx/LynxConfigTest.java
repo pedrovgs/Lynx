@@ -72,10 +72,9 @@ public class LynxConfigTest {
     assertTrue(lynxConfig.hasTextSizeInPx());
   }
 
-  @Test
-  public void shouldUse10AsDefaultSamplingRate(){
+  @Test public void shouldUse150AsDefaultSamplingRate() {
     LynxConfig lynxConfig = new LynxConfig();
 
-    assertEquals(10,lynxConfig.getSamplingRate());
+    assertEquals(150, lynxConfig.getSamplingRate());
   }
 }

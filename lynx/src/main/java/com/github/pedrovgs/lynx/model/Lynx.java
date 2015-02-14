@@ -30,8 +30,6 @@ import java.util.List;
  */
 public class Lynx {
 
-  private static final int MIN_NOTIFICATION_TIME_FREQUENCY = 10;
-
   private Logcat logcat;
   private final MainThread mainThread;
   private final TimeProvider timeProvider;
@@ -122,7 +120,7 @@ public class Lynx {
     long now = timeProvider.getCurrentTimeMillis();
     long timeFromLastNotification = now - lastNotificationTime;
     boolean hasTracesToNotify = tracesToNotify.size() > 0;
-    return timeFromLastNotification > MIN_NOTIFICATION_TIME_FREQUENCY && hasTracesToNotify;
+    return timeFromLastNotification > lynxConfig.getSamplingRate() && hasTracesToNotify;
   }
 
   private void notifyListeners(final List<Trace> traces) {

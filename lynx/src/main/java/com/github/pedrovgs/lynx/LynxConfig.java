@@ -32,7 +32,7 @@ public class LynxConfig implements Serializable, Cloneable {
   private int maxNumberOfTracesToShow = 2500;
   private String filter;
   private Float textSizeInPx;
-  private int samplingRate = 10;
+  private int samplingRate = 150;
 
   public LynxConfig() {
 
@@ -58,7 +58,7 @@ public class LynxConfig implements Serializable, Cloneable {
     return this;
   }
 
-  public LynxConfig withSamplingRate(int samplingRate) {
+  public LynxConfig setSamplingRate(int samplingRate) {
     this.samplingRate = samplingRate;
     return this;
   }

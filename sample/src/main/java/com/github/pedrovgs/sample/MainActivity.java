@@ -31,6 +31,7 @@ public class MainActivity extends ActionBarActivity {
 
   private static final int MAX_TRACES_TO_SHOW = 3000;
   private static final String LYNX_FILTER = "Lynx";
+  private static final int SAMPLING_RATE = 200;
 
   private Thread logGeneratorThread;
   private boolean continueReading = true;
@@ -44,8 +45,10 @@ public class MainActivity extends ActionBarActivity {
     bt_show_lynx_activity.setOnClickListener(new View.OnClickListener() {
 
       @Override public void onClick(View v) {
-        LynxConfig lynxConfig = new LynxConfig().setMaxNumberOfTracesToShow(MAX_TRACES_TO_SHOW)
-            .setFilter(LYNX_FILTER);
+        LynxConfig lynxConfig = new LynxConfig();
+        lynxConfig.setMaxNumberOfTracesToShow(MAX_TRACES_TO_SHOW)
+            .setFilter(LYNX_FILTER)
+            .setSamplingRate(SAMPLING_RATE);
 
         Context context = MainActivity.this;
         Intent lynxActivityIntent = LynxActivity.getIntent(context, lynxConfig);
