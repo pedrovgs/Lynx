@@ -167,7 +167,7 @@ License
     limitations under the License.
 
 
-[1]: ./art/screenshot_demo_1.png
+[1]: ./art/screenshot_demo_1.gif
 [2]: https://play.google.com/store/apps/details?id=com.tuenti.messenger
 [3]: https://github.com/pedrovgs/Renderers
 [4]: https://github.com/square/seismic
