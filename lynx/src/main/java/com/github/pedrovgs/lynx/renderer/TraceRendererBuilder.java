@@ -32,7 +32,7 @@ import java.util.List;
  * To learn more about Renderers library take a look to the repository:
  * https://github.com/pedrovgs/Renderers
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public class TraceRendererBuilder extends RendererBuilder<Trace> {
 

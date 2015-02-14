@@ -30,7 +30,7 @@ import java.util.List;
  * modified on demand. LynxConfig object will be used to filter traces if any filter has been
  * previously configured.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public class Lynx {
 

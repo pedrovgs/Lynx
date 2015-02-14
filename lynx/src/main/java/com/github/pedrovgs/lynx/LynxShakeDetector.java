@@ -25,7 +25,7 @@ import com.squareup.seismic.ShakeDetector;
  * Identifies when the user has shaken the device to open LynxActivity. This sake detector is a
  * wrapper of Square Seismic library: https://github.com/square/seismic
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public class LynxShakeDetector {
 

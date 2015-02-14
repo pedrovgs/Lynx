@@ -39,7 +39,7 @@ import com.pedrogomez.renderers.Renderer;
  * To learn more about Renderers library take a look to the repository:
  * https://github.com/pedrovgs/Renderers
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 class TraceRenderer extends Renderer<Trace> {
 

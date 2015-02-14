@@ -21,7 +21,7 @@ package com.github.pedrovgs.lynx.model;
  * messages from a background thread to the UI thread. The usage of interfaces to abstract the
  * execution context is really useful for testing.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public interface MainThread {
 

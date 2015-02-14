@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Buffer created to keep a max number of traces and be able to configure the size of the buffer.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 class TraceBuffer {
 

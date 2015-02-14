@@ -27,7 +27,7 @@ import java.util.List;
  * responsibility is related to all the presentation logic to Lynx UI implementations. Lynx UI
  * implementations have to implement LynxPresenter.View interface.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public class LynxPresenter implements Lynx.Listener {
 

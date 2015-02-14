@@ -23,7 +23,7 @@ import android.os.Looper;
  * MainThread implementation based on Android Handler and Looper classes. This class is used to
  * post Runnable objects over the UI.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public class AndroidMainThread implements MainThread {
 
