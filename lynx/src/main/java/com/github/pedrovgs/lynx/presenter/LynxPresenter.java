@@ -73,14 +73,6 @@ public class LynxPresenter implements Lynx.Listener {
     view.showTraces(tracesToNotify, tracesRemoved);
   }
 
-  public void onScrollToPosition(int lastVisiblePosition) {
-    if (shouldDisableAutoScroll(lastVisiblePosition)) {
-      view.disableAutoScroll();
-    } else {
-      view.enableAutoScroll();
-    }
-  }
-
   public void onFilterUpdated(String filter) {
     if (isInitialized) {
       LynxConfig lynxConfig = lynx.getConfig();
@@ -95,6 +87,18 @@ public class LynxPresenter implements Lynx.Listener {
     List<Trace> tracesToShare = new LinkedList<Trace>(traceBuffer.getTraces());
     String plainTraces = generatePlainTracesToShare(tracesToShare);
     view.shareTraces(plainTraces);
+  }
+
+  public void onScrollToPosition(int lastVisiblePositionInTheList) {
+    if (shouldDisableAutoScroll(lastVisiblePositionInTheList)) {
+      view.disableAutoScroll();
+    } else {
+      view.enableAutoScroll();
+    }
+  }
+
+  public List<Trace> getCurrentTraces() {
+    return traceBuffer.getTraces();
   }
 
   private void clearView() {
@@ -121,10 +125,6 @@ public class LynxPresenter implements Lynx.Listener {
 
   private int updateTraceBuffer(List<Trace> traces) {
     return traceBuffer.add(traces);
-  }
-
-  public List<Trace> getCurrentTraces() {
-    return traceBuffer.getTraces();
   }
 
   private void validateNumberOfTracesConfiguration(long maxNumberOfTracesToShow) {
@@ -163,12 +163,12 @@ public class LynxPresenter implements Lynx.Listener {
 
     void showTraces(List<Trace> traces, int removedTraces);
 
-    void disableAutoScroll();
-
-    void enableAutoScroll();
-
     void clear();
 
     void shareTraces(String plainTraces);
+
+    void disableAutoScroll();
+
+    void enableAutoScroll();
   }
 }

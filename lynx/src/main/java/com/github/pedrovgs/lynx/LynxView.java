@@ -65,8 +65,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   private ImageButton ib_share;
 
   private RendererAdapter<Trace> adapter;
-  private int transcriptMode;
-  private int lastFirstVisibleItem = -1;
+  private int lastScrollPosition;
 
   public LynxView(Context context) {
     this(context, null);
@@ -124,24 +123,25 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   }
 
   @Override public void showTraces(List<Trace> traces, int removedTraces) {
+    if (lastScrollPosition == 0) {
+      lastScrollPosition = lv_traces.getFirstVisiblePosition();
+    }
     adapter.clear();
     adapter.addAll(traces);
-    disableTranscriptMode();
     adapter.notifyDataSetChanged();
     updateScrollPosition(removedTraces);
-    recoverTranscriptMode();
   }
 
-  @Override public void disableAutoScroll() {
-    transcriptMode = ListView.TRANSCRIPT_MODE_DISABLED;
-  }
-
-  @Override public void enableAutoScroll() {
-    transcriptMode = ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL;
+  private void updateScrollPosition(int removedTraces) {
+    boolean shouldUpdateScrollPosition = removedTraces > 0;
+    if (shouldUpdateScrollPosition) {
+      int newScrollPosition = lastScrollPosition - removedTraces;
+      lastScrollPosition = newScrollPosition;
+      lv_traces.setSelectionFromTop(newScrollPosition, 0);
+    }
   }
 
   @Override public void clear() {
-    transcriptMode = ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL;
     adapter.clear();
     adapter.notifyDataSetChanged();
   }
@@ -151,6 +151,14 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     sharingIntent.setType(SHARE_INTENT_TYPE);
     sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, plainTraces);
     getContext().startActivity(Intent.createChooser(sharingIntent, SHARE_INTENT_TITLE));
+  }
+
+  @Override public void disableAutoScroll() {
+    lv_traces.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_DISABLED);
+  }
+
+  @Override public void enableAutoScroll() {
+    lv_traces.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
   }
 
   private boolean isPresenterReady() {
@@ -210,6 +218,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   private void mapGui() {
     lv_traces = (ListView) findViewById(R.id.lv_traces);
+    lv_traces.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
     et_filter = (EditText) findViewById(R.id.et_filter);
     ib_share = (ImageButton) findViewById(R.id.ib_share);
     configureCursorColor();
@@ -246,17 +255,18 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   private void hookListeners() {
     lv_traces.setOnScrollListener(new AbsListView.OnScrollListener() {
       @Override public void onScrollStateChanged(AbsListView view, int scrollState) {
-
+        //Empty
       }
 
       @Override public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
           int totalItemCount) {
-        lastFirstVisibleItem = firstVisibleItem;
-        int lastVisiblePosition = firstVisibleItem + visibleItemCount;
-        presenter.onScrollToPosition(lastVisiblePosition);
+        if (lastScrollPosition - firstVisibleItem != 1) {
+          lastScrollPosition = firstVisibleItem;
+        }
+        int lastVisiblePositionInTheList = firstVisibleItem + visibleItemCount;
+        presenter.onScrollToPosition(lastVisiblePositionInTheList);
       }
     });
-
     et_filter.addTextChangedListener(new TextWatcher() {
       @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         //Empty
@@ -289,30 +299,6 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
       throw new IllegalArgumentException(
           "You can't configure Lynx with a null LynxConfig instance.");
     }
-  }
-
-  private void disableTranscriptMode() {
-    lv_traces.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_DISABLED);
-  }
-
-  private void recoverTranscriptMode() {
-    lv_traces.setTranscriptMode(transcriptMode);
-  }
-
-  private void updateScrollPosition(int removedTraces) {
-    if (shouldUpdateScrollPosition(removedTraces)) {
-      int scrollPosition = lastFirstVisibleItem + removedTraces - 1;
-      boolean isTranscriptModeDisabled =
-          lv_traces.getTranscriptMode() == ListView.TRANSCRIPT_MODE_DISABLED;
-      if (isTranscriptModeDisabled) {
-        lv_traces.setSelection(scrollPosition);
-        lastFirstVisibleItem = scrollPosition;
-      }
-    }
-  }
-
-  private boolean shouldUpdateScrollPosition(int removedTraces) {
-    return removedTraces > 0 && lastFirstVisibleItem >= 0;
   }
 
   private void updateFilterText() {
