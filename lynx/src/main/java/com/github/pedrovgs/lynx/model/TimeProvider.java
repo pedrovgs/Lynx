@@ -21,7 +21,7 @@ package com.github.pedrovgs.lynx.model;
  * System.currentTimeMillis instead of use the System call directly we improve our code
  * testability and provide mocked implementations of TimeProvider with pre-configured results.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public class TimeProvider {
 

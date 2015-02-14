@@ -21,7 +21,7 @@ import com.github.pedrovgs.lynx.exception.IllegalTraceException;
 /**
  * Logcat trace representation. All traces contains a message and a TraceLevel assigned.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public class Trace {
 
@@ -33,7 +33,7 @@ public class Trace {
 
   private final TraceLevel level;
   private final String message;
-  
+
   public Trace(TraceLevel level, String message) {
     this.level = level;
     this.message = message;

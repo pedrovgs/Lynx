@@ -49,7 +49,7 @@ import java.util.List;
  * printed by the Android Logcat. Add this view to your layouts if you want to show your Logcat
  * traces and configure it using styleable attributes.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public class LynxView extends RelativeLayout implements LynxPresenter.View {
 

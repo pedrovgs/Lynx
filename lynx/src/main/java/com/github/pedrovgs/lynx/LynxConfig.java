@@ -28,7 +28,7 @@ import java.io.Serializable;
  * - Text size in DP used to render a trace.
  * - Sampling rate used to read from the Logcat output.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public class LynxConfig implements Serializable, Cloneable {
   private static final long serialVersionUID = 293939299388293L;

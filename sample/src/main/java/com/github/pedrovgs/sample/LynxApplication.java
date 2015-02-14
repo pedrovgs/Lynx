@@ -23,7 +23,7 @@ import com.github.pedrovgs.lynx.LynxShakeDetector;
  * Application extension created to show how to initialize LynxShakeDetector to start LynxActivity
  * on when the user shakes the device.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public class LynxApplication extends Application {
 

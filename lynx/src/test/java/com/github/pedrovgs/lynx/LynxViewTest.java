@@ -127,10 +127,10 @@ import static org.mockito.Mockito.verify;
 
     lynxView.showTraces(traces, 0);
 
-    ListView lv_traces = getLvTraces();
-    int tracesCount = lv_traces.getAdapter().getCount();
+    ListView tracesListView = getLvTraces();
+    int tracesCount = tracesListView.getAdapter().getCount();
     assertEquals(numberOfTracesToShow, tracesCount);
-    assertTracesRendered(traces, lv_traces);
+    assertTracesRendered(traces, tracesListView);
   }
 
   @Test public void shouldReplaceOldTracesAndUseTheNewOne() {
@@ -140,10 +140,10 @@ import static org.mockito.Mockito.verify;
     lynxView.showTraces(traces, 0);
     lynxView.showTraces(newTraces, 0);
 
-    ListView lv_traces = getLvTraces();
-    int tracesCount = lv_traces.getAdapter().getCount();
+    ListView tracesListView = getLvTraces();
+    int tracesCount = tracesListView.getAdapter().getCount();
     assertEquals(20, tracesCount);
-    assertTracesRendered(newTraces, lv_traces);
+    assertTracesRendered(newTraces, tracesListView);
   }
 
   @Test public void shouldResetListViewStateOnClear() {
@@ -152,8 +152,8 @@ import static org.mockito.Mockito.verify;
     lynxView.showTraces(traces, 0);
     lynxView.clear();
 
-    ListView lv_traces = getLvTraces();
-    assertEquals(0, lv_traces.getAdapter().getCount());
+    ListView tracesListView = getLvTraces();
+    assertEquals(0, tracesListView.getAdapter().getCount());
   }
 
   @Test public void shouldApplyNewConfigJustIfIsDifferentOfTheCurrentOne() {
@@ -172,11 +172,10 @@ import static org.mockito.Mockito.verify;
     verify(presenter, never()).setLynxConfig(defaultConfig);
   }
 
-
-  private void assertTracesRendered(List<Trace> traces, ListView lv_traces) {
+  private void assertTracesRendered(List<Trace> traces, ListView tracesListView) {
     for (int i = 0; i < traces.size(); i++) {
       Trace trace = traces.get(i);
-      Trace renderedTrace = (Trace) lv_traces.getAdapter().getItem(i);
+      Trace renderedTrace = (Trace) tracesListView.getAdapter().getItem(i);
       assertEquals(trace, renderedTrace);
     }
   }

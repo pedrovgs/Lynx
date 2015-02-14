@@ -33,7 +33,7 @@ import java.io.InputStreamReader;
  * extends from Thread and all the code inside the run() method will be executed in a background
  * thread.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public class Logcat extends Thread implements Cloneable {
   private static final String LOGTAG = "Logcat";

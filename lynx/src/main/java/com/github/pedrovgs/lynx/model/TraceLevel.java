@@ -19,7 +19,7 @@ package com.github.pedrovgs.lynx.model;
 /**
  * Logcat trace levels used to indicate the trace importance.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public enum TraceLevel {
   VERBOSE("V"), DEBUG("D"), INFO("I"), WARNING("W"), ERROR("E"), ASSERT("A"), WTF("F");

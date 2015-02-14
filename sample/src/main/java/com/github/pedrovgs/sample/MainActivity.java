@@ -29,7 +29,7 @@ import java.util.Random;
 /**
  * Activity created to show how to use Lynx.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public class MainActivity extends ActionBarActivity {
 

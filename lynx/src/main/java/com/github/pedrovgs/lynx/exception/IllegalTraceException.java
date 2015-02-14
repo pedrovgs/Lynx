@@ -21,7 +21,7 @@ package com.github.pedrovgs.lynx.exception;
  * Trace.fromString method to know the exact format of a Trace in the String representation needed
  * to avoid this exception.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public class IllegalTraceException extends Exception {
 

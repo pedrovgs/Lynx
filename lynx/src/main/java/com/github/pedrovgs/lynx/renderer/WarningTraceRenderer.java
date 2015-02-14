@@ -22,7 +22,7 @@ import com.github.pedrovgs.lynx.LynxConfig;
 /**
  * TraceRenderer implementation used to render Trace objects with TraceLevel.WARNING trace level.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 class WarningTraceRenderer extends TraceRenderer {
 

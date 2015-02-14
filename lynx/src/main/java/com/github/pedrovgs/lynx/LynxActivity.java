@@ -28,7 +28,7 @@ import android.os.Bundle;
  * intent
  * to start this Activity.
  *
- * @author Pedro Vicente Gómez Sánchez.
+ * @author Pedro Vicente Gomez Sanchez.
  */
 public class LynxActivity extends Activity {
 
