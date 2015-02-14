@@ -67,7 +67,15 @@ You can **provide different configurations based on styleable attributes**:
 * Text size used to render traces inside LynxView: ``lynx:text_size="12sp``
 * Sampling rate used to read from the application log: ``lynx:sampling_rate=200``
 
-If you have to support applications based on Android 2.X you'll have to add ``READ_LOG`` permission to your application manifest. **This is not needed for newer Android versions.**
+To be able to show LynxActivity shaking your phone or starting it programatically you'll have to add LynxActivity to your AndroidManifest.
+
+```xml
+
+<activity android:name="com.github.pedrovgs.lynx.LynxActivity"/>
+
+```
+
+If you have to support applications based on Android 2.X you'll have to add ``READ_LOG`` permission to your AndroidManifest. **This is not needed for newer Android versions.**
 
 ```xml
 
@@ -85,7 +93,7 @@ Add Lynx dependency to your build.gradle
 ```groovy
 
 dependencies{
-    compile 'com.github.pedrovgs:lynx:1.00@aar'
+    compile 'com.github.pedrovgs:lynx:1.0'
     compile 'com.squareup:seisimc:1.0.1'
 }
 
