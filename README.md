@@ -2,9 +2,9 @@ Lynx
 ====
 
 
-Are you bored of connect your device to your computer to know what's happening inside your app? If you hate it, this is going to be your favorite library. Shake your phone, press a button or add a LynxView to your layouts and you'll see what's logcat printing :)
+Are you bored of connect your device to your computer to know what's happening inside your app? If you hate it, this is going to be your favorite library. Shake your phone, press a button or add a ``LynxView`` to your layouts and you'll see what's logcat printing :)
 
-Lynx is an Android library created to show a custom view with all the information logcat is printing, different traces of different levels will be rendererd to show from log messages to exceptions. You can filter this traces, share your logcat to other apps, configure the max number of traces to show or the sampling rate used by the library. The min Api Level supported is 8.
+Lynx is an Android library created to show a custom view with all the information logcat is printing, different traces of different levels will be rendererd to show from log messages to your application exceptions. You can filter this traces, share your logcat to other apps, configure the max number of traces to show or the sampling rate used by the library. The min Api Level supported is 8.
 
 Screenshots
 -----------
@@ -14,7 +14,7 @@ Screenshots
 Usage
 -----
 
-To use Lynx Android library and get your logcat inside your app you can use different approaches:
+To use Lynx Android library and get your logcat inside your app you **can use different approaches**:
 
 * 1. Start ``LynxActivity`` using a ``LynxConfig`` object.
 
@@ -60,14 +60,14 @@ public class YourApplication extends Application {
 
 ```
 
-You can provide different configurations based on styleable attributes:
+You can **provide different configurations based on styleable attributes**:
 
 * Filter to apply by default: ``lynx:filter="Lynx"``
 * Max number of traces to show inside LynxView: ``lynx:max_traces_to_show=3000``
 * Text size used to render traces inside LynxView: ``lynx:text_size="12sp``
 * Sampling rate used to read from the application log: ``lynx:sampling_rate=200``
 
-If you have to support applications based on Android 2.X you'll have to add ``READ_LOG`` permission to your application manifest. This is not needed for other Android versions.
+If you have to support applications based on Android 2.X you'll have to add ``READ_LOG`` permission to your application manifest. **This is not needed for other Android versions.**
 
 ```xml
 
