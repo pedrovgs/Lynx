@@ -38,7 +38,6 @@ dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   compile 'com.github.pedrovgs:renderers:1.4'
   compile 'com.squareup:seismic:1.0.1'
-  testCompile 'com.android.support:appcompat-v7:21.0.3'
   testCompile 'org.robolectric:robolectric:2.4'
   testCompile 'junit:junit:4.10'
   testCompile 'org.mockito:mockito-all:1.9.5'
@@ -55,6 +54,7 @@ task checkstyle(type: Checkstyle) {
 
 apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
 
+//Workaround for https://github.com/JCAndKSolutions/android-unit-test/issues/99
 task copyTestResources(type: Copy) {
   from "build/intermediates/res/test"
   into "build/intermediates/res"

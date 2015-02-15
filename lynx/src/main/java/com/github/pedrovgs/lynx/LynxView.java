@@ -68,18 +68,18 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   private int lastScrollPosition;
 
   public LynxView(Context context) {
-    super(context);
-    init(null);
+    this(context, null);
   }
 
   public LynxView(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    init(attrs);
+    this(context, attrs, 0);
   }
 
   public LynxView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    init(attrs);
+    initializeConfiguration(attrs);
+    initializePresenter();
+    initializeView();
   }
 
   /**
@@ -178,12 +178,6 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   @Override public void enableAutoScroll() {
     lv_traces.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-  }
-
-  private void init(AttributeSet attrs) {
-    initializeConfiguration(attrs);
-    initializePresenter();
-    initializeView();
   }
 
   private boolean isPresenterReady() {
