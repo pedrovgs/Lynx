@@ -54,3 +54,12 @@ task checkstyle(type: Checkstyle) {
 }
 
 apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+
+task copyTestResources(type: Copy) {
+  from "build/intermediates/res/test"
+  into "build/intermediates/res"
+}
+
+afterEvaluate {
+  tasks.findByPath('testDebugClasses').dependsOn copyTestResources
+}
