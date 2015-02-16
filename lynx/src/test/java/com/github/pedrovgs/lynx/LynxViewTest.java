@@ -75,7 +75,7 @@ import static org.mockito.Mockito.verify;
     Spinner sp_filter = (Spinner) lynxView.findViewById(R.id.sp_filter);
 
     assertEquals(View.VISIBLE, sp_filter.getVisibility());
-    assertEquals(TraceLevel.ALL, sp_filter.getSelectedItem());
+    assertEquals(TraceLevel.VERBOSE, sp_filter.getSelectedItem());
   }
 
   @Test public void shouldShowShareImageButtonAsVisible() {

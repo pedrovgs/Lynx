@@ -36,14 +36,14 @@ public class LynxConfigTest {
   private static final String ANY_FILTER = "AnyFilter";
 
   @Test public void setFilterNullThrowsNPE() {
-    exception.expect(NullPointerException.class);
+    exception.expect(IllegalArgumentException.class);
     exception.expectMessage("filter can't be null");
     LynxConfig lynxConfig = new LynxConfig();
     lynxConfig.setFilter(null);
   }
 
   @Test public void setFilterTraceLevelNullThrowsNPE() {
-    exception.expect(NullPointerException.class);
+    exception.expect(IllegalArgumentException.class);
     exception.expectMessage("filterTraceLevel can't be null");
     LynxConfig lynxConfig = new LynxConfig();
     lynxConfig.setFilterTraceLevel(null);
@@ -59,7 +59,7 @@ public class LynxConfigTest {
     LynxConfig lynxConfig = new LynxConfig();
 
     assertNotNull(lynxConfig.getFilter());
-    assertEquals(TraceLevel.ALL, lynxConfig.getFilterTraceLevel());
+    assertEquals(TraceLevel.VERBOSE, lynxConfig.getFilterTraceLevel());
   }
 
   @Test public void shouldHasNoFilterByDefault() {
@@ -81,7 +81,7 @@ public class LynxConfigTest {
   }
 
   @Test public void shouldHasNoFilterIfFilterTraceLeveIsSet() {
-    LynxConfig lynxConfig = new LynxConfig().setFilterTraceLevel(TraceLevel.ALL);
+    LynxConfig lynxConfig = new LynxConfig().setFilterTraceLevel(TraceLevel.VERBOSE);
 
     assertFalse(lynxConfig.hasFilter());
   }

@@ -226,9 +226,8 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
           attributes.getInteger(R.styleable.lynx_sampling_rate, lynxConfig.getSamplingRate());
 
       lynxConfig.setMaxNumberOfTracesToShow(maxTracesToShow)
-          .setFilter(TextUtils.isEmpty(filter)?"":filter)
+          .setFilter(TextUtils.isEmpty(filter) ? "" : filter)
           .setSamplingRate(samplingRate);
-
       attributes.recycle();
     }
   }

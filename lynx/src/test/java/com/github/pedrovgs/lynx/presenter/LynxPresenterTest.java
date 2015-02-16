@@ -135,7 +135,7 @@ public class LynxPresenterTest {
     verify(lynx).setConfig(lynxConfigArgumentCaptor.capture());
     LynxConfig lynxConfig = lynxConfigArgumentCaptor.getValue();
     assertEquals(ANY_FILTER, lynxConfig.getFilter());
-    assertEquals(TraceLevel.ALL, lynxConfig.getFilterTraceLevel());
+    assertEquals(TraceLevel.VERBOSE, lynxConfig.getFilterTraceLevel());
   }
 
   @Test public void shouldApplyNewConfigToLynxOnFilterTraceLevelUpdated() {

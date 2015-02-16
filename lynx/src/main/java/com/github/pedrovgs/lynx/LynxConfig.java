@@ -44,7 +44,7 @@ public class LynxConfig implements Serializable, Cloneable {
 
   public LynxConfig() {
     filter = "";
-    filterTraceLevel = TraceLevel.ALL;
+    filterTraceLevel = TraceLevel.VERBOSE;
   }
 
   public LynxConfig setMaxNumberOfTracesToShow(int maxNumberOfTracesToShow) {
@@ -59,7 +59,7 @@ public class LynxConfig implements Serializable, Cloneable {
 
   public LynxConfig setFilter(String filter) {
     if (filter == null) {
-      throw new NullPointerException("filter can't be null");
+      throw new IllegalArgumentException("filter can't be null");
     }
     this.filter = filter;
     return this;
@@ -67,7 +67,7 @@ public class LynxConfig implements Serializable, Cloneable {
 
   public LynxConfig setFilterTraceLevel(TraceLevel filterTraceLevel) {
     if (filterTraceLevel == null) {
-      throw new NullPointerException("filterTraceLevel can't be null");
+      throw new IllegalArgumentException("filterTraceLevel can't be null");
     }
     this.filterTraceLevel = filterTraceLevel;
     return this;
@@ -96,7 +96,7 @@ public class LynxConfig implements Serializable, Cloneable {
   }
 
   public boolean hasFilter() {
-    return filter != null && !"".equals(filter) || !TraceLevel.ALL.equals(filterTraceLevel);
+    return !"".equals(filter) || !TraceLevel.VERBOSE.equals(filterTraceLevel);
   }
 
   public float getTextSizeInPx() {
@@ -139,6 +139,7 @@ public class LynxConfig implements Serializable, Cloneable {
   @Override public Object clone() {
     return new LynxConfig().setMaxNumberOfTracesToShow(getMaxNumberOfTracesToShow())
         .setFilter(filter)
+        .setFilterTraceLevel(filterTraceLevel)
         .setSamplingRate(getSamplingRate());
   }
 

@@ -42,9 +42,12 @@ public class LynxTest {
   private static final String ANY_ERROR_TRACE = "02-07 17:45:33.014 E/Any error trace";
   private static final String ANY_WTF_TRACE = "02-07 17:45:33.014 F/Any WTF trace";
   private static final String ANY_FILTER = "FiLteR";
-  private static final String ANY_TRACE_MATCHING_FILTER = "02-07 17:45:33.014 D/any fIltEr trace";
+  private static final String ANY_TRACE_MATCHING_FILTER_DEBUG =
+      "02-07 17:45:33.014 D/any fIltEr trace";
+  private static final String ANY_TRACE_MATCHING_FILTER_VERBOSE =
+      "02-07 17:45:33.014 V/any fIltEr trace";
   private static final String ANY_TRACE_NON_MATCHING_FILTER =
-      "02-07 17:45:33.014 W/Any error trace";
+      "02-07 17:45:33.014 V/Any error trace";
 
   private Lynx lynx;
 
@@ -122,31 +125,43 @@ public class LynxTest {
   @Test public void shouldNotifyAboutTracesJustIfTraceMatchesWithLynxConfigFilter()
       throws IllegalTraceException {
     givenCurrentTime();
-    givenLynxWithFilter(ANY_FILTER, TraceLevel.ALL);
+    givenLynxWithFilter(ANY_FILTER, TraceLevel.VERBOSE);
 
     Logcat.Listener logcatListener = startLogcat();
-    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER);
+    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER_DEBUG);
 
-    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER);
+    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER_DEBUG);
     verify(listener).onNewTraces(expectedTraces);
   }
 
   @Test public void shouldNotifyAboutTracesJustIfTraceMatchesWithLynxConfigFilterTraceLevel()
       throws IllegalTraceException {
     givenCurrentTime();
-    givenLynxWithFilter("", TraceLevel.DEBUG);
+    givenLynxWithFilter("", TraceLevel.VERBOSE);
 
     Logcat.Listener logcatListener = startLogcat();
-    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER);
+    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER_VERBOSE);
 
-    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER);
+    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER_VERBOSE);
+    verify(listener).onNewTraces(expectedTraces);
+  }
+
+  @Test public void shouldNotifyAboutTracesJustIfTraceMatchesWithLynxConfigFilterTraceLevelHigher()
+      throws IllegalTraceException {
+    givenCurrentTime();
+    givenLynxWithFilter("", TraceLevel.VERBOSE);
+
+    Logcat.Listener logcatListener = startLogcat();
+    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER_DEBUG);
+
+    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER_DEBUG);
     verify(listener).onNewTraces(expectedTraces);
   }
 
   @Test public void shouldNotNotifyAboutTracesJustIfTraceMatchesWithLynxConfigFilter()
       throws IllegalTraceException {
     givenCurrentTime();
-    givenLynxWithFilter(ANY_FILTER, TraceLevel.ALL);
+    givenLynxWithFilter(ANY_FILTER, TraceLevel.VERBOSE);
 
     Logcat.Listener logcatListener = startLogcat();
     logcatListener.onTraceRead(ANY_TRACE_NON_MATCHING_FILTER);
@@ -167,13 +182,13 @@ public class LynxTest {
 
   @Test public void shouldNotifyJustTracesMatchingFilter() throws IllegalTraceException {
     givenCurrentTimes(NOW, NOW + 5, NOW + 15, NOW + 20);
-    givenLynxWithFilter(ANY_FILTER, TraceLevel.ALL);
+    givenLynxWithFilter(ANY_FILTER, TraceLevel.VERBOSE);
 
     Logcat.Listener logcatListener = startLogcat();
     logcatListener.onTraceRead(ANY_TRACE_NON_MATCHING_FILTER);
-    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER);
+    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER_DEBUG);
 
-    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER);
+    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER_DEBUG);
     verify(listener).onNewTraces(expectedTraces);
   }
 
@@ -183,9 +198,9 @@ public class LynxTest {
 
     Logcat.Listener logcatListener = startLogcat();
     logcatListener.onTraceRead(ANY_TRACE_NON_MATCHING_FILTER);
-    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER);
+    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER_DEBUG);
 
-    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER);
+    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER_DEBUG);
     verify(listener).onNewTraces(expectedTraces);
   }
 
