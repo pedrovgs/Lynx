@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import com.github.pedrovgs.lynx.LynxActivity;
 import com.github.pedrovgs.lynx.LynxConfig;
+import com.github.pedrovgs.lynx.model.TraceLevel;
 import java.util.Random;
 
 /**
@@ -44,7 +45,6 @@ public class MainActivity extends ActionBarActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-
     Button bt_show_lynx_activity = (Button) findViewById(R.id.bt_show_lynx_activity);
     bt_show_lynx_activity.setOnClickListener(new View.OnClickListener() {
 
@@ -68,6 +68,7 @@ public class MainActivity extends ActionBarActivity {
     LynxConfig lynxConfig = new LynxConfig();
     lynxConfig.setMaxNumberOfTracesToShow(MAX_TRACES_TO_SHOW)
         .setFilter(LYNX_FILTER)
+        .setFilterTraceLevel(TraceLevel.DEBUG)
         .setSamplingRate(SAMPLING_RATE);
 
     Intent lynxActivityIntent = LynxActivity.getIntent(this, lynxConfig);

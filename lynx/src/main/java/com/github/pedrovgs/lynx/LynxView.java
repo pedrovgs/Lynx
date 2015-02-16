@@ -20,22 +20,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import com.github.pedrovgs.lynx.model.AndroidMainThread;
 import com.github.pedrovgs.lynx.model.Logcat;
 import com.github.pedrovgs.lynx.model.Lynx;
 import com.github.pedrovgs.lynx.model.TimeProvider;
 import com.github.pedrovgs.lynx.model.Trace;
+import com.github.pedrovgs.lynx.model.TraceLevel;
 import com.github.pedrovgs.lynx.presenter.LynxPresenter;
 import com.github.pedrovgs.lynx.renderer.TraceRendererBuilder;
 import com.pedrogomez.renderers.ListAdapteeCollection;
@@ -56,6 +61,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   private static final String LOGTAG = "LynxView";
   private static final String SHARE_INTENT_TYPE = "text/plain";
   private static final CharSequence SHARE_INTENT_TITLE = "Application Logcat";
+  private static final int DEFAULT_POSITION = 0;
 
   private LynxPresenter presenter;
   private LynxConfig lynxConfig;
@@ -63,6 +69,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
   private ListView lv_traces;
   private EditText et_filter;
   private ImageButton ib_share;
+  private Spinner sp_filter;
 
   private RendererAdapter<Trace> adapter;
   private int lastScrollPosition;
@@ -219,7 +226,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
           attributes.getInteger(R.styleable.lynx_sampling_rate, lynxConfig.getSamplingRate());
 
       lynxConfig.setMaxNumberOfTracesToShow(maxTracesToShow)
-          .setFilter(filter)
+          .setFilter(TextUtils.isEmpty(filter)?"":filter)
           .setSamplingRate(samplingRate);
 
       attributes.recycle();
@@ -240,6 +247,8 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     lv_traces.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
     et_filter = (EditText) findViewById(R.id.et_filter);
     ib_share = (ImageButton) findViewById(R.id.ib_share);
+    sp_filter = (Spinner) findViewById(R.id.sp_filter);
+
     configureCursorColor();
     updateFilterText();
   }
@@ -305,6 +314,22 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
     ib_share.setOnClickListener(new OnClickListener() {
       @Override public void onClick(View v) {
         presenter.onShareButtonClicked();
+      }
+    });
+
+    sp_filter.setAdapter(
+        new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, TraceLevel.values()));
+    sp_filter.setSelection(DEFAULT_POSITION);
+    sp_filter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+      @Override
+      public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        presenter.updateFilterTraceLevel((TraceLevel) parent.getItemAtPosition(position));
+      }
+
+      @Override
+      public void onNothingSelected(AdapterView<?> parent) {
+
       }
     });
   }

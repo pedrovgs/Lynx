@@ -19,6 +19,7 @@ package com.github.pedrovgs.lynx;
 import android.app.Activity;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Spinner;
 import com.github.pedrovgs.lynx.model.Trace;
 import com.github.pedrovgs.lynx.model.TraceLevel;
 import com.github.pedrovgs.lynx.presenter.LynxPresenter;
@@ -68,6 +69,13 @@ import static org.mockito.Mockito.verify;
     View et_filter = lynxView.findViewById(R.id.et_filter);
 
     assertEquals(View.VISIBLE, et_filter.getVisibility());
+  }
+
+  @Test public void shouldShowSpinnerForInputFilterAsVisibleAndDefaultValueAll() {
+    Spinner sp_filter = (Spinner) lynxView.findViewById(R.id.sp_filter);
+
+    assertEquals(View.VISIBLE, sp_filter.getVisibility());
+    assertEquals(TraceLevel.ALL, sp_filter.getSelectedItem());
   }
 
   @Test public void shouldShowShareImageButtonAsVisible() {

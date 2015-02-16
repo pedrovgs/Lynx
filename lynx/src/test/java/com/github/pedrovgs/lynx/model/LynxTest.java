@@ -44,7 +44,7 @@ public class LynxTest {
   private static final String ANY_FILTER = "FiLteR";
   private static final String ANY_TRACE_MATCHING_FILTER = "02-07 17:45:33.014 D/any fIltEr trace";
   private static final String ANY_TRACE_NON_MATCHING_FILTER =
-      "02-07 17:45:33.014 D/Any error trace";
+      "02-07 17:45:33.014 W/Any error trace";
 
   private Lynx lynx;
 
@@ -122,7 +122,19 @@ public class LynxTest {
   @Test public void shouldNotifyAboutTracesJustIfTraceMatchesWithLynxConfigFilter()
       throws IllegalTraceException {
     givenCurrentTime();
-    givenLynxWithFilter(ANY_FILTER);
+    givenLynxWithFilter(ANY_FILTER, TraceLevel.ALL);
+
+    Logcat.Listener logcatListener = startLogcat();
+    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER);
+
+    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER);
+    verify(listener).onNewTraces(expectedTraces);
+  }
+
+  @Test public void shouldNotifyAboutTracesJustIfTraceMatchesWithLynxConfigFilterTraceLevel()
+      throws IllegalTraceException {
+    givenCurrentTime();
+    givenLynxWithFilter("", TraceLevel.DEBUG);
 
     Logcat.Listener logcatListener = startLogcat();
     logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER);
@@ -134,7 +146,18 @@ public class LynxTest {
   @Test public void shouldNotNotifyAboutTracesJustIfTraceMatchesWithLynxConfigFilter()
       throws IllegalTraceException {
     givenCurrentTime();
-    givenLynxWithFilter(ANY_FILTER);
+    givenLynxWithFilter(ANY_FILTER, TraceLevel.ALL);
+
+    Logcat.Listener logcatListener = startLogcat();
+    logcatListener.onTraceRead(ANY_TRACE_NON_MATCHING_FILTER);
+
+    verify(listener, never()).onNewTraces(anyList());
+  }
+
+  @Test public void shouldNotNotifyAboutTracesJustIfTraceMatchesWithLynxConfigFilterTraceLevel()
+      throws IllegalTraceException {
+    givenCurrentTime();
+    givenLynxWithFilter("", TraceLevel.ERROR);
 
     Logcat.Listener logcatListener = startLogcat();
     logcatListener.onTraceRead(ANY_TRACE_NON_MATCHING_FILTER);
@@ -144,7 +167,19 @@ public class LynxTest {
 
   @Test public void shouldNotifyJustTracesMatchingFilter() throws IllegalTraceException {
     givenCurrentTimes(NOW, NOW + 5, NOW + 15, NOW + 20);
-    givenLynxWithFilter(ANY_FILTER);
+    givenLynxWithFilter(ANY_FILTER, TraceLevel.ALL);
+
+    Logcat.Listener logcatListener = startLogcat();
+    logcatListener.onTraceRead(ANY_TRACE_NON_MATCHING_FILTER);
+    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER);
+
+    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER);
+    verify(listener).onNewTraces(expectedTraces);
+  }
+
+  @Test public void shouldNotifyJustTracesMatchingFilterTraceLevel() throws IllegalTraceException {
+    givenCurrentTimes(NOW, NOW + 5, NOW + 15, NOW + 20);
+    givenLynxWithFilter("", TraceLevel.DEBUG);
 
     Logcat.Listener logcatListener = startLogcat();
     logcatListener.onTraceRead(ANY_TRACE_NON_MATCHING_FILTER);
@@ -175,8 +210,9 @@ public class LynxTest {
     verify(logcat).start();
   }
 
-  private void givenLynxWithFilter(String filter) {
-    LynxConfig lynxConfigWithFilter = new LynxConfig().setFilter(filter);
+  private void givenLynxWithFilter(String filter, TraceLevel filterTraceLevel) {
+    LynxConfig lynxConfigWithFilter =
+        new LynxConfig().setFilter(filter).setFilterTraceLevel(filterTraceLevel);
     lynxConfigWithFilter.setSamplingRate(10);
     lynx.setConfig(lynxConfigWithFilter);
   }

@@ -22,7 +22,7 @@ package com.github.pedrovgs.lynx.model;
  * @author Pedro Vicente Gomez Sanchez.
  */
 public enum TraceLevel {
-  VERBOSE("V"), DEBUG("D"), INFO("I"), WARNING("W"), ERROR("E"), ASSERT("A"), WTF("F");
+  ALL("ALL"), VERBOSE("V"), DEBUG("D"), INFO("I"), WARNING("W"), ERROR("E"), ASSERT("A"), WTF("F");
 
   private final String value;
 

@@ -26,10 +26,10 @@ import com.github.pedrovgs.lynx.exception.IllegalTraceException;
 public class Trace {
 
   private static final char TRACE_LEVEL_SEPARATOR = '/';
-  private static final int TRACE_LEVEL_INDEX = 19;
   private static final int END_OF_DATE_INDEX = 18;
   private static final int START_OF_MESSAGE_INDEX = 21;
   public static final int MIN_TRACE_SIZE = 21;
+  public static final int TRACE_LEVEL_INDEX = 19;
 
   private final TraceLevel level;
   private final String message;

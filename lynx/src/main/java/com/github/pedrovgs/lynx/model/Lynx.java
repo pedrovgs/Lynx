@@ -133,9 +133,18 @@ public class Lynx {
   }
 
   private boolean traceMatchesFilter(String logcatTrace) {
+    TraceLevel levelFilter = lynxConfig.getFilterTraceLevel();
     String filter = lynxConfig.getFilter().toLowerCase();
     String logcatTraceLowercase = logcatTrace.toLowerCase();
-    return logcatTraceLowercase.contains(filter);
+    return logcatTraceLowercase.contains(filter) && containsTraceLevel(logcatTraceLowercase,
+        levelFilter);
+  }
+
+  private boolean containsTraceLevel(String logcatTraceLowercase, TraceLevel levelFilter) {
+    return levelFilter.equals(TraceLevel.ALL)
+        || logcatTraceLowercase.charAt(Trace.TRACE_LEVEL_INDEX) == levelFilter.getValue()
+        .toLowerCase()
+        .charAt(0);
   }
 
   private void notifyNewTraces() {
