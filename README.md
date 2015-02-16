@@ -135,6 +135,7 @@ I'd like to improve this library with your help, there are some new features to 
 
 * To be able to filter traces using the TraceLevel.
 * Play/Pause LynxView.
+* Provide a custom UI based on styles.
 * Any cool feature you can imagine!
 
 Libraries used in this project
