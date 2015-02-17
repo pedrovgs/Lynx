@@ -315,9 +315,9 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
         presenter.onShareButtonClicked();
       }
     });
-
-    sp_filter.setAdapter(
-        new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, TraceLevel.values()));
+    ArrayAdapter<TraceLevel> adapter =
+        new ArrayAdapter<>(getContext(), R.layout.single_line_spinner_item, TraceLevel.values());
+    sp_filter.setAdapter(adapter);
     sp_filter.setSelection(DEFAULT_POSITION);
     sp_filter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 

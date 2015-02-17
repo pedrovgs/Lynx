@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+  <style name="Spinner"
+      parent="@android:style/Widget.Holo.Spinner"/>
+  <!-- Extracted from AOSP
+    https://github.com/android/platform_frameworks_base/blob/master/core/res/res/layout/simple_list_item_1.xml -->
+  <style name="DropDown">
+    <item name="android:paddingLeft">?android:attr/listPreferredItemPaddingLeft</item>
+    <item name="android:paddingRight">?android:attr/listPreferredItemPaddingRight</item>
+    <item name="android:minHeight">?android:attr/listPreferredItemHeightSmall</item>
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:gravity">center_vertical</item>
+  </style>
+</resources>
