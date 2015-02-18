@@ -141,10 +141,11 @@ public class Lynx {
   }
 
   private boolean containsTraceLevel(String logcatTrace, TraceLevel levelFilter) {
-    return levelFilter.equals(TraceLevel.VERBOSE) || aBoolean(logcatTrace, levelFilter);
+    return levelFilter.equals(TraceLevel.VERBOSE) || hasTraceLevelEqualOrHigher(logcatTrace,
+        levelFilter);
   }
 
-  private boolean aBoolean(String logcatTrace, TraceLevel levelFilter) {
+  private boolean hasTraceLevelEqualOrHigher(String logcatTrace, TraceLevel levelFilter) {
     TraceLevel level =
         TraceLevel.getTraceLevel(logcatTrace.charAt(Trace.TRACE_LEVEL_INDEX));
     return level.ordinal() >= levelFilter.ordinal();
