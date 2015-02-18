@@ -33,4 +33,31 @@ public enum TraceLevel {
   public String getValue() {
     return value;
   }
+
+  public static TraceLevel getTraceLevel(char traceString) {
+    TraceLevel traceLevel;
+    switch (traceString) {
+      case 'V':
+        traceLevel = TraceLevel.VERBOSE;
+        break;
+      case 'A':
+        traceLevel = TraceLevel.ASSERT;
+        break;
+      case 'I':
+        traceLevel = TraceLevel.INFO;
+        break;
+      case 'W':
+        traceLevel = TraceLevel.WARNING;
+        break;
+      case 'E':
+        traceLevel = TraceLevel.ERROR;
+        break;
+      case 'F':
+        traceLevel = TraceLevel.WTF;
+        break;
+      default:
+        traceLevel = TraceLevel.DEBUG;
+    }
+    return traceLevel;
+  }
 }

@@ -19,6 +19,7 @@ package com.github.pedrovgs.lynx.presenter;
 import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.model.Lynx;
 import com.github.pedrovgs.lynx.model.Trace;
+import com.github.pedrovgs.lynx.model.TraceLevel;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -93,6 +94,16 @@ public class LynxPresenter implements Lynx.Listener {
     if (isInitialized) {
       LynxConfig lynxConfig = lynx.getConfig();
       lynxConfig.setFilter(filter);
+      lynx.setConfig(lynxConfig);
+      clearView();
+      restartLynx();
+    }
+  }
+
+  public void updateFilterTraceLevel(TraceLevel level) {
+    if (isInitialized) {
+      LynxConfig lynxConfig = lynx.getConfig();
+      lynxConfig.setFilterTraceLevel(level);
       lynx.setConfig(lynxConfig);
       clearView();
       restartLynx();

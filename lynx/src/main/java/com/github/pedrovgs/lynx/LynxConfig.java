@@ -16,6 +16,7 @@
 
 package com.github.pedrovgs.lynx;
 
+import com.github.pedrovgs.lynx.model.TraceLevel;
 import java.io.Serializable;
 
 /**
@@ -37,11 +38,13 @@ public class LynxConfig implements Serializable, Cloneable {
 
   private int maxNumberOfTracesToShow = 2500;
   private String filter;
+  private TraceLevel filterTraceLevel;
   private Float textSizeInPx;
   private int samplingRate = 150;
 
   public LynxConfig() {
-
+    filter = "";
+    filterTraceLevel = TraceLevel.VERBOSE;
   }
 
   public LynxConfig setMaxNumberOfTracesToShow(int maxNumberOfTracesToShow) {
@@ -55,7 +58,18 @@ public class LynxConfig implements Serializable, Cloneable {
   }
 
   public LynxConfig setFilter(String filter) {
+    if (filter == null) {
+      throw new IllegalArgumentException("filter can't be null");
+    }
     this.filter = filter;
+    return this;
+  }
+
+  public LynxConfig setFilterTraceLevel(TraceLevel filterTraceLevel) {
+    if (filterTraceLevel == null) {
+      throw new IllegalArgumentException("filterTraceLevel can't be null");
+    }
+    this.filterTraceLevel = filterTraceLevel;
     return this;
   }
 
@@ -77,8 +91,12 @@ public class LynxConfig implements Serializable, Cloneable {
     return filter;
   }
 
+  public TraceLevel getFilterTraceLevel() {
+    return filterTraceLevel;
+  }
+
   public boolean hasFilter() {
-    return filter != null;
+    return !"".equals(filter) || !TraceLevel.VERBOSE.equals(filterTraceLevel);
   }
 
   public float getTextSizeInPx() {
@@ -120,7 +138,8 @@ public class LynxConfig implements Serializable, Cloneable {
 
   @Override public Object clone() {
     return new LynxConfig().setMaxNumberOfTracesToShow(getMaxNumberOfTracesToShow())
-        .setFilter(getFilter())
+        .setFilter(filter)
+        .setFilterTraceLevel(filterTraceLevel)
         .setSamplingRate(getSamplingRate());
   }
 

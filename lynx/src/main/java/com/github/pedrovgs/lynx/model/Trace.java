@@ -26,10 +26,10 @@ import com.github.pedrovgs.lynx.exception.IllegalTraceException;
 public class Trace {
 
   private static final char TRACE_LEVEL_SEPARATOR = '/';
-  private static final int TRACE_LEVEL_INDEX = 19;
   private static final int END_OF_DATE_INDEX = 18;
   private static final int START_OF_MESSAGE_INDEX = 21;
   public static final int MIN_TRACE_SIZE = 21;
+  public static final int TRACE_LEVEL_INDEX = 19;
 
   private final TraceLevel level;
   private final String message;
@@ -51,7 +51,7 @@ public class Trace {
           "You are trying to create a Trace object from a invalid String. Your trace have to be "
               + "something like: '02-07 17:45:33.014 D/Any debug trace'.");
     }
-    TraceLevel level = getTraceLevel(logcatTrace.charAt(TRACE_LEVEL_INDEX));
+    TraceLevel level = TraceLevel.getTraceLevel(logcatTrace.charAt(TRACE_LEVEL_INDEX));
     String date = logcatTrace.substring(0, END_OF_DATE_INDEX);
     String message = logcatTrace.substring(START_OF_MESSAGE_INDEX, logcatTrace.length());
     return new Trace(level, date + " " + message);
@@ -65,32 +65,7 @@ public class Trace {
     return message;
   }
 
-  private static TraceLevel getTraceLevel(char traceString) {
-    TraceLevel traceLevel;
-    switch (traceString) {
-      case 'V':
-        traceLevel = TraceLevel.VERBOSE;
-        break;
-      case 'A':
-        traceLevel = TraceLevel.ASSERT;
-        break;
-      case 'I':
-        traceLevel = TraceLevel.INFO;
-        break;
-      case 'W':
-        traceLevel = TraceLevel.WARNING;
-        break;
-      case 'E':
-        traceLevel = TraceLevel.ERROR;
-        break;
-      case 'F':
-        traceLevel = TraceLevel.WTF;
-        break;
-      default:
-        traceLevel = TraceLevel.DEBUG;
-    }
-    return traceLevel;
-  }
+
 
   @Override public boolean equals(Object o) {
     if (this == o) {

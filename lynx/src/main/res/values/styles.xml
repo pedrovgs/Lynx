@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+  <style name="Spinner"
+      parent="@android:style/Widget.Spinner"/>
+  <!-- Extracted from AOSP 
+  https://github.com/android/platform_frameworks_base/blob/froyo-release/core/res/res/layout/simple_list_item_1.xml -->
+  <style name="DropDown">
+    <item name="android:paddingLeft">6dip</item>
+    <item name="android:minHeight">?android:attr/listPreferredItemHeight</item>
+    <item name="android:gravity">center_vertical</item>
+  </style>
+</resources>

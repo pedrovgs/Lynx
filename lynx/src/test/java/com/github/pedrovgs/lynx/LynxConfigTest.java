@@ -16,19 +16,38 @@
 
 package com.github.pedrovgs.lynx;
 
+import com.github.pedrovgs.lynx.model.TraceLevel;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
  * @author Pedro Vicente Gómez Sánchez.
  */
 public class LynxConfigTest {
+  @Rule
+  public ExpectedException exception = ExpectedException.none();
 
   private static final String ANY_FILTER = "AnyFilter";
+
+  @Test public void setFilterNullThrowsNPE() {
+    exception.expect(IllegalArgumentException.class);
+    exception.expectMessage("filter can't be null");
+    LynxConfig lynxConfig = new LynxConfig();
+    lynxConfig.setFilter(null);
+  }
+
+  @Test public void setFilterTraceLevelNullThrowsNPE() {
+    exception.expect(IllegalArgumentException.class);
+    exception.expectMessage("filterTraceLevel can't be null");
+    LynxConfig lynxConfig = new LynxConfig();
+    lynxConfig.setFilterTraceLevel(null);
+  }
 
   @Test public void shouldUse2500AsMaxNumberOfTracesByDefault() {
     LynxConfig lynxConfig = new LynxConfig();
@@ -36,10 +55,11 @@ public class LynxConfigTest {
     assertEquals(2500, lynxConfig.getMaxNumberOfTracesToShow());
   }
 
-  @Test public void shouldUseNullFilterByDefault() {
+  @Test public void shouldUseNotNullFilterAndTraceLevelAllFilterByDefault() {
     LynxConfig lynxConfig = new LynxConfig();
 
-    assertNull(lynxConfig.getFilter());
+    assertNotNull(lynxConfig.getFilter());
+    assertEquals(TraceLevel.VERBOSE, lynxConfig.getFilterTraceLevel());
   }
 
   @Test public void shouldHasNoFilterByDefault() {
@@ -48,10 +68,22 @@ public class LynxConfigTest {
     assertFalse(lynxConfig.hasFilter());
   }
 
-  @Test public void shouldReturnTrueIfHasAnyFilterConfiguredDifferentOfNull() {
+  @Test public void shouldReturnTrueIfHasAnyFilterQueryConfiguredNotEmpty() {
     LynxConfig lynxConfig = new LynxConfig().setFilter(ANY_FILTER);
 
     assertTrue(lynxConfig.hasFilter());
+  }
+
+  @Test public void shouldReturnTrueIfHasAnyFilterTraceLevelConfiguredDifferentOfAll() {
+    LynxConfig lynxConfig = new LynxConfig().setFilterTraceLevel(TraceLevel.ERROR);
+
+    assertTrue(lynxConfig.hasFilter());
+  }
+
+  @Test public void shouldHasNoFilterIfFilterTraceLeveIsSet() {
+    LynxConfig lynxConfig = new LynxConfig().setFilterTraceLevel(TraceLevel.VERBOSE);
+
+    assertFalse(lynxConfig.hasFilter());
   }
 
   @Test public void shouldUse36pxAsTextSizeByDefault() {

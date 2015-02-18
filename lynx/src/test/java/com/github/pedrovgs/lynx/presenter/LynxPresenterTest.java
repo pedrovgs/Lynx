@@ -135,6 +135,20 @@ public class LynxPresenterTest {
     verify(lynx).setConfig(lynxConfigArgumentCaptor.capture());
     LynxConfig lynxConfig = lynxConfigArgumentCaptor.getValue();
     assertEquals(ANY_FILTER, lynxConfig.getFilter());
+    assertEquals(TraceLevel.VERBOSE, lynxConfig.getFilterTraceLevel());
+  }
+
+  @Test public void shouldApplyNewConfigToLynxOnFilterTraceLevelUpdated() {
+    givenAPreviusLynxConfig();
+    ArgumentCaptor<LynxConfig> lynxConfigArgumentCaptor = ArgumentCaptor.forClass(LynxConfig.class);
+
+    presenter.resume();
+    presenter.updateFilterTraceLevel(TraceLevel.DEBUG);
+
+    verify(lynx).setConfig(lynxConfigArgumentCaptor.capture());
+    LynxConfig lynxConfig = lynxConfigArgumentCaptor.getValue();
+    assertEquals("", lynxConfig.getFilter());
+    assertEquals(TraceLevel.DEBUG, lynxConfig.getFilterTraceLevel());
   }
 
   @Test public void shouldClearViewOnFilterUpdated() {
@@ -146,6 +160,15 @@ public class LynxPresenterTest {
     verify(view).clear();
   }
 
+  @Test public void shouldClearViewOnFilterTraceLevelUpdated() {
+    givenAPreviusLynxConfig();
+
+    presenter.resume();
+    presenter.updateFilterTraceLevel(TraceLevel.DEBUG);
+
+    verify(view).clear();
+  }
+
   @Test public void shouldShowNewTracesAfterOnFilterUpdated() {
     givenAPreviusLynxConfig();
     List<Trace> traces = generateTraces(3);
@@ -153,6 +176,19 @@ public class LynxPresenterTest {
     presenter.resume();
     presenter.onNewTraces(traces);
     presenter.updateFilter(ANY_FILTER);
+    List<Trace> newTraces = generateTraces(5);
+    presenter.onNewTraces(newTraces);
+
+    verify(view, times(2)).showTraces(newTraces, 0);
+  }
+
+  @Test public void shouldShowNewTracesAfterOnFilterTraceLevelUpdated() {
+    givenAPreviusLynxConfig();
+    List<Trace> traces = generateTraces(3);
+
+    presenter.resume();
+    presenter.onNewTraces(traces);
+    presenter.updateFilterTraceLevel(TraceLevel.DEBUG);
     List<Trace> newTraces = generateTraces(5);
     presenter.onNewTraces(newTraces);
 
