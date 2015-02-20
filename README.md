@@ -1,4 +1,4 @@
-Lynx [![Build Status](https://travis-ci.org/pedrovgs/Lynx.svg?branch=master)](https://travis-ci.org/pedrovgs/Lynx) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.pedrovgs/lynx/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.pedrovgs/lynx)
+Lynx [![Build Status](https://travis-ci.org/pedrovgs/Lynx.svg?branch=master)](https://travis-ci.org/pedrovgs/Lynx) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.pedrovgs/lynx/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.pedrovgs/lynx) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Lynx-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1552)
 ====
 
 
