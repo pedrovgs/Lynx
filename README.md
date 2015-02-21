@@ -1,7 +1,6 @@
 Lynx [![Build Status](https://travis-ci.org/pedrovgs/Lynx.svg?branch=master)](https://travis-ci.org/pedrovgs/Lynx) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.pedrovgs/lynx/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.pedrovgs/lynx) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Lynx-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1552)
 ====
 
-
 Are you bored of connect your device to your computer to know what's happening inside your app? If you hate it, this is going to be your favorite library. Shake your phone, press a button or add a ``LynxView`` to your layouts and you'll see what Andoird logcat is printing :)
 
 Lynx is an Android library created to show a custom view with all the information logcat is printing, different traces of different levels will be rendererd to show from log messages to your application exceptions. You can filter this traces, share your logcat to other apps, configure the max number of traces to show or the sampling rate used by the library. The min Api Level supported is 8.
@@ -121,19 +120,11 @@ Or add Lynx as a new dependency inside your pom.xml
 ```
 
 
-Who's using it
---------------
-
-* [Tuenti][2]
-
-*Does your app use Lynx? If you want to be featured on this list drop me a line.*
-
 Do you want to contribute?
 --------------------------
 
 I'd like to improve this library with your help, there are some new features to implement waiting for you ;)
 
-* To be able to filter traces using the TraceLevel.
 * Play/Pause LynxView.
 * Provide a custom UI based on styles.
 * Any cool feature you can imagine!
@@ -161,6 +152,19 @@ Developed By
   <img alt="Add me to Linkedin" src="http://imageshack.us/a/img41/7877/smallld.png" />
 </a>
 
+
+Who's using it
+--------------
+
+* [Tuenti][2]
+
+*Does your app use Lynx? If you want to be featured on this list drop me a line.*
+
+Contributors
+------------
+* [Pedro Vicente Gómez Sánchez][8]
+* [Israel Ferrer Camacho][9]
+
 License
 -------
 
@@ -186,3 +190,5 @@ License
 [5]: https://github.com/robolectric/robolectric
 [6]: https://github.com/junit-team/junit
 [7]: https://github.com/mockito/mockito
+[8]: https://github.com/pedrovgs
+[9]: https://github.com/rallat
