@@ -62,7 +62,7 @@
           android:textColor="@color/white"
           android:textColorHint="@color/gray"
           tools:text="Filter"
-          android:singleLine="true""/>
+          android:singleLine="true"/>
 
       <Spinner
           android:id="@+id/sp_filter"
