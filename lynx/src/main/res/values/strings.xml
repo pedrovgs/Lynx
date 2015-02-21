@@ -17,6 +17,6 @@
 
 <resources>
 
-  <string name="et_filter_hint_text">Add your logcat filter here</string>
+  <string name="et_filter_hint_text">Logcat filter</string>
 
 </resources>
