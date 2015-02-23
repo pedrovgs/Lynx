@@ -92,7 +92,7 @@ Add Lynx dependency to your build.gradle
 ```groovy
 
 dependencies{
-    compile 'com.github.pedrovgs:lynx:1.1'
+    compile 'com.github.pedrovgs:lynx:1.2'
 }
 
 ```
@@ -104,19 +104,10 @@ Or add Lynx as a new dependency inside your pom.xml
 <dependency>
     <groupId>com.github.pedrovgs</groupId>
     <artifactId>lynx</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <type>aar</type>
 </dependency>
-<dependency>
-  <groupId>com.squareup</groupId>
-  <artifactId>seismic</artifactId>
-  <version>1.0.1</version>
-</dependency>
-<dependency>
-  <groupId>com.github.pedrovgs</groupId>
-  <artifactId>renderers</artifactId>
-  <version>1.4</version>
-</dependency>
+
 ```
 
 
