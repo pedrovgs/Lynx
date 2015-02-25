@@ -148,6 +148,7 @@ Who's using it
 --------------
 
 * [Tuenti][2]
+* [Upclose.me][10]
 
 *Does your app use Lynx? If you want to be featured on this list drop me a line.*
 
@@ -183,3 +184,4 @@ License
 [7]: https://github.com/mockito/mockito
 [8]: https://github.com/pedrovgs
 [9]: https://github.com/rallat
+[10]: https://play.google.com/store/apps/details?id=fm.rushmore.mainapp
