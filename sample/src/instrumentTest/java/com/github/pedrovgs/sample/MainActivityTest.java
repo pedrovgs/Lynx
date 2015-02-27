@@ -23,7 +23,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNot.not;
 
 /**
  * @author Pedro Vicente Gomez Sanchez.
@@ -39,11 +39,11 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     getActivity();
   }
 
-  public void shouldShowsLynxViewAsGoneByDefault() {
-    onView(withId(R.id.lynx_view)).check(matches(is(isDisplayed())));
+  public void testShowsLynxViewAsGoneByDefault() {
+    onView(withId(R.id.lynx_view)).check(matches(not(isDisplayed())));
   }
 
-  public void shouldShowsLynxViewOnShowLynxButtonClicked() {
+  public void testShowsLynxViewOnShowLynxButtonClicked() {
     onView(withId(R.id.bt_show_lynx_view)).perform(click());
 
     onView(withId(R.id.lynx_view)).check(matches(isDisplayed()));
