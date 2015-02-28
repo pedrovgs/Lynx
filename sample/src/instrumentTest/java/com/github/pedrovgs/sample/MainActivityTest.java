@@ -48,4 +48,10 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
     onView(withId(R.id.lynx_view)).check(matches(isDisplayed()));
   }
+
+  public void testOpensLynxActivityOnOpenLynxActivityButtonClicked() {
+    onView(withId(R.id.bt_show_lynx_activity)).perform(click());
+
+    onView(withId(R.id.lynx_view)).check(matches(isDisplayed()));
+  }
 }
