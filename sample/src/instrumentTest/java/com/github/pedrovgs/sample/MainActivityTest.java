@@ -23,12 +23,15 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.IsNot.not;
 
 /**
  * @author Pedro Vicente Gomez Sanchez.
  */
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
+
+  private static final String LYNX_VIEW_DEFAULT_FILETR = "Lynx";
 
   public MainActivityTest() {
     super(MainActivity.class);
@@ -53,5 +56,11 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     onView(withId(R.id.bt_show_lynx_activity)).perform(click());
 
     onView(withId(R.id.lynx_view)).check(matches(isDisplayed()));
+  }
+
+  public void testShouldShowLynxViewWithLynxAsFilterOnShowLynxViewButtonClicked() {
+    onView(withId(R.id.bt_show_lynx_view)).perform(click());
+
+    onView(withId(R.id.et_filter)).check(matches(withText(LYNX_VIEW_DEFAULT_FILETR)));
   }
 }
