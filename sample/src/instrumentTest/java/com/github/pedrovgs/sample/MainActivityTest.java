@@ -23,6 +23,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.IsNot.not;
 
@@ -31,7 +32,9 @@ import static org.hamcrest.core.IsNot.not;
  */
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-  private static final String LYNX_VIEW_DEFAULT_FILETR = "Lynx";
+  private static final String LYNX_FILTER = "Lynx";
+  private static final String VERBOSE_TRACE_LEVEL = "VERBOSE";
+  private static final String DEBUG_TRACE_LEVEL = "DEBUG";
 
   public MainActivityTest() {
     super(MainActivity.class);
@@ -58,9 +61,27 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     onView(withId(R.id.lynx_view)).check(matches(isDisplayed()));
   }
 
-  public void testShouldShowLynxViewWithLynxAsFilterOnShowLynxViewButtonClicked() {
+  public void testShowsLynxViewWithLynxAsFilterOnShowLynxViewButtonClicked() {
     onView(withId(R.id.bt_show_lynx_view)).perform(click());
 
-    onView(withId(R.id.et_filter)).check(matches(withText(LYNX_VIEW_DEFAULT_FILETR)));
+    onView(withId(R.id.et_filter)).check(matches(withText(LYNX_FILTER)));
+  }
+
+  public void testUsesVerboseAsDefaultTraceLevelFilterInLynxViewOnShowLynxViewButtonClicked() {
+    onView(withId(R.id.bt_show_lynx_view)).perform(click());
+
+    onView(withId(R.id.tv_spinner_trace_level)).check(matches(withText(VERBOSE_TRACE_LEVEL)));
+  }
+
+  public void testOpensLynxActivityUsingLynxAsDefaultFilterOnOpenLynxActivityButtonClicked() {
+    onView(withId(R.id.bt_show_lynx_activity)).perform(click());
+
+    onView(withId(R.id.et_filter)).check(matches(withText(LYNX_FILTER)));
+  }
+
+  public void testOpensLynxActivityUsingDebugAsDefaultTraceLevelOnOpenLynxActivityButtonClicked() {
+    onView(withId(R.id.bt_show_lynx_activity)).perform(click());
+
+    onView(withId(R.id.sp_filter)).check(matches(withSpinnerText(DEBUG_TRACE_LEVEL)));
   }
 }
