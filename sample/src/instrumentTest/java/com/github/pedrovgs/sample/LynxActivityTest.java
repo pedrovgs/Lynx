@@ -32,8 +32,8 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
@@ -43,12 +43,6 @@ import static org.hamcrest.core.IsInstanceOf.instanceOf;
 public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
   private static final String ANY_TRACE_FILTER = "Lynx";
-  private static final String VERBOSE_FILTER = "VERBOSE";
-  private static final String ERROR_FILTER = "ERROR";
-  private static final String DEBUG_FILTER = "DEBUG";
-  private static final String INFO_FILTER = "INFO";
-  private static final String WARNING_FILTER = "WARNING";
-  private static final String WTF_FILTER = "WTF";
 
   public LynxActivityTest() {
     super(MainActivity.class);
@@ -72,7 +66,7 @@ public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActiv
   }
 
   public void testShowsTracesEqualsOrGreaterThanVerboseTraceLevelOnTraceLevelSelected() {
-    selectFilterByTraceLevel(VERBOSE_FILTER);
+    selectFilterByTraceLevel(TraceLevel.VERBOSE);
 
     waitForSomeTraces();
 
@@ -85,7 +79,7 @@ public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActiv
   }
 
   public void testShowsTracesEqualsOrGreaterThanDebugTraceLevelOnTraceLevelSelected() {
-    selectFilterByTraceLevel(DEBUG_FILTER);
+    selectFilterByTraceLevel(TraceLevel.DEBUG);
 
     waitForSomeTraces();
 
@@ -97,7 +91,7 @@ public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActiv
   }
 
   public void testShowsTracesEqualsOrGreaterThanInfoTraceLevelOnTraceLevelSelected() {
-    selectFilterByTraceLevel(INFO_FILTER);
+    selectFilterByTraceLevel(TraceLevel.INFO);
 
     waitForSomeTraces();
 
@@ -108,7 +102,7 @@ public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActiv
   }
 
   public void testShowsTracesEqualsOrGreaterThanWARNINGTraceLevelOnTraceLevelSelected() {
-    selectFilterByTraceLevel(WARNING_FILTER);
+    selectFilterByTraceLevel(TraceLevel.WARNING);
 
     waitForSomeTraces();
 
@@ -118,7 +112,7 @@ public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActiv
   }
 
   public void testShowsTracesEqualsOrGreaterThanErrorTraceLevelOnTraceLevelSelected() {
-    selectFilterByTraceLevel(ERROR_FILTER);
+    selectFilterByTraceLevel(TraceLevel.ERROR);
 
     waitForSomeTraces();
 
@@ -127,16 +121,16 @@ public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActiv
   }
 
   public void testShowsTracesEqualsOrGreaterThanWtfRTraceLevelOnTraceLevelSelected() {
-    selectFilterByTraceLevel(WTF_FILTER);
+    selectFilterByTraceLevel(TraceLevel.WTF);
 
     waitForSomeTraces();
 
     assertShowsTraceMatchingTraceLevel(TraceLevel.WTF);
   }
 
-  private void selectFilterByTraceLevel(String traceLevel) {
+  private void selectFilterByTraceLevel(TraceLevel traceLevel) {
     onView(withId(R.id.sp_filter)).perform(click());
-    onView(allOf(withId(R.id.tv_spinner_trace_level), withText(traceLevel))).perform(click());
+    onData(allOf(is(instanceOf(TraceLevel.class)), is(equalTo(traceLevel)))).perform(click());
   }
 
   private void assertShowsTraceMatchingTraceLevel(TraceLevel traceLevel) {
