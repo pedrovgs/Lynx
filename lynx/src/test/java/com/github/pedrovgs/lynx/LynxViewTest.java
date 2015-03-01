@@ -44,8 +44,7 @@ import static org.mockito.Mockito.verify;
 @Config(emulateSdk = 18) @RunWith(RobolectricTestRunner.class) public class LynxViewTest {
 
   private static final String ANY_TRACE_MESSAGE = "02-07 17:45:33.014 D/ Any trace message";
-  private static final String SHARE_INTENT_TYPE = "text/plain";
-  public static final int ANY_TEXT_SIZE = 300;
+  private static final int ANY_TEXT_SIZE = 300;
 
   private LynxView lynxView;
   private Activity activity;
@@ -180,6 +179,15 @@ import static org.mockito.Mockito.verify;
     verify(presenter, never()).setLynxConfig(defaultConfig);
   }
 
+  @Test public void shouldChangeSpinnerItemOnConfigChanges() {
+    LynxConfig newLynxConfig = new LynxConfig().setFilterTraceLevel(TraceLevel.WTF);
+
+    lynxView.setLynxConfig(newLynxConfig);
+
+    Spinner spinner = getTraceLevelFilterSpinner();
+    assertEquals(TraceLevel.WTF, spinner.getSelectedItem());
+  }
+
   private void assertTracesRendered(List<Trace> traces, ListView tracesListView) {
     for (int i = 0; i < traces.size(); i++) {
       Trace trace = traces.get(i);
@@ -198,5 +206,9 @@ import static org.mockito.Mockito.verify;
 
   private ListView getLvTraces() {
     return (ListView) lynxView.findViewById(R.id.lv_traces);
+  }
+
+  private Spinner getTraceLevelFilterSpinner() {
+    return (Spinner) lynxView.findViewById(R.id.sp_filter);
   }
 }

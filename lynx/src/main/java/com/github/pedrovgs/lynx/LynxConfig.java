@@ -124,7 +124,7 @@ public class LynxConfig implements Serializable, Cloneable {
         : that.textSizeInPx != null) {
       return false;
     }
-
+    if (filterTraceLevel != that.filterTraceLevel) return false;
     return true;
   }
 

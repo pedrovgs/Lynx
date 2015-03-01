@@ -135,8 +135,14 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
       this.lynxConfig = (LynxConfig) lynxConfig.clone();
       updateFilterText();
       updateAdapter();
+      updateSpinner();
       presenter.setLynxConfig(lynxConfig);
     }
+  }
+
+  private void updateSpinner() {
+    TraceLevel filterTraceLevel = lynxConfig.getFilterTraceLevel();
+    sp_filter.setSelection(filterTraceLevel.ordinal());
   }
 
   /**
@@ -326,8 +332,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
         presenter.updateFilterTraceLevel((TraceLevel) parent.getItemAtPosition(position));
       }
 
-      @Override
-      public void onNothingSelected(AdapterView<?> parent) {
+      @Override public void onNothingSelected(AdapterView<?> parent) {
 
       }
     });

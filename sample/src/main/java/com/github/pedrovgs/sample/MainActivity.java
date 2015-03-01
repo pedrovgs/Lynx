@@ -85,27 +85,33 @@ public class MainActivity extends ActionBarActivity {
    */
   private void generateFiveRandomTracesPerSecond() {
     final Random random = new Random();
+    Log.d("Lynx", "Debug trace generated automatically");
+    Log.w("Lynx", "Warning trace generated automatically");
+    Log.e("Lynx", "Error trace generated automatically");
+    Log.wtf("Lynx", "WTF trace generated automatically");
+    Log.i("Lynx", "Info trace generated automatically");
+    Log.v("Lynx", "Verbose trace generated automatically");
     logGeneratorThread = new Thread(new Runnable() {
       @Override public void run() {
         while (continueReading) {
           int traceLevel = random.nextInt(6);
           switch (traceLevel) {
             case 0:
-              Log.d("LynxDebug", traceCounter + " - Debug trace generated automatically");
+              Log.d("Lynx", traceCounter + " - Debug trace generated automatically");
               break;
             case 1:
-              Log.w("LynxWarning", traceCounter + " - Warning trace generated automatically");
+              Log.w("Lynx", traceCounter + " - Warning trace generated automatically");
               break;
             case 2:
-              Log.e("LynxError", traceCounter + " - Error trace generated automatically");
+              Log.e("Lynx", traceCounter + " - Error trace generated automatically");
               break;
             case 3:
-              Log.wtf("LynxWtf", traceCounter + " - WTF trace generated automatically");
+              Log.wtf("Lynx", traceCounter + " - WTF trace generated automatically");
               break;
             case 4:
-              Log.i("LynxInfo", traceCounter + " - Info trace generated automatically");
+              Log.i("Lynx", traceCounter + " - Info trace generated automatically");
             default:
-              Log.v("LynxVerbose", traceCounter + " - Verbose trace generated automatically");
+              Log.v("Lynx", traceCounter + " - Verbose trace generated automatically");
           }
           traceCounter++;
           try {
