@@ -72,6 +72,16 @@ import static org.junit.Assert.assertEquals;
     assertEquals(defaultLynxConfig, lynxConfig);
   }
 
+  @Test public void shouldConfigureLynxViewWithTheDefaultLynxConfigIfUsesGetIntentMethod() {
+    Intent intent = LynxActivity.getIntent(Robolectric.application);
+
+    LynxActivity lynxActivity =
+        Robolectric.buildActivity(LynxActivity.class).withIntent(intent).create().resume().get();
+
+    LynxView lynxView = (LynxView) lynxActivity.findViewById(R.id.lynx_view);
+    assertEquals(new LynxConfig(), lynxView.getLynxConfig());
+  }
+
   @Test public void shouldPassLynxConfigurationToLynxView() {
     LynxConfig lynxConfig =
         new LynxConfig().setMaxNumberOfTracesToShow(ANY_MAX_NUMBER_OF_TRACES).setFilter(ANY_FILTER);

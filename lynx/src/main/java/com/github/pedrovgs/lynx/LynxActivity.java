@@ -35,6 +35,13 @@ public class LynxActivity extends Activity {
   private static final String LYNX_CONFIG_EXTRA = "extra_lynx_config";
 
   /**
+   * Generates an Intent to start LynxActivity with a default LynxConfig object as configuration.
+   */
+  public static Intent getIntent(Context context) {
+    return getIntent(context, new LynxConfig());
+  }
+
+  /**
    * Generates an Intent to start LynxActivity with a LynxConfig configuration passed as parameter.
    */
   public static Intent getIntent(Context context, LynxConfig lynxConfig) {
