@@ -102,10 +102,10 @@ public class LynxPresenter implements Lynx.Listener {
 
   public void updateFilterTraceLevel(TraceLevel level) {
     if (isInitialized) {
+      clearView();
       LynxConfig lynxConfig = lynx.getConfig();
       lynxConfig.setFilterTraceLevel(level);
       lynx.setConfig(lynxConfig);
-      clearView();
       restartLynx();
     }
   }

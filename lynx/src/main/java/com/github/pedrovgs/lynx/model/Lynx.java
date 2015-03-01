@@ -136,8 +136,7 @@ public class Lynx {
     TraceLevel levelFilter = lynxConfig.getFilterTraceLevel();
     String filter = lynxConfig.getFilter().toLowerCase();
     String logcatTraceLowercase = logcatTrace.toLowerCase();
-    return logcatTraceLowercase.contains(filter) && containsTraceLevel(logcatTrace,
-        levelFilter);
+    return logcatTraceLowercase.contains(filter) && containsTraceLevel(logcatTrace, levelFilter);
   }
 
   private boolean containsTraceLevel(String logcatTrace, TraceLevel levelFilter) {
@@ -146,8 +145,7 @@ public class Lynx {
   }
 
   private boolean hasTraceLevelEqualOrHigher(String logcatTrace, TraceLevel levelFilter) {
-    TraceLevel level =
-        TraceLevel.getTraceLevel(logcatTrace.charAt(Trace.TRACE_LEVEL_INDEX));
+    TraceLevel level = TraceLevel.getTraceLevel(logcatTrace.charAt(Trace.TRACE_LEVEL_INDEX));
     return level.ordinal() >= levelFilter.ordinal();
   }
 

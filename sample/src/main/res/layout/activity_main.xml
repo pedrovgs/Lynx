@@ -26,7 +26,7 @@
       android:layout_height="wrap_content"
       android:layout_centerHorizontal="true"
       android:layout_alignParentTop="true"
-      android:padding="@dimen/lynx_icon_padding"
+      android:layout_marginTop="@dimen/lynx_icon_margin_top"
       android:src="@drawable/ic_lynx"/>
 
   <Button
