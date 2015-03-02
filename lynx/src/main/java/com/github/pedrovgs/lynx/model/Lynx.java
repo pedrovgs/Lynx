@@ -103,20 +103,21 @@ public class Lynx {
     logcat = (Logcat) logcat.clone();
     logcat.setListener(previousListener);
     lastNotificationTime = 0;
+    tracesToNotify.clear();
     logcat.start();
   }
 
   /**
    * Adds a Listener to the listeners collection to be notified with new Trace objects.
    */
-  public void registerListener(Listener lynxPresenter) {
+  public synchronized void registerListener(Listener lynxPresenter) {
     listeners.add(lynxPresenter);
   }
 
   /**
    * Removes a Listener to the listeners collection.
    */
-  public void unregisterListener(Listener lynxPresenter) {
+  public synchronized void unregisterListener(Listener lynxPresenter) {
     listeners.remove(lynxPresenter);
   }
 
@@ -164,15 +165,15 @@ public class Lynx {
     return timeFromLastNotification > lynxConfig.getSamplingRate() && hasTracesToNotify;
   }
 
-  private void notifyListeners(final List<Trace> traces) {
+  private synchronized void notifyListeners(final List<Trace> traces) {
     mainThread.post(new Runnable() {
       @Override public void run() {
         for (Listener listener : listeners) {
           listener.onNewTraces(traces);
         }
+        lastNotificationTime = timeProvider.getCurrentTimeMillis();
       }
     });
-    lastNotificationTime = timeProvider.getCurrentTimeMillis();
   }
 
   public interface Listener {
