@@ -17,11 +17,15 @@
 package com.github.pedrovgs.sample;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import com.github.pedrovgs.lynx.model.Trace;
 import com.github.pedrovgs.lynx.model.TraceLevel;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -36,6 +40,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.hamcrest.core.IsNot.not;
 
 /**
  * @author Pedro Vicente Gómez Sánchez.
@@ -88,6 +93,7 @@ public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     assertShowsTraceMatchingTraceLevel(TraceLevel.WARNING);
     assertShowsTraceMatchingTraceLevel(TraceLevel.ERROR);
     assertShowsTraceMatchingTraceLevel(TraceLevel.WTF);
+    assertTracesListDoesNotShowTracesLowerThan(TraceLevel.DEBUG);
   }
 
   public void testShowsTracesEqualsOrGreaterThanInfoTraceLevelOnTraceLevelSelected() {
@@ -99,6 +105,7 @@ public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     assertShowsTraceMatchingTraceLevel(TraceLevel.WARNING);
     assertShowsTraceMatchingTraceLevel(TraceLevel.ERROR);
     assertShowsTraceMatchingTraceLevel(TraceLevel.WTF);
+    assertTracesListDoesNotShowTracesLowerThan(TraceLevel.INFO);
   }
 
   public void testShowsTracesEqualsOrGreaterThanWARNINGTraceLevelOnTraceLevelSelected() {
@@ -109,6 +116,7 @@ public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     assertShowsTraceMatchingTraceLevel(TraceLevel.WARNING);
     assertShowsTraceMatchingTraceLevel(TraceLevel.ERROR);
     assertShowsTraceMatchingTraceLevel(TraceLevel.WTF);
+    assertTracesListDoesNotShowTracesLowerThan(TraceLevel.WARNING);
   }
 
   public void testShowsTracesEqualsOrGreaterThanErrorTraceLevelOnTraceLevelSelected() {
@@ -118,6 +126,7 @@ public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
     assertShowsTraceMatchingTraceLevel(TraceLevel.ERROR);
     assertShowsTraceMatchingTraceLevel(TraceLevel.WTF);
+    assertTracesListDoesNotShowTracesLowerThan(TraceLevel.ERROR);
   }
 
   public void testShowsTracesEqualsOrGreaterThanWtfRTraceLevelOnTraceLevelSelected() {
@@ -126,6 +135,7 @@ public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     waitForSomeTraces();
 
     assertShowsTraceMatchingTraceLevel(TraceLevel.WTF);
+    assertTracesListDoesNotShowTracesLowerThan(TraceLevel.WTF);
   }
 
   private void selectFilterByTraceLevel(TraceLevel traceLevel) {
@@ -178,6 +188,35 @@ public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
       @Override public void describeTo(Description description) {
         description.appendText("Trace contains '").appendText(message + "' in trace message.");
+      }
+    };
+  }
+
+  private void assertTracesListDoesNotShowTracesLowerThan(TraceLevel traceLevel) {
+    onView(withId(R.id.lv_traces)).check(matches(not(withTraceLevelInAdapter(traceLevel))));
+  }
+
+  private static Matcher<View> withTraceLevelInAdapter(final TraceLevel traceLevel) {
+    return new TypeSafeMatcher<View>() {
+
+      @Override public void describeTo(Description description) {
+        description.appendText(
+            "Your ListView contains at least one trace with TraceLevel less than TraceLevel: ");
+        description.appendText(String.valueOf(traceLevel));
+      }
+
+      @Override public boolean matchesSafely(View view) {
+        if (!(view instanceof AdapterView)) {
+          return false;
+        }
+        @SuppressWarnings("rawtypes") Adapter adapter = ((AdapterView) view).getAdapter();
+        for (int i = 0; i < adapter.getCount(); i++) {
+          Trace trace = (Trace) adapter.getItem(i);
+          if (trace.getLevel().ordinal() < traceLevel.ordinal()) {
+            return true;
+          }
+        }
+        return false;
       }
     };
   }
