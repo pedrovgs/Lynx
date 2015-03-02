@@ -224,8 +224,8 @@ public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActiv
   /**
    * Ugly sleep used for some of this tests. This method is needed because we can't provide Log
    * traces from the test application process and the default traces generation is implemented in
-   * MainActivity. onData method doesn't wait until our traces are displayed with the filter
-   * provided. That's why I need this Thread.Sleep. Please, don't do this at home.
+   * MainActivity. onData method doesn't wait until different log traces are displayed with the
+   * filter provided, that's why I need this Thread.Sleep. Please, don't do this at home.
    */
   private void waitForSomeTraces() {
     try {
