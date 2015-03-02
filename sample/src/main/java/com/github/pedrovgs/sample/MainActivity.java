@@ -25,7 +25,6 @@ import android.widget.Button;
 import com.github.pedrovgs.lynx.LynxActivity;
 import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.model.TraceLevel;
-import java.util.Random;
 
 /**
  * Activity created to show how to use Lynx.
@@ -84,17 +83,10 @@ public class MainActivity extends ActionBarActivity {
    * Random traces generator used just for this demo application.
    */
   private void generateFiveRandomTracesPerSecond() {
-    final Random random = new Random();
-    Log.d("Lynx", "Debug trace generated automatically");
-    Log.w("Lynx", "Warning trace generated automatically");
-    Log.e("Lynx", "Error trace generated automatically");
-    Log.wtf("Lynx", "WTF trace generated automatically");
-    Log.i("Lynx", "Info trace generated automatically");
-    Log.v("Lynx", "Verbose trace generated automatically");
     logGeneratorThread = new Thread(new Runnable() {
       @Override public void run() {
         while (continueReading) {
-          int traceLevel = random.nextInt(6);
+          int traceLevel = traceCounter % 6;
           switch (traceLevel) {
             case 0:
               Log.d("Lynx", traceCounter + " - Debug trace generated automatically");
