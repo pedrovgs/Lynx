@@ -48,7 +48,8 @@ public class LynxTest {
       "02-07 17:45:33.014 V/any fIltEr trace";
   private static final String ANY_TRACE_NON_MATCHING_FILTER =
       "02-07 17:45:33.014 V/Any error trace";
-
+  private static final String ANY_TRACE_MATCHING_FILTER_WTF =
+      "02-07 17:45:33.014 F/Any error trace";
   private Lynx lynx;
 
   @Mock private Lynx.Listener listener;
@@ -223,6 +224,21 @@ public class LynxTest {
     lynx.restart();
 
     verify(logcat).start();
+  }
+
+  @Test public void shouldRemovePendingTracesToNotifyOnRestart() throws IllegalTraceException {
+    givenCurrentTimes(NOW, NOW + 1, NOW + 2, NOW + 30);
+
+    Logcat.Listener logcatListener = startLogcat();
+    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER_WTF);
+    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER_VERBOSE);
+    lynx.restart();
+    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER_DEBUG);
+
+    List<Trace> tracesBeforeReset = generateTraces(ANY_TRACE_MATCHING_FILTER_VERBOSE);
+    verify(listener, never()).onNewTraces(tracesBeforeReset);
+    List<Trace> tracesAfterReset = generateTraces(ANY_TRACE_MATCHING_FILTER_DEBUG);
+    verify(listener).onNewTraces(tracesAfterReset);
   }
 
   private void givenLynxWithFilter(String filter, TraceLevel filterTraceLevel) {
