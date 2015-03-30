@@ -73,6 +73,8 @@ public class LynxTest {
   }
 
   @Test public void shouldStartLogcatOnStart() {
+    givenLogcatHasBeenCreatedButNotStarted();
+
     lynx.startReading();
 
     verify(logcat).start();
@@ -269,5 +271,9 @@ public class LynxTest {
 
   private void givenCurrentTime() {
     when(timeProvider.getCurrentTimeMillis()).thenReturn(NOW);
+  }
+
+  private void givenLogcatHasBeenCreatedButNotStarted() {
+    when(logcat.getState()).thenReturn(Thread.State.NEW);
   }
 }

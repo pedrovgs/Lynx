@@ -66,7 +66,7 @@ public class Lynx {
   }
 
   /**
-   * Configures a Logcat. Listeners and initialize Logcat dependency to read logcat traces.
+   * Configures a Logcat.Listener and initialize Logcat dependency to read traces from the OS log.
    */
   public void startReading() {
     logcat.setListener(new Logcat.Listener() {
@@ -79,7 +79,8 @@ public class Lynx {
         notifyNewTraces();
       }
     });
-    if (!logcat.isAlive()) {
+    boolean logcatWasNotStarted = Thread.State.NEW.equals(logcat.getState());
+    if (logcatWasNotStarted) {
       logcat.start();
     }
   }
