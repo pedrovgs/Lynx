@@ -9,10 +9,10 @@ dependencies:
 
 test:
   override:
-    - echo y | android update sdk -a -u -t sys-img-x86-android-22
+    - echo y | android update sdk -a -u -t sys-img-x86-android-21
     - echo no | android create avd -n testing -t android-21
     - emulator -avd testing -no-window -no-boot-anim -no-audio:
         background: true
         parallel: true
-    - bin/android-wait-for-emulator
+    - circle-android wait-for-boot
     - ./gradlew connectedAndroidTest
