@@ -9,8 +9,8 @@ dependencies:
 
 test:
   override:
-    - echo y | android update sdk -a -u -t sys-img-x86-android-21
-    - echo no | android create avd -n testing -t android-21
+    - echo y | android update sdk -a -u -t sys-img-x86-android-22
+    - echo no | android create avd -n testing -t android-22
     - emulator -avd testing -no-window -no-boot-anim -no-audio:
         background: true
         parallel: true
