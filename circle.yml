@@ -1,6 +1,6 @@
 machine:
     environment:
-        ANDROID_HOME: /home/ubuntu/android
+        ANDROID_HOME: /usr/local/android-sdk-linux
     java:
         version: oraclejdk7
 
