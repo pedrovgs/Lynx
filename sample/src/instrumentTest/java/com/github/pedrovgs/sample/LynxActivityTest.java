@@ -16,12 +16,14 @@
 
 package com.github.pedrovgs.sample;
 
+import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import com.github.pedrovgs.lynx.model.Trace;
 import com.github.pedrovgs.lynx.model.TraceLevel;
+import com.robotium.solo.Solo;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -55,7 +57,9 @@ public class LynxActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
   @Override protected void setUp() throws Exception {
     super.setUp();
-    getActivity();
+    Activity activity = getActivity();
+    Solo solo = new Solo(getInstrumentation(), activity);
+    solo.unlockScreen();
     onView(withId(R.id.bt_show_lynx_activity)).perform(click());
     onView(withId(R.id.et_filter)).perform(clearText());
   }

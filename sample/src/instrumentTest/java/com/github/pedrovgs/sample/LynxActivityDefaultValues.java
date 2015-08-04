@@ -16,8 +16,10 @@
 
 package com.github.pedrovgs.sample;
 
+import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import com.github.pedrovgs.lynx.LynxActivity;
+import com.robotium.solo.Solo;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -38,7 +40,9 @@ public class LynxActivityDefaultValues extends ActivityInstrumentationTestCase2<
 
   @Override protected void setUp() throws Exception {
     super.setUp();
-    getActivity();
+    Activity activity = getActivity();
+    Solo solo = new Solo(getInstrumentation(), activity);
+    solo.unlockScreen();
   }
 
   public void testDoesNotUseFilterByDefault() {

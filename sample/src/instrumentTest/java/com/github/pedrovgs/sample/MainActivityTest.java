@@ -16,7 +16,9 @@
 
 package com.github.pedrovgs.sample;
 
+import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
+import com.robotium.solo.Solo;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -42,7 +44,9 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
   @Override protected void setUp() throws Exception {
     super.setUp();
-    getActivity();
+    Activity activity = getActivity();
+    Solo solo = new Solo(getInstrumentation(), activity);
+    solo.unlockScreen();
   }
 
   public void testShowsLynxViewAsGoneByDefault() {
