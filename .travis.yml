@@ -1,5 +1,6 @@
 os:
   - osx
+osx_image: xcode6.4
 language: android
 
 android:
