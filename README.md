@@ -92,7 +92,7 @@ Add Lynx dependency to your build.gradle
 ```groovy
 
 dependencies{
-    compile 'com.github.pedrovgs:lynx:1.5'
+    compile 'com.github.pedrovgs:lynx:1.6'
 }
 
 ```
@@ -104,7 +104,7 @@ Or add Lynx as a new dependency inside your pom.xml
 <dependency>
     <groupId>com.github.pedrovgs</groupId>
     <artifactId>lynx</artifactId>
-    <version>1.5</version>
+    <version>1.6</version>
     <type>aar</type>
 </dependency>
 
