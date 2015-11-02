@@ -69,7 +69,7 @@ public class LynxActivity extends Activity {
   private LynxConfig getLynxConfig() {
     Bundle extras = getIntent().getExtras();
     LynxConfig lynxConfig = new LynxConfig();
-    if (extras != null) {
+    if (extras != null && extras.containsKey(LYNX_CONFIG_EXTRA)) {
       lynxConfig = (LynxConfig) extras.getSerializable(LYNX_CONFIG_EXTRA);
     }
     return lynxConfig;
