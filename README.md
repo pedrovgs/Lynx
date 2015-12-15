@@ -152,11 +152,6 @@ Who's using it
 
 *Does your app use Lynx? If you want to be featured on this list drop me a line.*
 
-Contributors
-------------
-* [Pedro Vicente Gómez Sánchez][8]
-* [Israel Ferrer Camacho][9]
-
 License
 -------
 
@@ -183,5 +178,4 @@ License
 [6]: https://github.com/junit-team/junit
 [7]: https://github.com/mockito/mockito
 [8]: https://github.com/pedrovgs
-[9]: https://github.com/rallat
 [10]: https://play.google.com/store/apps/details?id=fm.rushmore.mainapp
