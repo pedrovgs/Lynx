@@ -143,15 +143,6 @@ Developed By
   <img alt="Add me to Linkedin" src="http://imageshack.us/a/img41/7877/smallld.png" />
 </a>
 
-
-Who's using it
---------------
-
-* [Tuenti][2]
-* [Upclose.me][10]
-
-*Does your app use Lynx? If you want to be featured on this list drop me a line.*
-
 License
 -------
 
