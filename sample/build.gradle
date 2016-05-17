@@ -1,26 +1,14 @@
-buildscript {
-  repositories {
-    jcenter()
-  }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:1.0.0'
-  }
-}
 apply plugin: 'com.android.application'
 apply plugin: 'checkstyle'
 
-repositories {
-  jcenter()
-}
-
 android {
-  compileSdkVersion 21
-  buildToolsVersion "21.1.2"
+  compileSdkVersion 24
+  buildToolsVersion "24.0.0"
 
   defaultConfig {
     applicationId "com.github.pedrovgs.sample"
     minSdkVersion 8
-    targetSdkVersion 21
+    targetSdkVersion 24
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -45,7 +33,7 @@ android {
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   compile project(':lynx')
-  compile 'com.android.support:appcompat-v7:21.0.3'
+  compile 'com.android.support:appcompat-v7:24.0.0'
   androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
 }
 

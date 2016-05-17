@@ -1,26 +1,13 @@
-buildscript {
-  repositories {
-    mavenCentral()
-  }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:1.1.1'
-    classpath 'com.github.jcandksolutions.gradle:android-unit-test:2.1.1'
-  }
-}
 apply plugin: 'com.android.library'
 apply plugin: 'checkstyle'
 
-repositories {
-  jcenter()
-}
-
 android {
-  compileSdkVersion 21
-  buildToolsVersion "21.1.2"
+  compileSdkVersion 24
+  buildToolsVersion "24.0.0"
 
   defaultConfig {
     minSdkVersion 8
-    targetSdkVersion 21
+    targetSdkVersion 24
     versionCode 1
     versionName "1.0"
   }
@@ -32,8 +19,6 @@ android {
     }
   }
 }
-
-apply plugin: 'android-unit-test'
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -54,13 +39,3 @@ task checkstyle(type: Checkstyle) {
 }
 
 apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
-
-//Workaround for https://github.com/JCAndKSolutions/android-unit-test/issues/99
-task copyTestResources(type: Copy) {
-  from "build/intermediates/res/test"
-  into "build/intermediates/res"
-}
-
-afterEvaluate {
-  tasks.findByPath('testDebugClasses').dependsOn copyTestResources
-}
