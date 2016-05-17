@@ -23,7 +23,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
@@ -31,7 +32,9 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Pedro Vicente Gómez Sánchez.
  */
-@Config(emulateSdk = 18) @RunWith(RobolectricTestRunner.class) public class LynxActivityTest {
+@Config(constants = BuildConfig.class, sdk = 18)
+@RunWith(RobolectricGradleTestRunner.class)
+public class LynxActivityTest {
 
   private static final int ANY_MAX_NUMBER_OF_TRACES = 1000;
   private static final String EXTRA_LYNX_CONFIG = "extra_lynx_config";
@@ -73,7 +76,7 @@ import static org.junit.Assert.assertEquals;
   }
 
   @Test public void shouldConfigureLynxViewWithTheDefaultLynxConfigIfUsesGetIntentMethod() {
-    Intent intent = LynxActivity.getIntent(Robolectric.application);
+    Intent intent = LynxActivity.getIntent(RuntimeEnvironment.application);
 
     LynxActivity lynxActivity =
         Robolectric.buildActivity(LynxActivity.class).withIntent(intent).create().resume().get();
@@ -85,7 +88,7 @@ import static org.junit.Assert.assertEquals;
   @Test public void shouldPassLynxConfigurationToLynxView() {
     LynxConfig lynxConfig =
         new LynxConfig().setMaxNumberOfTracesToShow(ANY_MAX_NUMBER_OF_TRACES).setFilter(ANY_FILTER);
-    Intent intent = LynxActivity.getIntent(Robolectric.application, lynxConfig);
+    Intent intent = LynxActivity.getIntent(RuntimeEnvironment.application, lynxConfig);
 
     LynxActivity lynxActivity =
         Robolectric.buildActivity(LynxActivity.class).withIntent(intent).create().resume().get();
