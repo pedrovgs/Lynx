@@ -42,6 +42,10 @@ public class Trace {
   /**
    * Factory method used to create a Trace instance from a String. The format of the input string
    * have to be something like: "02-07 17:45:33.014 D/Any debug trace"
+   *
+   * @param logcatTrace the logcat string
+   * @return a new Trace instance
+   * @throws IllegalTraceException if the string argument is an invalid string
    */
   public static Trace fromString(String logcatTrace) throws IllegalTraceException {
     if (logcatTrace == null
