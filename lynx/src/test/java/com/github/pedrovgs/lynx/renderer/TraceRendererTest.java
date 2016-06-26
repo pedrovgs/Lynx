@@ -19,6 +19,7 @@ package com.github.pedrovgs.lynx.renderer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import com.github.pedrovgs.lynx.BuildConfig;
 import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.R;
 import com.github.pedrovgs.lynx.model.Trace;
@@ -26,8 +27,8 @@ import com.github.pedrovgs.lynx.model.TraceLevel;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
@@ -35,7 +36,9 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Pedro Vicente Gómez Sánchez.
  */
-@Config(emulateSdk = 18) @RunWith(RobolectricTestRunner.class) public class TraceRendererTest {
+@Config(constants = BuildConfig.class, sdk = 18)
+@RunWith(RobolectricGradleTestRunner.class)
+public class TraceRendererTest {
 
   private static final TraceLevel ANY_TRACE_LEVEL = TraceLevel.WTF;
   private static final String ANY_TRACE_MESSAGE =
@@ -63,7 +66,7 @@ import static org.junit.Assert.assertEquals;
   }
 
   private View renderTrace(Trace anyTrace) {
-    LayoutInflater layoutInflater = LayoutInflater.from(Robolectric.application);
+    LayoutInflater layoutInflater = LayoutInflater.from(RuntimeEnvironment.application);
     traceRenderer.onCreate(anyTrace, layoutInflater, null);
     traceRenderer.render();
     return traceRenderer.getRootView();

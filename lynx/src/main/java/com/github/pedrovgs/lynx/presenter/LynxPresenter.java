@@ -49,6 +49,8 @@ public class LynxPresenter implements Lynx.Listener {
   /**
    * Updates and applies a new lynx configuration based on the LynxConfig object passed as
    * parameter.
+   *
+   * @param lynxConfig the lynx configuration
    */
   public void setLynxConfig(LynxConfig lynxConfig) {
     validateLynxConfig(lynxConfig);
@@ -89,6 +91,8 @@ public class LynxPresenter implements Lynx.Listener {
 
   /**
    * Updates the filter used to know which Trace objects we have to show in the UI.
+   *
+   * @param filter the filter to use
    */
   public void updateFilter(String filter) {
     if (isInitialized) {
@@ -123,7 +127,9 @@ public class LynxPresenter implements Lynx.Listener {
   /**
    * Based on the int passed as parameter changes auto scroll feature configuration to
    * enable/disabled. If the last visible item of the list is in the last position of the list,
-   * enables auto scroll, if ont, disables auto scroll.
+   * enables auto scroll, if not, disables auto scroll.
+   *
+   * @param lastVisiblePositionInTheList the index of the last visible position
    */
   public void onScrollToPosition(int lastVisiblePositionInTheList) {
     if (shouldDisableAutoScroll(lastVisiblePositionInTheList)) {
@@ -135,6 +141,8 @@ public class LynxPresenter implements Lynx.Listener {
 
   /**
    * Returns a list of the current traces stored in this presenter.
+   *
+   * @return a list of the current traces
    */
   public List<Trace> getCurrentTraces() {
     return traceBuffer.getTraces();

@@ -45,6 +45,8 @@ public class Logcat extends Thread implements Cloneable {
 
   /**
    * Configures a listener to be notified with new traces read from the application logcat.
+   *
+   * @param listener the Logcat listener
    */
   public void setListener(Listener listener) {
     this.listener = listener;
@@ -52,6 +54,8 @@ public class Logcat extends Thread implements Cloneable {
 
   /**
    * Obtains the current Logcat listener.
+   *
+   * @return the current Logcat listener
    */
   public Listener getListener() {
     return listener;

@@ -53,6 +53,8 @@ public class Lynx {
 
   /**
    * Indicates a custom LynxConfig object.
+   *
+   * @param lynxConfig a custom LynxConfig object
    */
   public synchronized void setConfig(LynxConfig lynxConfig) {
     this.lynxConfig = lynxConfig;
@@ -60,6 +62,8 @@ public class Lynx {
 
   /**
    * Returns a copy of the current LynxConfig object.
+   *
+   * @return a copy of the current LynxConfig object
    */
   public LynxConfig getConfig() {
     return (LynxConfig) lynxConfig.clone();
@@ -110,6 +114,8 @@ public class Lynx {
 
   /**
    * Adds a Listener to the listeners collection to be notified with new Trace objects.
+   *
+   * @param lynxPresenter a lynx listener
    */
   public synchronized void registerListener(Listener lynxPresenter) {
     listeners.add(lynxPresenter);
@@ -117,6 +123,8 @@ public class Lynx {
 
   /**
    * Removes a Listener to the listeners collection.
+   *
+   * @param lynxPresenter a lynx listener
    */
   public synchronized void unregisterListener(Listener lynxPresenter) {
     listeners.remove(lynxPresenter);

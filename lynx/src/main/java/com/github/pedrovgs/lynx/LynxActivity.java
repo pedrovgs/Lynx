@@ -36,6 +36,9 @@ public class LynxActivity extends Activity {
 
   /**
    * Generates an Intent to start LynxActivity with a default LynxConfig object as configuration.
+   *
+   * @param context the application context
+   * @return a new {@code Intent} to start {@link LynxActivity}
    */
   public static Intent getIntent(Context context) {
     return getIntent(context, new LynxConfig());
@@ -43,6 +46,10 @@ public class LynxActivity extends Activity {
 
   /**
    * Generates an Intent to start LynxActivity with a LynxConfig configuration passed as parameter.
+   *
+   * @param context the application context
+   * @param lynxConfig the lynx configuration
+   * @return a new {@code Intent} to start {@link LynxActivity}
    */
   public static Intent getIntent(Context context, LynxConfig lynxConfig) {
     if (lynxConfig == null) {

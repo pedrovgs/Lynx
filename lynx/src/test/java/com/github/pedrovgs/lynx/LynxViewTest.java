@@ -31,7 +31,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertEquals;
@@ -41,7 +41,9 @@ import static org.mockito.Mockito.verify;
 /**
  * @author Pedro Vicente Gómez Sánchez.
  */
-@Config(emulateSdk = 18) @RunWith(RobolectricTestRunner.class) public class LynxViewTest {
+@Config(constants = BuildConfig.class, sdk = 18)
+@RunWith(RobolectricGradleTestRunner.class)
+public class LynxViewTest {
 
   private static final String ANY_TRACE_MESSAGE = "02-07 17:45:33.014 D/ Any trace message";
   private static final int ANY_TEXT_SIZE = 300;

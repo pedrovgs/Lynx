@@ -127,6 +127,8 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   /**
    * Given a valid LynxConfig object update all the dependencies to apply this new configuration.
+   *
+   * @param lynxConfig the lynx configuration
    */
   public void setLynxConfig(LynxConfig lynxConfig) {
     validateLynxConfig(lynxConfig);
@@ -147,14 +149,16 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   /**
    * Returns the current LynxConfig object used.
+   *
+   * @return the lynx configuration
    */
   public LynxConfig getLynxConfig() {
     return lynxConfig;
   }
 
   /**
-   * Given a List<Trace> updates the ListView adapter with this information and keeps the scroll
-   * position if needed.
+   * Given a {@code List<Trace>} updates the ListView adapter with this information and keeps the
+   * scroll position if needed.
    */
   @Override public void showTraces(List<Trace> traces, int removedTraces) {
     if (lastScrollPosition == 0) {

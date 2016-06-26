@@ -25,9 +25,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Renderer builder implementation created to return Renderer<Trace> instances based on the trace
- * level. This builder will use six different Renderer<Trace> implementations, one for each
- * TraceLevel type.
+ * Renderer builder implementation created to return {@code Renderer<Trace>} instances based on the
+ * trace level. This builder will use six different {@code Renderer<Trace>} implementations, one for
+ * each TraceLevel type.
  *
  * To learn more about Renderers library take a look to the repository:
  * https://github.com/pedrovgs/Renderers
