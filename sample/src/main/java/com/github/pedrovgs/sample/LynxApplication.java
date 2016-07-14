@@ -29,7 +29,7 @@ public class LynxApplication extends Application {
 
   @Override public void onCreate() {
     super.onCreate();
-    LynxShakeDetector lynxShakeDetector = new LynxShakeDetector(this);
+    LynxShakeDetector lynxShakeDetector = new LynxShakeDetector(this, false);
     lynxShakeDetector.init();
   }
 }
