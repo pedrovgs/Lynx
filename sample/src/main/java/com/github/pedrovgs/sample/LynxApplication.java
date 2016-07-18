@@ -33,6 +33,6 @@ public class LynxApplication extends Application {
     LynxShakeDetector lynxShakeDetector = new LynxShakeDetector(this);
     LynxConfig lynxConfig = new LynxConfig();
     lynxConfig.setMaxNumberOfTracesToShow(4000).setFilter("LynxFilter");
-    lynxShakeDetector.init();
+    lynxShakeDetector.init(lynxConfig);
   }
 }
