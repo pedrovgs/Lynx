@@ -278,10 +278,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   private void initializeRenderers() {
     RendererBuilder<Trace> tracesRendererBuilder = new TraceRendererBuilder(lynxConfig);
-    Context context = getContext();
-    LayoutInflater layoutInflater = LayoutInflater.from(context);
-    adapter = new RendererAdapter<Trace>(layoutInflater, tracesRendererBuilder,
-        new ListAdapteeCollection<Trace>());
+    adapter = new RendererAdapter<>(tracesRendererBuilder, new ListAdapteeCollection<Trace>());
     adapter.addAll(presenter.getCurrentTraces());
     if (adapter.getCount() > 0) {
       adapter.notifyDataSetChanged();
