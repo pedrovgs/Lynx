@@ -43,7 +43,6 @@ import com.github.pedrovgs.lynx.model.Trace;
 import com.github.pedrovgs.lynx.model.TraceLevel;
 import com.github.pedrovgs.lynx.presenter.LynxPresenter;
 import com.github.pedrovgs.lynx.renderer.TraceRendererBuilder;
-import com.pedrogomez.renderers.ListAdapteeCollection;
 import com.pedrogomez.renderers.RendererAdapter;
 import com.pedrogomez.renderers.RendererBuilder;
 import java.lang.reflect.Field;
