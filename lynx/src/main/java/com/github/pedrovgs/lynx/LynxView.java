@@ -43,7 +43,6 @@ import com.github.pedrovgs.lynx.model.Trace;
 import com.github.pedrovgs.lynx.model.TraceLevel;
 import com.github.pedrovgs.lynx.presenter.LynxPresenter;
 import com.github.pedrovgs.lynx.renderer.TraceRendererBuilder;
-import com.pedrogomez.renderers.ListAdapteeCollection;
 import com.pedrogomez.renderers.RendererAdapter;
 import com.pedrogomez.renderers.RendererBuilder;
 import java.lang.reflect.Field;
@@ -278,10 +277,7 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
 
   private void initializeRenderers() {
     RendererBuilder<Trace> tracesRendererBuilder = new TraceRendererBuilder(lynxConfig);
-    Context context = getContext();
-    LayoutInflater layoutInflater = LayoutInflater.from(context);
-    adapter = new RendererAdapter<Trace>(layoutInflater, tracesRendererBuilder,
-        new ListAdapteeCollection<Trace>());
+    adapter = new RendererAdapter<>(tracesRendererBuilder);
     adapter.addAll(presenter.getCurrentTraces());
     if (adapter.getCount() > 0) {
       adapter.notifyDataSetChanged();
