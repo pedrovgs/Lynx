@@ -30,7 +30,7 @@ public class LynxApplication extends Application {
 
   @Override public void onCreate() {
     super.onCreate();
-    LynxShakeDetector lynxShakeDetector = new LynxShakeDetector(this, false);
+    LynxShakeDetector lynxShakeDetector = new LynxShakeDetector(this);
     LynxConfig lynxConfig = new LynxConfig();
     lynxConfig.setMaxNumberOfTracesToShow(4000).setFilter("LynxFilter");
     lynxShakeDetector.init(lynxConfig);

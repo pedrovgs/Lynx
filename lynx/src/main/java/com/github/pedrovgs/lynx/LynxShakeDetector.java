@@ -32,7 +32,11 @@ public class LynxShakeDetector {
   private final Context context;
 
   private static boolean isEnabled = true;
-  private static boolean keepAlwaysActive;
+  private static boolean keepAlwaysActive = false;
+
+  public LynxShakeDetector(Context context) {
+    this.context = context;
+  }
 
   public LynxShakeDetector(Context context, boolean keepAlwaysActive) {
     this.context = context;
