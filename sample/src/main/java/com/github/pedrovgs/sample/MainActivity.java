@@ -18,7 +18,7 @@ package com.github.pedrovgs.sample;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +32,7 @@ import com.github.pedrovgs.lynx.model.TraceLevel;
  *
  * @author Pedro Vicente Gomez Sanchez.
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
   private static final int MAX_TRACES_TO_SHOW = 3000;
   private static final String LYNX_FILTER = "Lynx";

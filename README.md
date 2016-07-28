@@ -3,7 +3,7 @@ Lynx [![Build Status](https://travis-ci.org/pedrovgs/Lynx.svg?branch=master)](ht
 
 Are you bored of connect your device to your computer to know what's happening inside your app? If you hate it, this is going to be your favorite library. Shake your phone, press a button or add a ``LynxView`` to your layouts and you'll see what Andoird logcat is printing :)
 
-Lynx is an Android library created to show a custom view with all the information logcat is printing, different traces of different levels will be rendererd to show from log messages to your application exceptions. You can filter this traces, share your logcat to other apps, configure the max number of traces to show or the sampling rate used by the library. The min Api Level supported is 8.
+Lynx is an Android library created to show a custom view with all the information logcat is printing, different traces of different levels will be rendererd to show from log messages to your application exceptions. You can filter this traces, share your logcat to other apps, configure the max number of traces to show or the sampling rate used by the library. The min Api Level supported is 10.
 
 Screenshots
 -----------

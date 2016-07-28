@@ -40,14 +40,22 @@ public class LynxShakeDetector {
   }
 
   /**
-   * Starts listening shakes to open LynxActivity if a shake is detected if the ShakeDetector is
-   * enabled.
+   * Starts listening shakes to open LynxActivity if a shake is detected and if the ShakeDetector is
+   * enabled, with a default Lynx configuration. It's a shortcut for {@link #init(LynxConfig) with a null value.}
    */
   public void init() {
+    init(null);
+  }
+
+  /**
+   * Starts listening shakes to open LynxActivity if a shake is detected and if the ShakeDetector is
+   * enabled.
+   */
+  public void init(final LynxConfig lynxConfig) {
     ShakeDetector shakeDetector = new ShakeDetector(new ShakeDetector.Listener() {
       @Override public void hearShake() {
         if (isEnabled) {
-          openLynxActivity();
+          openLynxActivity(lynxConfig);
           if (keepAlwaysActive) {
             disable();
           }
@@ -80,8 +88,8 @@ public class LynxShakeDetector {
     return keepAlwaysActive;
   }
 
-  private void openLynxActivity() {
-    Intent lynxActivityIntent = new Intent(context, LynxActivity.class);
+  private void openLynxActivity(LynxConfig config) {
+    Intent lynxActivityIntent = LynxActivity.getIntent(context, config);
     lynxActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     context.startActivity(lynxActivityIntent);
   }

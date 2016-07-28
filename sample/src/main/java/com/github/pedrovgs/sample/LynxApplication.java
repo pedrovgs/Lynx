@@ -17,6 +17,7 @@
 package com.github.pedrovgs.sample;
 
 import android.app.Application;
+import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.LynxShakeDetector;
 
 /**
@@ -30,6 +31,8 @@ public class LynxApplication extends Application {
   @Override public void onCreate() {
     super.onCreate();
     LynxShakeDetector lynxShakeDetector = new LynxShakeDetector(this, false);
-    lynxShakeDetector.init();
+    LynxConfig lynxConfig = new LynxConfig();
+    lynxConfig.setMaxNumberOfTracesToShow(4000).setFilter("LynxFilter");
+    lynxShakeDetector.init(lynxConfig);
   }
 }
