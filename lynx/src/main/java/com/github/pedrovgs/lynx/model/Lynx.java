@@ -101,7 +101,7 @@ public class Lynx {
    * Stops the configured Logcat dependency and creates a clone to restart using Logcat and
    * LogcatListener configured previously.
    */
-  public void restart() {
+  public synchronized void restart() {
     Logcat.Listener previousListener = logcat.getListener();
     logcat.stopReading();
     logcat.interrupt();
@@ -159,7 +159,7 @@ public class Lynx {
     return level.ordinal() >= levelFilter.ordinal();
   }
 
-  private void notifyNewTraces() {
+  private synchronized void notifyNewTraces() {
     if (shouldNotifyListeners()) {
       final List<Trace> traces = new LinkedList<Trace>(tracesToNotify);
       tracesToNotify.clear();
@@ -167,7 +167,7 @@ public class Lynx {
     }
   }
 
-  private boolean shouldNotifyListeners() {
+  private synchronized boolean shouldNotifyListeners() {
     long now = timeProvider.getCurrentTimeMillis();
     long timeFromLastNotification = now - lastNotificationTime;
     boolean hasTracesToNotify = tracesToNotify.size() > 0;
