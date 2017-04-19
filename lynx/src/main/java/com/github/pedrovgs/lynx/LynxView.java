@@ -19,6 +19,7 @@ package com.github.pedrovgs.lynx;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.support.annotation.CheckResult;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -35,6 +36,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.github.pedrovgs.lynx.model.AndroidMainThread;
 import com.github.pedrovgs.lynx.model.Logcat;
 import com.github.pedrovgs.lynx.model.Lynx;
@@ -45,6 +48,7 @@ import com.github.pedrovgs.lynx.presenter.LynxPresenter;
 import com.github.pedrovgs.lynx.renderer.TraceRendererBuilder;
 import com.pedrogomez.renderers.RendererAdapter;
 import com.pedrogomez.renderers.RendererBuilder;
+
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -181,11 +185,27 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
    * Uses an intent to share content and given one String with all the information related to the
    * List of traces shares this information with other applications.
    */
-  @Override public void shareTraces(String plainTraces) {
-    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-    sharingIntent.setType(SHARE_INTENT_TYPE);
-    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, plainTraces);
-    getContext().startActivity(Intent.createChooser(sharingIntent, SHARE_INTENT_TITLE));
+  @CheckResult @Override public boolean shareTraces(String fullTraces) {
+    try {
+      shareTracesInternal(fullTraces);
+      return true;
+    } catch (RuntimeException exception1) { // Likely cause is a TransactionTooLargeException on API levels 15+.
+      try {
+        /*
+         * Limit trace size to between 100kB and 400kB, since Unicode characters can be 1-4 bytes each.
+         */
+        int fullTracesLength = fullTraces.length();
+        String truncatedTraces = fullTraces.substring(Math.max(0, fullTracesLength - 100000), fullTracesLength);
+        shareTracesInternal(truncatedTraces);
+        return true;
+      } catch (RuntimeException exception2) { // Likely cause is a TransactionTooLargeException on API levels 15+.
+        return false;
+      }
+    }
+  }
+
+  @Override public void notifyShareTracesFailed() {
+    Toast.makeText(getContext(), "Share failed", Toast.LENGTH_SHORT).show();
   }
 
   @Override public void disableAutoScroll() {
@@ -376,6 +396,13 @@ public class LynxView extends RelativeLayout implements LynxPresenter.View {
       lastScrollPosition = newScrollPosition;
       lv_traces.setSelectionFromTop(newScrollPosition, 0);
     }
+  }
+
+  private void shareTracesInternal(final String plainTraces) {
+    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+    sharingIntent.setType(SHARE_INTENT_TYPE);
+    sharingIntent.putExtra(Intent.EXTRA_TEXT, plainTraces);
+    getContext().startActivity(Intent.createChooser(sharingIntent, SHARE_INTENT_TITLE));
   }
 
   /**

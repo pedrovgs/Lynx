@@ -16,6 +16,8 @@
 
 package com.github.pedrovgs.lynx.presenter;
 
+import android.support.annotation.CheckResult;
+
 import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.model.Lynx;
 import com.github.pedrovgs.lynx.model.Trace;
@@ -121,7 +123,9 @@ public class LynxPresenter implements Lynx.Listener {
   public void onShareButtonClicked() {
     List<Trace> tracesToShare = new LinkedList<Trace>(traceBuffer.getTraces());
     String plainTraces = generatePlainTracesToShare(tracesToShare);
-    view.shareTraces(plainTraces);
+    if (!view.shareTraces(plainTraces)) {
+      view.notifyShareTracesFailed();
+    }
   }
 
   /**
@@ -212,7 +216,9 @@ public class LynxPresenter implements Lynx.Listener {
 
     void clear();
 
-    void shareTraces(String plainTraces);
+    @CheckResult boolean shareTraces(String plainTraces);
+
+    void notifyShareTracesFailed();
 
     void disableAutoScroll();
 
