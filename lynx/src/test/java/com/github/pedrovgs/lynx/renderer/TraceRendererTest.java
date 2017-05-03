@@ -27,7 +27,7 @@ import com.github.pedrovgs.lynx.model.TraceLevel;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
@@ -37,7 +37,7 @@ import static org.junit.Assert.assertEquals;
  * @author Pedro Vicente Gómez Sánchez.
  */
 @Config(constants = BuildConfig.class, sdk = 18)
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class TraceRendererTest {
 
   private static final TraceLevel ANY_TRACE_LEVEL = TraceLevel.WTF;

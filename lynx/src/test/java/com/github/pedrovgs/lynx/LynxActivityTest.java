@@ -23,7 +23,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
@@ -33,7 +33,7 @@ import static org.junit.Assert.assertEquals;
  * @author Pedro Vicente Gómez Sánchez.
  */
 @Config(constants = BuildConfig.class, sdk = 18)
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class LynxActivityTest {
 
   private static final int ANY_MAX_NUMBER_OF_TRACES = 1000;
