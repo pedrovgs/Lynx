@@ -20,6 +20,8 @@ import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.exception.IllegalTraceException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Main business logic class for this project. Lynx responsibility is related to listen Logcat
@@ -143,10 +145,23 @@ public class Lynx {
   }
 
   private synchronized boolean traceMatchesFilter(String logcatTrace) {
-    TraceLevel levelFilter = lynxConfig.getFilterTraceLevel();
-    String filter = lynxConfig.getFilter().toLowerCase();
+    return traceStringMatchesFilter(logcatTrace) &&
+            containsTraceLevel(logcatTrace, lynxConfig.getFilterTraceLevel());
+  }
+
+  private boolean traceStringMatchesFilter(String logcatTrace) {
+    String lowerCaseFilter = lynxConfig.getFilter().toLowerCase();
     String logcatTraceLowercase = logcatTrace.toLowerCase();
-    return logcatTraceLowercase.contains(filter) && containsTraceLevel(logcatTrace, levelFilter);
+    boolean matchesFilter = logcatTraceLowercase.contains(lowerCaseFilter);
+    if (!matchesFilter) {
+      try {
+        Pattern pattern = Pattern.compile(lowerCaseFilter);
+        matchesFilter = pattern.matcher(logcatTraceLowercase).find();
+      } catch (PatternSyntaxException exception) {
+
+      }
+    }
+    return matchesFilter;
   }
 
   private boolean containsTraceLevel(String logcatTrace, TraceLevel levelFilter) {
