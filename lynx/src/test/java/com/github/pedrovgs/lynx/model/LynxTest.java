@@ -18,13 +18,15 @@ package com.github.pedrovgs.lynx.model;
 
 import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.exception.IllegalTraceException;
-import java.util.LinkedList;
-import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyList;
@@ -42,14 +44,21 @@ public class LynxTest {
   private static final String ANY_ERROR_TRACE = "02-07 17:45:33.014 E/Any error trace";
   private static final String ANY_WTF_TRACE = "02-07 17:45:33.014 F/Any WTF trace";
   private static final String ANY_FILTER = "FiLteR";
+  private static final String ANY_OTHER_FILTER = "Other";
+  private static final String ANY_INVALID_REGEXP_FILTER = "[a-z";
   private static final String ANY_TRACE_MATCHING_FILTER_DEBUG =
       "02-07 17:45:33.014 D/any fIltEr trace";
   private static final String ANY_TRACE_MATCHING_FILTER_VERBOSE =
       "02-07 17:45:33.014 V/any fIltEr trace";
   private static final String ANY_TRACE_NON_MATCHING_FILTER =
       "02-07 17:45:33.014 V/Any error trace";
+  private static final String ANY_TRACE_NON_MATCHING_FILTER_DEBUG =
+          "02-07 17:45:33.014 D/Any error trace";
   private static final String ANY_TRACE_MATCHING_FILTER_WTF =
       "02-07 17:45:33.014 F/Any error trace";
+  private static final String ANY_TRACE_MATCHING_INVALID_REGEXP_FILTER =
+          "02-07 17:45:33.014 D/Any [a-z trace";
+
   private Lynx lynx;
 
   @Mock private Lynx.Listener listener;
@@ -204,6 +213,29 @@ public class LynxTest {
     logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER_DEBUG);
 
     List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER_DEBUG);
+    verify(listener).onNewTraces(expectedTraces);
+  }
+
+  @Test public void shouldNotifyJustTracesMatchingRegexpFilter() throws IllegalTraceException {
+    givenCurrentTimes(NOW, NOW + 5, NOW + 15, NOW + 20);
+    givenLynxWithFilter(ANY_FILTER + "|" + ANY_OTHER_FILTER, TraceLevel.DEBUG);
+
+    Logcat.Listener logcatListener = startLogcat();
+    logcatListener.onTraceRead(ANY_TRACE_MATCHING_FILTER_DEBUG);
+    logcatListener.onTraceRead(ANY_TRACE_NON_MATCHING_FILTER_DEBUG);
+
+    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_FILTER_DEBUG);
+    verify(listener).onNewTraces(expectedTraces);
+  }
+
+  @Test public void shouldNotifyTraceFilteredWithInvalidRegexp() throws IllegalTraceException {
+    givenCurrentTimes(NOW, NOW + 5, NOW + 15, NOW + 20);
+    givenLynxWithFilter(ANY_INVALID_REGEXP_FILTER, TraceLevel.DEBUG);
+
+    Logcat.Listener logcatListener = startLogcat();
+    logcatListener.onTraceRead(ANY_TRACE_MATCHING_INVALID_REGEXP_FILTER);
+
+    List<Trace> expectedTraces = generateTraces(ANY_TRACE_MATCHING_INVALID_REGEXP_FILTER);
     verify(listener).onNewTraces(expectedTraces);
   }
 

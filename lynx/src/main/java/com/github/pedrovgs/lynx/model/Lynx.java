@@ -18,8 +18,11 @@ package com.github.pedrovgs.lynx.model;
 
 import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.exception.IllegalTraceException;
+
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Main business logic class for this project. Lynx responsibility is related to listen Logcat
@@ -28,7 +31,8 @@ import java.util.List;
  *
  * Given a LynxConfig object the sample rating used to notify Lynx clients about new traces can be
  * modified on demand. LynxConfig object will be used to filter traces if any filter has been
- * previously configured.
+ * previously configured. Filtering will remove traces that contains given string or that match a
+ * regular expression specified as filter.
  *
  * @author Pedro Vicente Gomez Sanchez.
  */
@@ -43,12 +47,16 @@ public class Lynx {
   private LynxConfig lynxConfig = new LynxConfig();
   private long lastNotificationTime;
 
+  private String lowerCaseFilter = "";
+  private Pattern regexpFilter;
+
   public Lynx(Logcat logcat, MainThread mainThread, TimeProvider timeProvider) {
-    this.listeners = new LinkedList<Listener>();
-    this.tracesToNotify = new LinkedList<Trace>();
+    this.listeners = new LinkedList<>();
+    this.tracesToNotify = new LinkedList<>();
     this.logcat = logcat;
     this.mainThread = mainThread;
     this.timeProvider = timeProvider;
+    setFilters();
   }
 
   /**
@@ -58,6 +66,7 @@ public class Lynx {
    */
   public synchronized void setConfig(LynxConfig lynxConfig) {
     this.lynxConfig = lynxConfig;
+    setFilters();
   }
 
   /**
@@ -130,6 +139,15 @@ public class Lynx {
     listeners.remove(lynxPresenter);
   }
 
+  private void setFilters() {
+    lowerCaseFilter = lynxConfig.getFilter().toLowerCase();
+    try {
+      regexpFilter = Pattern.compile(lowerCaseFilter);
+    } catch (PatternSyntaxException exception) {
+      regexpFilter = null;
+    }
+  }
+
   private synchronized void addTraceToTheBuffer(String logcatTrace) throws IllegalTraceException {
     if (shouldAddTrace(logcatTrace)) {
       Trace trace = Trace.fromString(logcatTrace);
@@ -143,10 +161,17 @@ public class Lynx {
   }
 
   private synchronized boolean traceMatchesFilter(String logcatTrace) {
-    TraceLevel levelFilter = lynxConfig.getFilterTraceLevel();
-    String filter = lynxConfig.getFilter().toLowerCase();
-    String logcatTraceLowercase = logcatTrace.toLowerCase();
-    return logcatTraceLowercase.contains(filter) && containsTraceLevel(logcatTrace, levelFilter);
+    return traceStringMatchesFilter(logcatTrace) &&
+            containsTraceLevel(logcatTrace, lynxConfig.getFilterTraceLevel());
+  }
+
+  private boolean traceStringMatchesFilter(String logcatTrace) {
+    String lowerCaseLogcatTrace = logcatTrace.toLowerCase();
+    boolean matchesFilter = lowerCaseLogcatTrace.contains(lowerCaseFilter);
+    if (!matchesFilter && regexpFilter != null) {
+      matchesFilter = regexpFilter.matcher(lowerCaseLogcatTrace).find();
+    }
+    return matchesFilter;
   }
 
   private boolean containsTraceLevel(String logcatTrace, TraceLevel levelFilter) {
@@ -161,7 +186,7 @@ public class Lynx {
 
   private synchronized void notifyNewTraces() {
     if (shouldNotifyListeners()) {
-      final List<Trace> traces = new LinkedList<Trace>(tracesToNotify);
+      final List<Trace> traces = new LinkedList<>(tracesToNotify);
       tracesToNotify.clear();
       notifyListeners(traces);
     }
