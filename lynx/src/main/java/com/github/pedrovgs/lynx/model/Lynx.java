@@ -161,8 +161,8 @@ public class Lynx {
   }
 
   private synchronized boolean traceMatchesFilter(String logcatTrace) {
-    return traceStringMatchesFilter(logcatTrace) &&
-            containsTraceLevel(logcatTrace, lynxConfig.getFilterTraceLevel());
+    return traceStringMatchesFilter(logcatTrace)
+            && containsTraceLevel(logcatTrace, lynxConfig.getFilterTraceLevel());
   }
 
   private boolean traceStringMatchesFilter(String logcatTrace) {
