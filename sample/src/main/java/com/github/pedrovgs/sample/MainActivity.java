@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import com.github.pedrovgs.lynx.LynxActivity;
 import com.github.pedrovgs.lynx.LynxConfig;
+import com.github.pedrovgs.lynx.LynxShakeDetector;
 import com.github.pedrovgs.lynx.model.TraceLevel;
 
 /**
@@ -72,6 +73,20 @@ public class MainActivity extends AppCompatActivity {
 
     Intent lynxActivityIntent = LynxActivity.getIntent(this, lynxConfig);
     startActivity(lynxActivityIntent);
+  }
+
+  @Override protected void onPause() {
+    if (!LynxShakeDetector.isKeepAlwaysActive()) {
+      LynxShakeDetector.disable();
+    }
+    super.onPause();
+  }
+
+  @Override protected void onResume() {
+    super.onResume();
+    if (!LynxShakeDetector.isKeepAlwaysActive()) {
+      LynxShakeDetector.enable();
+    }
   }
 
   @Override protected void onDestroy() {

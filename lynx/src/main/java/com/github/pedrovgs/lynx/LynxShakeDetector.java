@@ -32,9 +32,15 @@ public class LynxShakeDetector {
   private final Context context;
 
   private static boolean isEnabled = true;
+  private static boolean keepAlwaysActive = false;
 
   public LynxShakeDetector(Context context) {
     this.context = context;
+  }
+
+  public LynxShakeDetector(Context context, boolean keepAlwaysActive) {
+    this.context = context;
+    this.keepAlwaysActive = keepAlwaysActive;
   }
 
   /**
@@ -54,6 +60,9 @@ public class LynxShakeDetector {
       @Override public void hearShake() {
         if (isEnabled) {
           openLynxActivity(lynxConfig);
+          if (keepAlwaysActive) {
+            disable();
+          }
         }
       }
     });
@@ -64,15 +73,23 @@ public class LynxShakeDetector {
   /**
    * Enables shake detector to open LynxActivity on shake.
    */
-  static void enable() {
+  public static void enable() {
     isEnabled = true;
   }
 
   /**
    * Disables shake detector to open LynxActivity on shake.
    */
-  static void disable() {
+  public static void disable() {
     isEnabled = false;
+  }
+
+  /**
+   * Gets keep always active setting.
+   * @return true if shake detector should be always active, false otherwise.
+   */
+  public static boolean isKeepAlwaysActive() {
+    return keepAlwaysActive;
   }
 
   private void openLynxActivity(LynxConfig config) {
