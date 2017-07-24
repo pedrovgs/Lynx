@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import android.util.Log;
+
 /**
  * Main business logic class for this project. Lynx responsibility is related to listen Logcat
  * events and notify it to the Lynx listeners transforming all the information from a plain String
@@ -145,6 +147,7 @@ public class Lynx {
       regexpFilter = Pattern.compile(lowerCaseFilter);
     } catch (PatternSyntaxException exception) {
       regexpFilter = null;
+      Log.d("LYNX", "Invalid regexp filter!");
     }
   }
 
