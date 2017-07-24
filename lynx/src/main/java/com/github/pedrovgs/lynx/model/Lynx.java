@@ -40,6 +40,8 @@ import android.util.Log;
  */
 public class Lynx {
 
+  private static final String LOGTAG = "Lynx";
+
   private Logcat logcat;
   private final MainThread mainThread;
   private final TimeProvider timeProvider;
@@ -147,7 +149,7 @@ public class Lynx {
       regexpFilter = Pattern.compile(lowerCaseFilter);
     } catch (PatternSyntaxException exception) {
       regexpFilter = null;
-      Log.d("LYNX", "Invalid regexp filter!");
+      Log.d(LOGTAG, "Invalid regexp filter!");
     }
   }
 
