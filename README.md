@@ -92,7 +92,7 @@ Add Lynx dependency to your build.gradle
 ```groovy
 
 dependencies{
-    compile 'com.github.pedrovgs:lynx:1.0.7'
+    compile 'com.github.pedrovgs:lynx:1.1.0'
 }
 
 ```
