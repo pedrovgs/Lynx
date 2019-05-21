@@ -54,6 +54,8 @@ public class LynxTest {
       "02-07 17:45:33.014 V/Any error trace";
   private static final String ANY_TRACE_NON_MATCHING_FILTER_DEBUG =
           "02-07 17:45:33.014 D/Any error trace";
+  private static final String ANY_TRACE_NON_MATCHING_MIN_LENGTH =
+          "02-07 45:33.014 D/";
   private static final String ANY_TRACE_MATCHING_FILTER_WTF =
       "02-07 17:45:33.014 F/Any error trace";
   private static final String ANY_TRACE_MATCHING_INVALID_REGEXP_FILTER =
@@ -188,6 +190,16 @@ public class LynxTest {
 
     Logcat.Listener logcatListener = startLogcat();
     logcatListener.onTraceRead(ANY_TRACE_NON_MATCHING_FILTER);
+
+    verify(listener, never()).onNewTraces(anyList());
+  }
+
+  @Test public void shouldNotNotifyAboutTracesWithLessThanMinimumLengthAndConfiguredFilter() {
+    givenCurrentTime();
+    givenLynxWithFilter("", TraceLevel.DEBUG);
+
+    Logcat.Listener logcatListener = startLogcat();
+    logcatListener.onTraceRead(ANY_TRACE_NON_MATCHING_MIN_LENGTH);
 
     verify(listener, never()).onNewTraces(anyList());
   }
