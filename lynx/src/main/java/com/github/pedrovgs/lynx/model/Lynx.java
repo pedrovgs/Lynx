@@ -162,7 +162,8 @@ public class Lynx {
 
   private boolean shouldAddTrace(String logcatTrace) {
     boolean hasFilterConfigured = lynxConfig.hasFilter();
-    return !hasFilterConfigured || traceMatchesFilter(logcatTrace);
+    boolean hasMinSize = logcatTrace.length() >= Trace.MIN_TRACE_SIZE;
+    return hasMinSize && (!hasFilterConfigured || traceMatchesFilter(logcatTrace));
   }
 
   private synchronized boolean traceMatchesFilter(String logcatTrace) {
