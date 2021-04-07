@@ -2,16 +2,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'checkstyle'
 
 android {
-  compileSdkVersion 25
-  buildToolsVersion "25.0.3"
+  compileSdkVersion 30
+  buildToolsVersion "30.0.3"
 
   defaultConfig {
     applicationId "com.github.pedrovgs.sample"
-    minSdkVersion 10
-    targetSdkVersion 25
+    minSdkVersion 14
+    targetSdkVersion 30
     versionCode 1
     versionName "1.0"
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
   }
 
   buildTypes {
@@ -27,10 +27,10 @@ android {
 }
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile project(':lynx')
-  compile 'com.android.support:appcompat-v7:25.3.1'
-  androidTestCompile ('com.android.support.test.espresso:espresso-core:2.2.2') {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation project(':lynx')
+  implementation 'androidx.appcompat:appcompat:1.2.0'
+  androidTestImplementation ('androidx.test.espresso:espresso-core:3.1.0') {
     exclude module: 'support-annotations'
   }
 }
