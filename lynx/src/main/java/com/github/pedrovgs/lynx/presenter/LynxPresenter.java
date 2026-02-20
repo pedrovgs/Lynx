@@ -16,7 +16,7 @@
 
 package com.github.pedrovgs.lynx.presenter;
 
-import android.support.annotation.CheckResult;
+import androidx.annotation.CheckResult;
 
 import com.github.pedrovgs.lynx.LynxConfig;
 import com.github.pedrovgs.lynx.model.Lynx;

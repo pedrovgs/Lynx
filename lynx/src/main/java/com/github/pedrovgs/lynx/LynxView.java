@@ -19,7 +19,7 @@ package com.github.pedrovgs.lynx;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.support.annotation.CheckResult;
+import androidx.annotation.CheckResult;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
